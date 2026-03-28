@@ -21,14 +21,21 @@ import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.ai.openai.api.OpenAiApi;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
+@Service
 public class ChatModelNode extends AbstractArmorySupport {
+
+    @Resource
+    private AgentNode agentNode;
+
     @Override
     protected AiAgentRegisterVO doApply(ArmoryCommandEntity requestParameter, DefaultArmoryFactory.DynamicContext dynamicContext) throws Exception {
         log.info("Agent装配操作-AiApiNode");
@@ -61,7 +68,7 @@ public class ChatModelNode extends AbstractArmorySupport {
 
     @Override
     public StrategyHandler<ArmoryCommandEntity, DefaultArmoryFactory.DynamicContext, AiAgentRegisterVO> get(ArmoryCommandEntity armoryCommandEntity, DefaultArmoryFactory.DynamicContext dynamicContext) throws Exception {
-        return defaultStrategyHandler;
+        return agentNode;
     }
 
     private McpSyncClient createMcpSyncClient(AiAgentConfigTableVO.Module.ChatModel.ToolMcp toolMcp) throws Exception {

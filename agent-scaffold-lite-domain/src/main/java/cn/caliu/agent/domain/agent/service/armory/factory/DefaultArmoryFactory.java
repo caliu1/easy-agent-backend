@@ -4,6 +4,7 @@ import cn.caliu.agent.domain.agent.model.entity.ArmoryCommandEntity;
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentRegisterVO;
 import cn.caliu.agent.domain.agent.service.armory.node.RootNode;
 import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
+import com.google.adk.agents.BaseAgent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,6 +45,10 @@ public class DefaultArmoryFactory {
         private OpenAiApi openAiApi;
 
         private ChatModel chatModel;
+        /**
+         * 智能体配置组
+         */
+        private Map<String, BaseAgent> agentGroup = new HashMap<>();
 
         private Map<String, Object> dataObjects = new HashMap<>();
 
