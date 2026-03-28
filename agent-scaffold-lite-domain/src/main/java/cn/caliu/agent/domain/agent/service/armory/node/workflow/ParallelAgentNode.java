@@ -7,9 +7,11 @@ import cn.caliu.agent.domain.agent.model.valobj.AiAgentRegisterVO;
 import cn.caliu.agent.domain.agent.model.valobj.enums.AgentTypeEnum;
 import cn.caliu.agent.domain.agent.service.armory.AbstractArmorySupport;
 import cn.caliu.agent.domain.agent.service.armory.factory.DefaultArmoryFactory;
+import cn.caliu.agent.domain.agent.service.armory.node.RunnerNode;
 import com.google.adk.agents.BaseAgent;
 import com.google.adk.agents.ParallelAgent;
 import com.google.adk.agents.SequentialAgent;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import java.util.List;
 @Slf4j
 @Service("parallelAgentNode")
 public class ParallelAgentNode extends AbstractArmorySupport {
+
     @Override
     protected AiAgentRegisterVO doApply(ArmoryCommandEntity requestParameter, DefaultArmoryFactory.DynamicContext dynamicContext) throws Exception {
         log.info("Agent装配操作-ParallelAgentNode");

@@ -7,6 +7,7 @@ import cn.caliu.agent.domain.agent.model.valobj.AiAgentRegisterVO;
 import cn.caliu.agent.domain.agent.model.valobj.enums.AgentTypeEnum;
 import cn.caliu.agent.domain.agent.service.armory.AbstractArmorySupport;
 import cn.caliu.agent.domain.agent.service.armory.factory.DefaultArmoryFactory;
+import cn.caliu.agent.domain.agent.service.armory.node.RunnerNode;
 import com.google.adk.agents.BaseAgent;
 import com.google.adk.agents.LoopAgent;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import java.util.List;
 @Slf4j
 @Service("loopAgentNode")
 public class LoopAgentNode extends AbstractArmorySupport {
+
 
     @Override
     protected AiAgentRegisterVO doApply(ArmoryCommandEntity requestParameter, DefaultArmoryFactory.DynamicContext dynamicContext) throws Exception {
@@ -41,7 +43,7 @@ public class LoopAgentNode extends AbstractArmorySupport {
         // 注册bean到spring容器
         registerBean(agentWorkflow.getName(), LoopAgent.class, loopAgent);
 
-        return null;
+        return router(requestParameter, dynamicContext);
     }
 
     @Override

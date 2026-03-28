@@ -6,6 +6,7 @@ import cn.caliu.agent.domain.agent.model.valobj.AiAgentRegisterVO;
 import cn.caliu.agent.domain.agent.service.armory.node.RootNode;
 import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
 import com.google.adk.agents.BaseAgent;
+import com.google.adk.agents.SequentialAgent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,6 +46,11 @@ public class DefaultArmoryFactory {
         private OpenAiApi openAiApi;
 
         private ChatModel chatModel;
+
+        /**
+         * 最后一个智能体节点
+         */
+        private SequentialAgent sequentialAgent;
         /**
          * 智能体配置组
          */
