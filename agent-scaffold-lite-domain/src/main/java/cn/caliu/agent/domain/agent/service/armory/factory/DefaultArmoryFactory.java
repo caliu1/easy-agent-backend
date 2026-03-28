@@ -1,6 +1,7 @@
 package cn.caliu.agent.domain.agent.service.armory.factory;
 
 import cn.caliu.agent.domain.agent.model.entity.ArmoryCommandEntity;
+import cn.caliu.agent.domain.agent.model.valobj.AiAgentConfigTableVO;
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentRegisterVO;
 import cn.caliu.agent.domain.agent.service.armory.node.RootNode;
 import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
@@ -14,7 +15,9 @@ import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,6 +52,8 @@ public class DefaultArmoryFactory {
          * 智能体配置组
          */
         private Map<String, BaseAgent> agentGroup = new HashMap<>();
+
+        private List<AiAgentConfigTableVO.Module.AgentWorkflow> agentWorkflows = new ArrayList<>();
 
         private Map<String, Object> dataObjects = new HashMap<>();
 
