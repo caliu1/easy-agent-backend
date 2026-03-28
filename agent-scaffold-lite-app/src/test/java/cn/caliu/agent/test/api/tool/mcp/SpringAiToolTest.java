@@ -69,7 +69,7 @@ public class SpringAiToolTest {
     public void test_url() throws MalformedURLException {
         String fullUrl = "http://appbuilder.baidu.com/v2/ai_search/mcp/sse?api_key=bce-v3/ALTAK-JFZXXLpfxhAutDQvJ32Ei/4492c1879b8c2f0df4612ef5b4a52df1c1fba9f7";
 
-        fullUrl = "http://127.0.0.1:9999/sse?apiKey=xxxx";
+        // fullUrl = "http://127.0.0.1:9999/sse?apiKey=xxxx";
 
         URL url = new URL(fullUrl);
 

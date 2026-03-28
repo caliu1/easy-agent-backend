@@ -12,12 +12,19 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 @Slf4j
 @Service
 public class AiApiNode extends AbstractArmorySupport {
 
+    @Resource
+    private ChatModelNode chatModelNode;
+
     @Override
     protected AiAgentRegisterVO doApply(ArmoryCommandEntity requestParameter, DefaultArmoryFactory.DynamicContext dynamicContext) throws Exception {
+        log.info("Agent装配操作-AiApiNode");
+
         // 编写 AiApi 构建
         AiAgentConfigTableVO aiAgentConfigTableVO = requestParameter.getAiAgentConfigTableVO();
         AiAgentConfigTableVO.Module.AiApi aiApi = aiAgentConfigTableVO.getModule().getAiApi();
@@ -37,9 +44,7 @@ public class AiApiNode extends AbstractArmorySupport {
 
     @Override
     public StrategyHandler<ArmoryCommandEntity, DefaultArmoryFactory.DynamicContext, AiAgentRegisterVO> get(ArmoryCommandEntity requestParameter, DefaultArmoryFactory.DynamicContext dynamicContext) throws Exception {
-
-        // 如果不需要下一个节点了，可以配置 defaultStrategyHandler
-        return defaultStrategyHandler;
+        return chatModelNode;
     }
 
 }
