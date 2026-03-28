@@ -7,6 +7,9 @@ import cn.caliu.agent.domain.agent.model.valobj.AiAgentRegisterVO;
 import cn.caliu.agent.domain.agent.model.valobj.enums.AgentTypeEnum;
 import cn.caliu.agent.domain.agent.service.armory.AbstractArmorySupport;
 import cn.caliu.agent.domain.agent.service.armory.factory.DefaultArmoryFactory;
+import com.google.adk.agents.BaseAgent;
+import com.google.adk.agents.ParallelAgent;
+import com.google.adk.agents.SequentialAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +20,26 @@ import java.util.List;
 public class ParallelAgentNode extends AbstractArmorySupport {
     @Override
     protected AiAgentRegisterVO doApply(ArmoryCommandEntity requestParameter, DefaultArmoryFactory.DynamicContext dynamicContext) throws Exception {
-        return null;
+        log.info("Agent装配操作-ParallelAgentNode");
+
+        List<AiAgentConfigTableVO.Module.AgentWorkflow> agentWorkflows = dynamicContext.getAgentWorkflows();
+        AiAgentConfigTableVO.Module.AgentWorkflow agentWorkflow = agentWorkflows.remove(0);
+
+        List<String> subAgentNames = agentWorkflow.getSubAgents();
+        List<BaseAgent> subAgents = dynamicContext.queryAgentList(subAgentNames);
+
+        ParallelAgent parallelAgent = ParallelAgent.builder()
+                .name(agentWorkflow.getName())
+                .description(agentWorkflow.getDescription())
+                .subAgents(subAgents)
+                .build();
+
+        dynamicContext.getAgentGroup().put(agentWorkflow.getName(), parallelAgent);
+
+        // 注册bean到spring容器
+        registerBean(agentWorkflow.getName(), ParallelAgent.class, parallelAgent);
+
+        return router(requestParameter, dynamicContext);
     }
 
     @Override
