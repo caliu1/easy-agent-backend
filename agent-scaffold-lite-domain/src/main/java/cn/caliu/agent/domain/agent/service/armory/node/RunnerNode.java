@@ -1,6 +1,5 @@
 package cn.caliu.agent.domain.agent.service.armory.node;
 
-import autovalue.shaded.com.google.common.collect.ImmutableList;
 import cn.bugstack.wrench.design.framework.tree.StrategyHandler;
 import cn.caliu.agent.domain.agent.model.entity.ArmoryCommandEntity;
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentConfigTableVO;
@@ -13,6 +12,7 @@ import com.google.adk.agents.BaseAgent;
 import com.google.adk.agents.SequentialAgent;
 import com.google.adk.plugins.BasePlugin;
 import com.google.adk.runner.InMemoryRunner;
+import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
