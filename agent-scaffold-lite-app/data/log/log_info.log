@@ -12229,3 +12229,191 @@ public final class QuickSort {
     }
 }
 ```]
+26-03-30.15:00:25.306 [background-preinit] INFO  Version                - HV000001: Hibernate Validator 8.0.2.Final
+26-03-30.15:00:25.330 [main            ] INFO  AiAgentAutoConfigTest  - Starting AiAgentAutoConfigTest using Java 17.0.17 with PID 42132 (started by Administrator in D:\Project\agent-scaffold-lite\agent-scaffold-lite-app)
+26-03-30.15:00:25.331 [main            ] INFO  AiAgentAutoConfigTest  - The following 1 profile is active: "dev"
+26-03-30.15:00:25.818 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[cn.caliu.agent]' package. Please check your configuration.
+26-03-30.15:00:25.941 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.15:00:26.064 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'clientAnnotatedBeans' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration$ClientMcpAnnotatedBeans] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.15:00:26.072 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.ai.mcp.client.annotation-scanner-org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.15:00:26.892 [main            ] WARN  SyncMcpSamplingProvider - No sampling methods found
+26-03-30.15:00:26.894 [main            ] WARN  SyncMcpElicitationProvider - No elicitation methods found
+26-03-30.15:00:27.016 [main            ] INFO  AiAgentAutoConfigTest  - Started AiAgentAutoConfigTest in 2.054 seconds (process running for 2.616)
+26-03-30.15:00:27.131 [main            ] INFO  AiAgentAutoConfig      - 智能体装配：[{"agent":{"agentDesc":"一个测试的智能体","agentId":"100001","agentName":"测试智能体01"},"appName":"testAgent","module":{"agentWorkflows":[{"description":"Executes a sequence of code writing, reviewing, and refactoring.","maxIterations":3,"name":"CodePipelineAgent","subAgents":["CodeWriterAgent","CodeReviewerAgent","CodeRefactorerAgent"],"type":"sequential"}],"agents":[{"description":"Writes initial Java code based on a specification.","instruction":"You are a Java Code Generator.\nBased *only* on the user's request, write Java code that fulfills the requirement.\nOutput *only* the complete Java code block, enclosed in triple backticks (```java ... ```).\n","name":"CodeWriterAgent","outputKey":"generated_code"},{"description":"Reviews code and provides feedback.","instruction":"You are an expert Java Code Reviewer.\nYour task is to provide constructive feedback on the provided code.\n\n**Code to Review:**\n```java\n{generated_code}\n```\n\n**Review Criteria:**\n1.  **Correctness:** Does the code work as intended? Are there logic errors?\n2.  **Readability:** Is the code clear and easy to understand? Follows Java style guidelines?\n3.  **Efficiency:** Is the code reasonably efficient? Any obvious performance bottlenecks?\n4.  **Edge Cases:** Does the code handle potential edge cases or invalid inputs gracefully?\n5.  **Best Practices:** Does the code follow common Java best practices?\n\n**Output:**\nProvide your feedback as a concise, bulleted list. Focus on the most important points for improvement.\nIf the code is excellent and requires no changes, simply state: \"No major issues found.\"\nOutput *only* the review comments or the \"No major issues\" statement.\n","name":"CodeReviewerAgent","outputKey":"review_comments"},{"description":"Refactors code based on review comments.","instruction":"You are a Java Code Refactoring AI.\nYour goal is to improve the given Java code based on the provided review comments.\n\n**Original Code:**\n```java\n{generated_code}\n```\n\n**Review Comments:**\n{review_comments}\n\n**Task:**\nCarefully apply the suggestions from the review comments to refactor the original code.\nIf the review comments state \"No major issues found,\" return the original code unchanged.\nEnsure the final code is complete, functional, and includes necessary imports and docstrings.\n\n**Output:**\nOutput *only* the final, refactored Java code block, enclosed in triple backticks (```java ... ```).\nDo not add any other text before or after the code block.\n","name":"CodeRefactorerAgent","outputKey":"refactored_code"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":5000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}},{"sse":{"baseUri":"https://mcp.map.baidu.com/","name":"baidu-map","requestTimeout":5000,"sseEndpoint":"sse?ak=tV0NsP4Gmj8IL7mhvyjVZ7c6"}}]}}}]
+26-03-30.15:00:27.132 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.15:00:27.222 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.15:00:27.714 [HttpClient-3-Worker-1] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.15:00:27.784 [main            ] INFO  ChatModelNode          - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.15:00:28.257 [HttpClient-4-Worker-1] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=mcp-server-baidu-maps, title=null, version=1.26.0] and Instructions This is a MCP server for Baidu Maps.
+26-03-30.15:00:28.339 [main            ] INFO  ChatModelNode          - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=mcp-server-baidu-maps, title=null, version=1.26.0], instructions=This is a MCP server for Baidu Maps., meta=null]
+26-03-30.15:00:28.664 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.15:00:28.694 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.15:00:28.694 [main            ] INFO  SequentialAgentNode    - Agent装配操作-SequentialAgentNode
+26-03-30.15:00:28.695 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: CodePipelineAgent
+26-03-30.15:00:28.695 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.15:00:28.697 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100001
+26-03-30.15:00:41.169 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=12046ms, tokens=5518
+26-03-30.15:00:47.210 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=6034ms, tokens=6355
+26-03-30.15:09:31.717 [background-preinit] INFO  Version                - HV000001: Hibernate Validator 8.0.2.Final
+26-03-30.15:09:31.740 [main            ] INFO  AiAgentAutoConfigTest  - Starting AiAgentAutoConfigTest using Java 17.0.17 with PID 24408 (started by Administrator in D:\Project\agent-scaffold-lite\agent-scaffold-lite-app)
+26-03-30.15:09:31.741 [main            ] INFO  AiAgentAutoConfigTest  - The following 1 profile is active: "dev"
+26-03-30.15:09:32.264 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[cn.caliu.agent]' package. Please check your configuration.
+26-03-30.15:09:32.404 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.15:09:32.532 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'clientAnnotatedBeans' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration$ClientMcpAnnotatedBeans] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.15:09:32.538 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.ai.mcp.client.annotation-scanner-org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.15:09:33.367 [main            ] WARN  SyncMcpSamplingProvider - No sampling methods found
+26-03-30.15:09:33.368 [main            ] WARN  SyncMcpElicitationProvider - No elicitation methods found
+26-03-30.15:09:33.505 [main            ] INFO  AiAgentAutoConfigTest  - Started AiAgentAutoConfigTest in 2.075 seconds (process running for 2.619)
+26-03-30.15:09:33.641 [main            ] INFO  AiAgentAutoConfig      - 智能体装配：[{"agent":{"agentDesc":"一个测试的智能体","agentId":"100001","agentName":"测试智能体01"},"appName":"testAgent","module":{"agentWorkflows":[{"description":"Executes a sequence of code writing, reviewing, and refactoring.","maxIterations":3,"name":"CodePipelineAgent","subAgents":["CodeWriterAgent","CodeReviewerAgent","CodeRefactorerAgent"],"type":"sequential"}],"agents":[{"description":"Writes initial Java code based on a specification.","instruction":"You are a Java Code Generator.\nBased *only* on the user's request, write Java code that fulfills the requirement.\nOutput *only* the complete Java code block, enclosed in triple backticks (```java ... ```).\n","name":"CodeWriterAgent","outputKey":"generated_code"},{"description":"Reviews code and provides feedback.","instruction":"You are an expert Java Code Reviewer.\nYour task is to provide constructive feedback on the provided code.\n\n**Code to Review:**\n```java\n{generated_code}\n```\n\n**Review Criteria:**\n1.  **Correctness:** Does the code work as intended? Are there logic errors?\n2.  **Readability:** Is the code clear and easy to understand? Follows Java style guidelines?\n3.  **Efficiency:** Is the code reasonably efficient? Any obvious performance bottlenecks?\n4.  **Edge Cases:** Does the code handle potential edge cases or invalid inputs gracefully?\n5.  **Best Practices:** Does the code follow common Java best practices?\n\n**Output:**\nProvide your feedback as a concise, bulleted list. Focus on the most important points for improvement.\nIf the code is excellent and requires no changes, simply state: \"No major issues found.\"\nOutput *only* the review comments or the \"No major issues\" statement.\n","name":"CodeReviewerAgent","outputKey":"review_comments"},{"description":"Refactors code based on review comments.","instruction":"You are a Java Code Refactoring AI.\nYour goal is to improve the given Java code based on the provided review comments.\n\n**Original Code:**\n```java\n{generated_code}\n```\n\n**Review Comments:**\n{review_comments}\n\n**Task:**\nCarefully apply the suggestions from the review comments to refactor the original code.\nIf the review comments state \"No major issues found,\" return the original code unchanged.\nEnsure the final code is complete, functional, and includes necessary imports and docstrings.\n\n**Output:**\nOutput *only* the final, refactored Java code block, enclosed in triple backticks (```java ... ```).\nDo not add any other text before or after the code block.\n","name":"CodeRefactorerAgent","outputKey":"refactored_code"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":5000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}},{"sse":{"baseUri":"https://mcp.map.baidu.com/","name":"baidu-map","requestTimeout":5000,"sseEndpoint":"sse?ak=tV0NsP4Gmj8IL7mhvyjVZ7c6"}}]}}}]
+26-03-30.15:09:33.642 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.15:09:33.735 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.15:09:34.188 [HttpClient-3-Worker-2] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.15:09:34.255 [main            ] INFO  ChatModelNode          - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.15:09:34.797 [HttpClient-4-Worker-1] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=mcp-server-baidu-maps, title=null, version=1.26.0] and Instructions This is a MCP server for Baidu Maps.
+26-03-30.15:09:34.956 [main            ] INFO  ChatModelNode          - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=mcp-server-baidu-maps, title=null, version=1.26.0], instructions=This is a MCP server for Baidu Maps., meta=null]
+26-03-30.15:09:35.305 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.15:09:35.334 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.15:09:35.334 [main            ] INFO  SequentialAgentNode    - Agent装配操作-SequentialAgentNode
+26-03-30.15:09:35.335 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: CodePipelineAgent
+26-03-30.15:09:35.335 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.15:09:35.337 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100001
+26-03-30.15:09:47.964 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=12194ms, tokens=5522
+26-03-30.15:09:53.961 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=5990ms, tokens=6392
+26-03-30.15:10:05.951 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=11987ms, tokens=7066
+26-03-30.15:10:05.952 [main            ] INFO  AiAgentAutoConfigTest  - ===> 最终测试结果: [```java
+public class QuickSort {
+    /**
+     * 快速排序主方法
+     * @param arr 待排序的整型数组
+     */
+    public static void quickSort(int[] arr) {
+        if (arr == null || arr.length <= 1) {
+            return;
+        }
+        quickSort(arr, 0, arr.length - 1);
+    }
+
+    /**
+     * 快速排序递归实现
+     * @param arr 待排序数组
+     * @param low 起始索引
+     * @param high 结束索引
+     */
+    private static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            // 获取分区点
+            int pivotIndex = partition(arr, low, high);
+            // 递归排序左半部分
+            quickSort(arr, low, pivotIndex - 1);
+            // 递归排序右半部分
+            quickSort(arr, pivotIndex + 1, high);
+        }
+    }
+
+    /**
+     * 分区操作：将数组分为小于等于pivot和大于pivot的两部分
+     * @param arr 待排序数组
+     * @param low 起始索引
+     * @param high 结束索引
+     * @return pivot的最终位置
+     */
+    private static int partition(int[] arr, int low, int high) {
+        // 选择最后一个元素作为pivot
+        int pivot = arr[high];
+        int i = low - 1; // 小于等于pivot的元素的索引
+
+        for (int j = low; j < high; j++) {
+            // 如果当前元素小于等于pivot
+            if (arr[j] <= pivot) {
+                i++;
+                swap(arr, i, j);
+            }
+        }
+        // 将pivot放到正确位置
+        swap(arr, i + 1, high);
+        return i + 1;
+    }
+
+    /**
+     * 交换数组中两个位置的元素
+     * @param arr 数组
+     * @param i 索引1
+     * @param j 索引2
+     */
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+}
+```, - **Correctness**: The implementation is logically correct and follows the standard Lomuto partition scheme. It correctly sorts arrays in-place.
+- **Readability**: Code is well-structured, well-documented with clear Javadoc, and follows Java naming and style conventions.
+- **Efficiency**: Time complexity is O(n²) worst-case (e.g., already-sorted array), which is inherent to basic quicksort; no optimizations (e.g., randomized pivot, median-of-three) are included — acceptable for a basic implementation but worth noting for production use.
+- **Edge Cases**: Handles `null` and arrays of length ≤ 1 correctly. However, it does not guard against integer overflow in index calculations (not a practical concern here, but technically possible in extreme cases).
+- **Best Practices**: Uses `private static` helper methods appropriately; avoids side effects; no unnecessary object creation. Consider adding `@param`/`@return` consistency (e.g., `swap` lacks `@return` — harmless since it's void, but minor inconsistency)., ```java
+public class QuickSort {
+    /**
+     * 快速排序主方法
+     * @param arr 待排序的整型数组
+     */
+    public static void quickSort(int[] arr) {
+        if (arr == null || arr.length <= 1) {
+            return;
+        }
+        quickSort(arr, 0, arr.length - 1);
+    }
+
+    /**
+     * 快速排序递归实现
+     * @param arr 待排序数组
+     * @param low 起始索引
+     * @param high 结束索引
+     */
+    private static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            // 获取分区点
+            int pivotIndex = partition(arr, low, high);
+            // 递归排序左半部分
+            quickSort(arr, low, pivotIndex - 1);
+            // 递归排序右半部分
+            quickSort(arr, pivotIndex + 1, high);
+        }
+    }
+
+    /**
+     * 分区操作：将数组分为小于等于pivot和大于pivot的两部分
+     * @param arr 待排序数组
+     * @param low 起始索引
+     * @param high 结束索引
+     * @return pivot的最终位置
+     */
+    private static int partition(int[] arr, int low, int high) {
+        // 选择最后一个元素作为pivot
+        int pivot = arr[high];
+        int i = low - 1; // 小于等于pivot的元素的索引
+
+        for (int j = low; j < high; j++) {
+            // 如果当前元素小于等于pivot
+            if (arr[j] <= pivot) {
+                i++;
+                swap(arr, i, j);
+            }
+        }
+        // 将pivot放到正确位置
+        swap(arr, i + 1, high);
+        return i + 1;
+    }
+
+    /**
+     * 交换数组中两个位置的元素
+     * @param arr 数组
+     * @param i 索引1
+     * @param j 索引2
+     */
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+}
+```]

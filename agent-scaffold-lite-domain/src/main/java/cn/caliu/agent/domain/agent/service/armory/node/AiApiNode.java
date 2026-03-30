@@ -25,7 +25,6 @@ public class AiApiNode extends AbstractArmorySupport {
     protected AiAgentRegisterVO doApply(ArmoryCommandEntity requestParameter, DefaultArmoryFactory.DynamicContext dynamicContext) throws Exception {
         log.info("Agent装配操作-AiApiNode");
 
-        // 编写 AiApi 构建
         AiAgentConfigTableVO aiAgentConfigTableVO = requestParameter.getAiAgentConfigTableVO();
         AiAgentConfigTableVO.Module.AiApi aiApi = aiAgentConfigTableVO.getModule().getAiApi();
 
@@ -37,8 +36,6 @@ public class AiApiNode extends AbstractArmorySupport {
                 .build();
         dynamicContext.setOpenAiApi(openAiApi);
 
-
-        // 路由到下一个节点，如果不需要路由了，可以 return 返回结果
         return router(requestParameter, dynamicContext);
     }
 

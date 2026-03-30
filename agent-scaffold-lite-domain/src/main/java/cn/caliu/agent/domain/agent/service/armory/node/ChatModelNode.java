@@ -76,7 +76,7 @@ public class ChatModelNode extends AbstractArmorySupport {
         AiAgentConfigTableVO.Module.ChatModel.ToolMcp.SSEServerParameters sseConfig = toolMcp.getSse();
         AiAgentConfigTableVO.Module.ChatModel.ToolMcp.StdioServerParameters stdioConfig = toolMcp.getStdio();
 
-        if (sseConfig == null) {
+        if (sseConfig != null) {
             String originalBaseUri = sseConfig.getBaseUri();
             String baseUri = originalBaseUri;
             String sseEndpoint = sseConfig.getSseEndpoint();

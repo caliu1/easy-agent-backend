@@ -10,17 +10,17 @@ ai:
             agent-desc: 一个测试的智能体
           module:
             ai-api:
-              base-url: https://apis.itedus.cn
-              api-key: sk-Sp2jx3yeq7x7HJ663bDc9bF0D34b4f609f833840271519B1
+              base-url: https://dashscope.aliyuncs.com/compatible-mode/
+              api-key: sk-b5909159a5da494aa942fdfcb96e12ca
               completions-path: v1/chat/completions
               embeddings-path: v1/embeddings
             chat-model:
-              model: gpt-4.1
+              model: qwen-plus
               tool-mcp-list:
                 - sse:
                     name: baidu-search
                     base-uri: http://appbuilder.baidu.com/v2/ai_search/mcp/
-                    sse-endpoint: sse?api_key=bce-v3/ALTAK-3zODLb9qHozIftQlGwez5/2696e92781f5bf1ba1870e2958f239fd6dc822a4
+                    sse-endpoint: sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb
                     request-timeout: 5000
                 - sse:
                     name: baidu-map

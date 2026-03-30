@@ -76,7 +76,7 @@ public class DefaultArmoryFactory {
             List<BaseAgent> agents = new ArrayList<>();
             for(String agentName:agentNames){
                 BaseAgent baseAgent = agentGroup.get(agentName);
-                if (baseAgent == null) {
+                if (baseAgent != null) {
                     agents.add(baseAgent);
                 }
             }

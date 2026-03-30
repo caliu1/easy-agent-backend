@@ -31,7 +31,10 @@ public class SequentialAgentNode extends AbstractArmorySupport {
         AiAgentConfigTableVO.Module.AgentWorkflow agentWorkflow = agentWorkflows.remove(0);
 
         List<String> subAgentNames = agentWorkflow.getSubAgents();
+        // log.info("===> 准备查找的子 Agent 名称: {}", subAgentNames);
+
         List<BaseAgent> subAgents = dynamicContext.queryAgentList(subAgentNames);
+        // log.info("===> 实际查找到的子 Agent 数量: {}", subAgents == null ? 0 : subAgents.size()); // 新增日志
 
         SequentialAgent sequentialAgent = SequentialAgent.builder()
                 .name(agentWorkflow.getName())
