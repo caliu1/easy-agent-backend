@@ -1,6 +1,7 @@
 package cn.caliu.agent.test.app;
 
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentRegisterVO;
+import com.alibaba.fastjson.JSON;
 import com.google.adk.events.Event;
 import com.google.adk.runner.InMemoryRunner;
 import com.google.adk.sessions.Session;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 @Slf4j
@@ -97,8 +99,27 @@ public class AiAgentAutoConfigTest {
         }
 
         log.info("===> 最终测试结果: {}", output);
-
-        new CountDownLatch(1).await();
-
     }
+
+    @Test
+    public void test_parallel_research_app(){
+        AiAgentRegisterVO aiAgentRegisterVO = applicationContext.getBean("100003", AiAgentRegisterVO.class);
+
+        String appName = aiAgentRegisterVO.getAppName();
+        InMemoryRunner runner = aiAgentRegisterVO.getRunner();
+
+        Session session = runner.sessionService()
+                .createSession(appName, "xiaofuge")
+                .blockingGet();
+
+        Content userMsg = Content.fromParts(Part.fromText("你具备哪些能力"));
+        Flowable<Event> events = runner.runAsync("xiaofuge", session.id(), userMsg);
+
+        List<String> outputs = new ArrayList<>();
+        events.blockingForEach(event -> outputs.add(event.stringifyContent()));
+
+        log.info("测试结果:{}", JSON.toJSONString(outputs));
+    }
+
+
 }

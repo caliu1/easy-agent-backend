@@ -35,11 +35,15 @@ public class AgentWorkflowNode extends AbstractArmorySupport {
         AiAgentConfigTableVO aiAgentConfigTableVO = requestParameter.getAiAgentConfigTableVO();
         List<AiAgentConfigTableVO.Module.AgentWorkflow> agentWorkflows = aiAgentConfigTableVO.getModule().getAgentWorkflows();
 
-        if (agentWorkflows == null) {
+        if (agentWorkflows == null || agentWorkflows.isEmpty() || dynamicContext.getCurrentStepIndex()>=agentWorkflows.size()) {
+            // 清空
+            dynamicContext.setCurrentAgentWorkflow(null);
+
             return router(requestParameter, dynamicContext);
         }
 
-        dynamicContext.setAgentWorkflows(agentWorkflows);
+        dynamicContext.setCurrentAgentWorkflow(agentWorkflows.get(dynamicContext.getCurrentStepIndex()));
+        dynamicContext.addCurrentStepIndex();
 
         return router(requestParameter, dynamicContext);
 
@@ -47,13 +51,11 @@ public class AgentWorkflowNode extends AbstractArmorySupport {
 
     @Override
     public StrategyHandler<ArmoryCommandEntity, DefaultArmoryFactory.DynamicContext, AiAgentRegisterVO> get(ArmoryCommandEntity requestParameter, DefaultArmoryFactory.DynamicContext dynamicContext) throws Exception {
-        List<AiAgentConfigTableVO.Module.AgentWorkflow> agentWorkflows = dynamicContext.getAgentWorkflows();
+        AiAgentConfigTableVO.Module.AgentWorkflow agentWorkflow = dynamicContext.getCurrentAgentWorkflow();
 
-        if (null == agentWorkflows || agentWorkflows.isEmpty()){
+        if (null == agentWorkflow){
             return runnerNode;
         }
-
-        AiAgentConfigTableVO.Module.AgentWorkflow agentWorkflow = agentWorkflows.get(0);
 
         String type = agentWorkflow.getType();
         AgentTypeEnum agentTypeEnum = AgentTypeEnum.formType(type);
@@ -68,7 +70,7 @@ public class AgentWorkflowNode extends AbstractArmorySupport {
             case "loopAgentNode" -> loopAgentNode;
             case "parallelAgentNode" -> parallelAgentNode;
             case "sequentialAgentNode" -> sequentialAgentNode;
-            default -> defaultStrategyHandler;
+            default -> runnerNode;
         };
     }
 }

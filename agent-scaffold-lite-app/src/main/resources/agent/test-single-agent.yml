@@ -1,0 +1,33 @@
+ai:
+  agent:
+    config:
+      tables:
+        testSingleAgent:
+          app-name: testSingleAgent
+          agent:
+            agent-id: 100002
+            agent-name: 单一智能体
+            agent-desc: 单一智能体
+          module:
+            ai-api:
+              base-url: https://dashscope.aliyuncs.com/compatible-mode/
+              api-key: sk-b5909159a5da494aa942fdfcb96e12ca
+              completions-path: v1/chat/completions
+              embeddings-path: v1/embeddings
+            chat-model:
+              model: qwen-plus
+              tool-mcp-list:
+                - sse:
+                    name: baidu-search
+                    base-uri: http://appbuilder.baidu.com/v2/ai_search/mcp/
+                    sse-endpoint: sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb
+                    request-timeout: 5000
+                - local:
+                    name: myToolCallbackProvider
+            agents:
+              - name: singleAgent
+                description: 西安电子科技大学就业服务
+                instruction: |
+                  通过百度检索，为用户提供西安电子科技大学就业服务，包括但不限于就业质量报告、平均薪水、读研深造比例等。
+            runner:
+              agent-name: singleAgent

@@ -12534,3 +12534,1186 @@ public class QuickSort {
 尤其硕士生就业已形成“**电子信息铁军**”品牌效应，本科生则展现出“**升学有保障、就业有出路、发展有后劲**”的鲜明优势，充分印证其“信息特色鲜明、军工底色厚重、产教融合深入”的人才培养成效。
 
 如需获取某届报告原文PDF或分专业就业数据，我可继续为您定位官网链接。]
+26-03-30.15:32:07.591 [HttpClient-3-Worker-3] WARN  HttpClientSseClientTransport - SSE stream observed an error
+java.io.IOException: chunked transfer encoding, state: READING_LENGTH
+	at java.net.http/jdk.internal.net.http.common.Utils.wrapWithExtraDetail(Utils.java:375)
+	at java.net.http/jdk.internal.net.http.Http1Response$BodyReader.onReadError(Http1Response.java:660)
+	at java.net.http/jdk.internal.net.http.Http1AsyncReceiver.checkForErrors(Http1AsyncReceiver.java:302)
+	at java.net.http/jdk.internal.net.http.Http1AsyncReceiver.flush(Http1AsyncReceiver.java:268)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:205)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:230)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.io.EOFException: EOF reached while reading
+	at java.net.http/jdk.internal.net.http.Http1AsyncReceiver$Http1TubeSubscriber.onComplete(Http1AsyncReceiver.java:597)
+	at java.net.http/jdk.internal.net.http.SocketTube$InternalReadPublisher$ReadSubscription.signalCompletion(SocketTube.java:648)
+	at java.net.http/jdk.internal.net.http.SocketTube$InternalReadPublisher$InternalReadSubscription.read(SocketTube.java:853)
+	at java.net.http/jdk.internal.net.http.SocketTube$SocketFlowTask.run(SocketTube.java:181)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:230)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler.runOrSchedule(SequentialScheduler.java:303)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler.runOrSchedule(SequentialScheduler.java:256)
+	at java.net.http/jdk.internal.net.http.SocketTube$InternalReadPublisher$InternalReadSubscription.signalReadable(SocketTube.java:782)
+	at java.net.http/jdk.internal.net.http.SocketTube$InternalReadPublisher$ReadEvent.signalEvent(SocketTube.java:965)
+	at java.net.http/jdk.internal.net.http.SocketTube$SocketFlowEvent.handle(SocketTube.java:253)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$SelectorManager.handleEvent(HttpClientImpl.java:1402)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$SelectorManager.lambda$run$3(HttpClientImpl.java:1347)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$SelectorManager.run(HttpClientImpl.java:1347)
+26-03-30.15:32:08.106 [HttpClient-4-Worker-0] WARN  HttpClientSseClientTransport - SSE stream observed an error
+java.io.IOException: chunked transfer encoding, state: READING_LENGTH
+	at java.net.http/jdk.internal.net.http.common.Utils.wrapWithExtraDetail(Utils.java:375)
+	at java.net.http/jdk.internal.net.http.Http1Response$BodyReader.onReadError(Http1Response.java:660)
+	at java.net.http/jdk.internal.net.http.Http1AsyncReceiver.checkForErrors(Http1AsyncReceiver.java:302)
+	at java.net.http/jdk.internal.net.http.Http1AsyncReceiver.flush(Http1AsyncReceiver.java:268)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:205)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:230)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:174)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler.runOrSchedule(SequentialScheduler.java:305)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler.runOrSchedule(SequentialScheduler.java:274)
+	at java.net.http/jdk.internal.net.http.Http1AsyncReceiver.onReadError(Http1AsyncReceiver.java:512)
+	at java.net.http/jdk.internal.net.http.Http1AsyncReceiver$Http1TubeSubscriber.onError(Http1AsyncReceiver.java:591)
+	at java.net.http/jdk.internal.net.http.common.SSLTube$DelegateWrapper.onError(SSLTube.java:257)
+	at java.net.http/jdk.internal.net.http.common.SSLTube$SSLSubscriberWrapper.complete(SSLTube.java:441)
+	at java.net.http/jdk.internal.net.http.common.SSLTube$SSLSubscriberWrapper.onErrorImpl(SSLTube.java:511)
+	at java.net.http/jdk.internal.net.http.common.SSLTube$SSLSubscriberWrapper.onError(SSLTube.java:525)
+	at java.net.http/jdk.internal.net.http.common.SubscriberWrapper$DownstreamPusher.run1(SubscriberWrapper.java:294)
+	at java.net.http/jdk.internal.net.http.common.SubscriberWrapper$DownstreamPusher.run(SubscriberWrapper.java:259)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:205)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:230)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler.runOrSchedule(SequentialScheduler.java:303)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler.runOrSchedule(SequentialScheduler.java:256)
+	at java.net.http/jdk.internal.net.http.common.SubscriberWrapper.errorCommon(SubscriberWrapper.java:421)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.errorCommon(SSLFlowDelegate.java:380)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:507)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:282)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:205)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:230)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: javax.net.ssl.SSLException: Tag mismatch!
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:133)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:383)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:326)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.SSLTransport.decode(SSLTransport.java:123)
+	at java.base/sun.security.ssl.SSLEngineImpl.decode(SSLEngineImpl.java:736)
+	at java.base/sun.security.ssl.SSLEngineImpl.readRecord(SSLEngineImpl.java:691)
+	at java.base/sun.security.ssl.SSLEngineImpl.unwrap(SSLEngineImpl.java:506)
+	at java.base/sun.security.ssl.SSLEngineImpl.unwrap(SSLEngineImpl.java:482)
+	at java.base/javax.net.ssl.SSLEngine.unwrap(SSLEngine.java:679)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.unwrapBuffer(SSLFlowDelegate.java:543)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:447)
+	... 7 common frames omitted
+Caused by: javax.crypto.AEADBadTagException: Tag mismatch!
+	at java.base/com.sun.crypto.provider.GaloisCounterMode$GCMDecrypt.doFinal(GaloisCounterMode.java:1493)
+	at java.base/com.sun.crypto.provider.GaloisCounterMode.engineDoFinal(GaloisCounterMode.java:447)
+	at java.base/javax.crypto.Cipher.doFinal(Cipher.java:2500)
+	at java.base/sun.security.ssl.SSLCipher$T12GcmReadCipherGenerator$GcmReadCipher.decrypt(SSLCipher.java:1659)
+	at java.base/sun.security.ssl.SSLEngineInputRecord.decodeInputRecord(SSLEngineInputRecord.java:239)
+	at java.base/sun.security.ssl.SSLEngineInputRecord.decode(SSLEngineInputRecord.java:196)
+	at java.base/sun.security.ssl.SSLEngineInputRecord.decode(SSLEngineInputRecord.java:159)
+	at java.base/sun.security.ssl.SSLTransport.decode(SSLTransport.java:111)
+	... 14 common frames omitted
+26-03-30.16:01:03.581 [background-preinit] INFO  Version                - HV000001: Hibernate Validator 8.0.2.Final
+26-03-30.16:01:03.607 [main            ] INFO  AiAgentAutoConfigTest  - Starting AiAgentAutoConfigTest using Java 17.0.17 with PID 16808 (started by Administrator in D:\Project\agent-scaffold-lite\agent-scaffold-lite-app)
+26-03-30.16:01:03.608 [main            ] INFO  AiAgentAutoConfigTest  - The following 1 profile is active: "dev"
+26-03-30.16:01:04.085 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[cn.caliu.agent]' package. Please check your configuration.
+26-03-30.16:01:04.198 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.16:01:04.346 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'clientAnnotatedBeans' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration$ClientMcpAnnotatedBeans] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.16:01:04.351 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.ai.mcp.client.annotation-scanner-org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.16:01:05.138 [main            ] WARN  SyncMcpSamplingProvider - No sampling methods found
+26-03-30.16:01:05.140 [main            ] WARN  SyncMcpElicitationProvider - No elicitation methods found
+26-03-30.16:01:05.273 [main            ] INFO  AiAgentAutoConfigTest  - Started AiAgentAutoConfigTest in 1.969 seconds (process running for 2.522)
+26-03-30.16:01:05.394 [main            ] INFO  AiAgentAutoConfig      - 智能体装配：[{"agent":{"agentDesc":"并行研究并汇总的智能体管道","agentId":"100003","agentName":"测试智能体03"},"appName":"ResearchAndSynthesisPipeline","module":{"agentWorkflows":[{"description":"Runs multiple research agents in parallel to gather information.","maxIterations":3,"name":"ParallelWebResearchAgent","subAgents":["RenewableEnergyResearcher","EVResearcher","CarbonCaptureResearcher"],"type":"parallel"},{"description":"Coordinates parallel research and synthesizes the results.","maxIterations":3,"name":"ResearchAndSynthesisPipeline","subAgents":["ParallelWebResearchAgent","SynthesisAgent"],"type":"sequential"}],"agents":[{"description":"Researches renewable energy sources.","instruction":"You are an AI Research Assistant specializing in energy.\nResearch the latest advancements in 'renewable energy sources'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"RenewableEnergyResearcher","outputKey":"renewable_energy_result"},{"description":"Researches electric vehicle technology.","instruction":"You are an AI Research Assistant specializing in transportation.\nResearch the latest developments in 'electric vehicle technology'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"EVResearcher","outputKey":"ev_technology_result"},{"description":"Researches carbon capture methods.","instruction":"You are an AI Research Assistant specializing in climate solutions.\nResearch the current state of 'carbon capture methods'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"CarbonCaptureResearcher","outputKey":"carbon_capture_result"},{"description":"Combines research findings into a structured report.","instruction":"You are an AI Assistant responsible for combining research findings into a structured report.\nYour primary task is to synthesize the following research summaries, clearly attributing findings to their source areas. Structure your response using headings for each topic. Ensure the report is coherent and integrates the key points smoothly.\n**Crucially: Your entire response MUST be grounded *exclusively* on the information provided in the 'Input Summaries' below. Do NOT add any external knowledge, facts, or details not present in these specific summaries.**\n**Input Summaries:**\n\n*   **Renewable Energy:**\n    {renewable_energy_result}\n\n*   **Electric Vehicles:**\n    {ev_technology_result}\n\n*   **Carbon Capture:**\n    {carbon_capture_result}\n\n**Output Format:**\n\n## Summary of Recent Sustainable Technology Advancements\n\n### Renewable Energy Findings\n(Based on RenewableEnergyResearcher's findings)\n[Synthesize and elaborate *only* on the renewable energy input summary provided above.]\n\n### Electric Vehicle Findings\n(Based on EVResearcher's findings)\n[Synthesize and elaborate *only* on the EV input summary provided above.]\n\n### Carbon Capture Findings\n(Based on CarbonCaptureResearcher's findings)\n[Synthesize and elaborate *only* on the carbon capture input summary provided above.]\n\n### Overall Conclusion\n[Provide a brief (1-2 sentence) concluding statement that connects *only* the findings presented above.]\n\nOutput *only* the structured report following this format. Do not include introductory or concluding phrases outside this structure, and strictly adhere to using only the provided input summary content.\n","name":"SynthesisAgent"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":500000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}}]},"runner":{"agentName":"ResearchAndSynthesisPipeline"}}}]
+26-03-30.16:01:05.395 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.16:01:05.493 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.16:01:05.955 [HttpClient-3-Worker-0] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.16:01:06.021 [main            ] INFO  ChatModelNode          - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.16:01:06.218 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.16:01:06.247 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.16:01:06.247 [main            ] INFO  ParallelAgentNode      - Agent装配操作-ParallelAgentNode
+26-03-30.16:01:06.248 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: ParallelWebResearchAgent
+26-03-30.16:01:06.248 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.16:01:06.248 [main            ] INFO  SequentialAgentNode    - Agent装配操作-SequentialAgentNode
+26-03-30.16:01:06.249 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: ResearchAndSynthesisPipeline
+26-03-30.16:01:06.249 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.16:01:06.249 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.16:01:06.251 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100003
+26-03-30.16:01:53.933 [background-preinit] INFO  Version                - HV000001: Hibernate Validator 8.0.2.Final
+26-03-30.16:01:53.960 [main            ] INFO  AiAgentAutoConfigTest  - Starting AiAgentAutoConfigTest using Java 17.0.17 with PID 33444 (started by Administrator in D:\Project\agent-scaffold-lite\agent-scaffold-lite-app)
+26-03-30.16:01:53.962 [main            ] INFO  AiAgentAutoConfigTest  - The following 1 profile is active: "dev"
+26-03-30.16:01:54.456 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[cn.caliu.agent]' package. Please check your configuration.
+26-03-30.16:01:54.574 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.16:01:54.719 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'clientAnnotatedBeans' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration$ClientMcpAnnotatedBeans] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.16:01:54.726 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.ai.mcp.client.annotation-scanner-org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.16:01:55.545 [main            ] WARN  SyncMcpSamplingProvider - No sampling methods found
+26-03-30.16:01:55.547 [main            ] WARN  SyncMcpElicitationProvider - No elicitation methods found
+26-03-30.16:01:55.684 [main            ] INFO  AiAgentAutoConfigTest  - Started AiAgentAutoConfigTest in 2.02 seconds (process running for 2.56)
+26-03-30.16:01:55.824 [main            ] INFO  AiAgentAutoConfig      - 智能体装配：[{"agent":{"agentDesc":"并行研究并汇总的智能体管道","agentId":"100003","agentName":"测试智能体03"},"appName":"ResearchAndSynthesisPipeline","module":{"agentWorkflows":[{"description":"Runs multiple research agents in parallel to gather information.","maxIterations":3,"name":"ParallelWebResearchAgent","subAgents":["RenewableEnergyResearcher","EVResearcher","CarbonCaptureResearcher"],"type":"parallel"},{"description":"Coordinates parallel research and synthesizes the results.","maxIterations":3,"name":"ResearchAndSynthesisPipeline","subAgents":["ParallelWebResearchAgent","SynthesisAgent"],"type":"sequential"}],"agents":[{"description":"Researches renewable energy sources.","instruction":"You are an AI Research Assistant specializing in energy.\nResearch the latest advancements in 'renewable energy sources'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"RenewableEnergyResearcher","outputKey":"renewable_energy_result"},{"description":"Researches electric vehicle technology.","instruction":"You are an AI Research Assistant specializing in transportation.\nResearch the latest developments in 'electric vehicle technology'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"EVResearcher","outputKey":"ev_technology_result"},{"description":"Researches carbon capture methods.","instruction":"You are an AI Research Assistant specializing in climate solutions.\nResearch the current state of 'carbon capture methods'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"CarbonCaptureResearcher","outputKey":"carbon_capture_result"},{"description":"Combines research findings into a structured report.","instruction":"You are an AI Assistant responsible for combining research findings into a structured report.\nYour primary task is to synthesize the following research summaries, clearly attributing findings to their source areas. Structure your response using headings for each topic. Ensure the report is coherent and integrates the key points smoothly.\n**Crucially: Your entire response MUST be grounded *exclusively* on the information provided in the 'Input Summaries' below. Do NOT add any external knowledge, facts, or details not present in these specific summaries.**\n**Input Summaries:**\n\n*   **Renewable Energy:**\n    {renewable_energy_result}\n\n*   **Electric Vehicles:**\n    {ev_technology_result}\n\n*   **Carbon Capture:**\n    {carbon_capture_result}\n\n**Output Format:**\n\n## Summary of Recent Sustainable Technology Advancements\n\n### Renewable Energy Findings\n(Based on RenewableEnergyResearcher's findings)\n[Synthesize and elaborate *only* on the renewable energy input summary provided above.]\n\n### Electric Vehicle Findings\n(Based on EVResearcher's findings)\n[Synthesize and elaborate *only* on the EV input summary provided above.]\n\n### Carbon Capture Findings\n(Based on CarbonCaptureResearcher's findings)\n[Synthesize and elaborate *only* on the carbon capture input summary provided above.]\n\n### Overall Conclusion\n[Provide a brief (1-2 sentence) concluding statement that connects *only* the findings presented above.]\n\nOutput *only* the structured report following this format. Do not include introductory or concluding phrases outside this structure, and strictly adhere to using only the provided input summary content.\n","name":"SynthesisAgent"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":500000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}}]},"runner":{"agentName":"ResearchAndSynthesisPipeline"}}}]
+26-03-30.16:01:55.825 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.16:01:55.918 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.16:01:56.295 [HttpClient-3-Worker-2] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.16:01:56.357 [main            ] INFO  ChatModelNode          - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.16:01:56.555 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.16:01:56.583 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.16:01:56.584 [main            ] INFO  ParallelAgentNode      - Agent装配操作-ParallelAgentNode
+26-03-30.16:01:56.585 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: ParallelWebResearchAgent
+26-03-30.16:01:56.585 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.16:01:56.585 [main            ] INFO  SequentialAgentNode    - Agent装配操作-SequentialAgentNode
+26-03-30.16:01:56.585 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: ResearchAndSynthesisPipeline
+26-03-30.16:01:56.585 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.16:01:56.585 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.16:01:56.588 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100003
+26-03-30.16:01:59.649 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=2632ms, tokens=1274
+26-03-30.16:02:01.527 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=1870ms, tokens=1268
+26-03-30.16:02:04.969 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=3440ms, tokens=1319
+26-03-30.16:02:13.339 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=8367ms, tokens=2257
+26-03-30.16:02:13.342 [main            ] INFO  AiAgentAutoConfigTest  - 测试结果:["我是一名专注于可再生能源领域的AI研究助手（RenewableEnergyResearcher），具备通过网络搜索实时获取最新科研进展、技术突破与产业动态的能力，尤其擅长检索和归纳太阳能、风能、储能、绿氢及智能电网等方向的前沿信息。","我是一名专注于电动车辆技术研究的AI助手（内部名称：EVResearcher）。我的核心能力是通过网络搜索工具，快速检索并总结关于电动汽车技术的最新进展，包括电池技术、充电基础设施、智能驾驶集成、电机效率提升等关键领域。","我是一名专注于碳捕获方法研究的AI研究助理（CarbonCaptureResearcher）。我的核心能力是检索、分析和总结关于碳捕获技术的最新信息，包括但不限于：直接空气捕获（DAC）、点源捕获（如电厂、水泥厂）、生物能源结合碳捕获与封存（BECCS）、矿物碳化、以及新兴电化学或吸附材料等前沿方向。我可通过网络搜索获取权威、时效性强的资料，并提供简洁准确的技术现状概述。","## Summary of Recent Sustainable Technology Advancements\n\n### Renewable Energy Findings\n(Based on RenewableEnergyResearcher's findings)\nThe RenewableEnergyResearcher specializes in real-time retrieval and synthesis of the latest scientific advancements, technological breakthroughs, and industrial developments within the renewable energy sector. Its expertise is specifically focused on key domains including solar power, wind power, energy storage systems, green hydrogen production and utilization, and smart grid technologies.\n\n### Electric Vehicle Findings\n(Based on EVResearcher's findings)\nThe EVResearcher is dedicated to the field of electric vehicle technology, with a core competency in rapidly searching for and summarizing the most recent progress. This includes critical areas such as battery technology innovations, the expansion and optimization of charging infrastructure, the integration of intelligent driving systems, and advancements aimed at improving motor efficiency.\n\n### Carbon Capture Findings\n(Based on CarbonCaptureResearcher's findings)\nThe CarbonCaptureResearcher focuses on carbon capture methodologies, possessing the ability to retrieve, analyze, and concisely summarize up-to-date information on various capture techniques. Its scope encompasses direct air capture (DAC), point-source capture from industrial emitters like power plants and cement factories, bioenergy with carbon capture and storage (BECCS), mineral carbonation, and emerging approaches involving electrochemical processes or novel adsorption materials.\n\n### Overall Conclusion\nThese three specialized research assistants collectively cover pivotal pillars of sustainable technology—renewable energy generation, electrified transportation, and carbon management—each providing targeted, real-time intelligence on their respective frontiers."]
+26-03-30.16:55:37.597 [background-preinit] INFO  Version                - HV000001: Hibernate Validator 8.0.2.Final
+26-03-30.16:55:37.626 [main            ] INFO  AiAgentAutoConfigTest  - Starting AiAgentAutoConfigTest using Java 17.0.17 with PID 43420 (started by Administrator in D:\Project\agent-scaffold-lite\agent-scaffold-lite-app)
+26-03-30.16:55:37.628 [main            ] INFO  AiAgentAutoConfigTest  - The following 1 profile is active: "dev"
+26-03-30.16:55:38.097 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[cn.caliu.agent]' package. Please check your configuration.
+26-03-30.16:55:38.208 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.16:55:38.340 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'clientAnnotatedBeans' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration$ClientMcpAnnotatedBeans] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.16:55:38.346 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.ai.mcp.client.annotation-scanner-org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.16:55:38.387 [main            ] WARN  GenericWebApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'aiAgentAutoConfig': Injection of resource dependencies failed
+26-03-30.16:55:38.404 [main            ] INFO  ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+26-03-30.16:55:38.417 [main            ] ERROR LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field toolMcpCreateService in cn.caliu.agent.domain.agent.service.armory.node.ChatModelNode required a single bean, but 3 were found:
+	- localToolMcpCreateService: defined in file [D:\Project\agent-scaffold-lite\agent-scaffold-lite-domain\target\classes\cn\caliu\agent\domain\agent\service\armory\mcp\client\impl\LocalToolMcpCreateService.class]
+	- SSEToolMcpCreateService: defined in file [D:\Project\agent-scaffold-lite\agent-scaffold-lite-domain\target\classes\cn\caliu\agent\domain\agent\service\armory\mcp\client\impl\SSEToolMcpCreateService.class]
+	- stdioToolMcpCreateService: defined in file [D:\Project\agent-scaffold-lite\agent-scaffold-lite-domain\target\classes\cn\caliu\agent\domain\agent\service\armory\mcp\client\impl\StdioToolMcpCreateService.class]
+
+This may be due to missing parameter name information
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+
+Ensure that your compiler is configured to use the '-parameters' flag.
+You may need to update both your build tool settings as well as your IDE.
+(See https://github.com/spring-projects/spring-framework/wiki/Upgrading-to-Spring-Framework-6.x#parameter-name-retention)
+
+
+26-03-30.16:55:38.419 [main            ] WARN  TestContextManager     - Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener] to prepare test instance [cn.caliu.agent.test.app.AiAgentAutoConfigTest@2f09e6b2]
+java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@27e44e9c testClass = cn.caliu.agent.test.app.AiAgentAutoConfigTest, locations = [], classes = [cn.caliu.agent.Application], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@7bab3f1a, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@12aba8be, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@4efac082, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@72e5a8e, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@121314f7, org.springframework.boot.test.autoconfigure.OnFailureConditionReportContextCustomizerFactory$OnFailureConditionReportContextCustomizer@576d5deb, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@d86a6f, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@0, org.springframework.boot.test.context.SpringBootTestAnnotation@e91f28fa], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:228)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:289)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:291)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:247)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:97)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:69)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater$1.execute(IdeaTestRunner.java:38)
+	at com.intellij.rt.execution.junit.TestsRepeater.repeat(TestsRepeater.java:11)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35)
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:231)
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:55)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'aiAgentAutoConfig': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1155)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1121)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1056)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1461)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+	... 27 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'IArmoryServiceImpl': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1664)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:599)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 51 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'defaultArmoryFactory': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 67 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'rootNode': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 81 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'aiApiNode': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 95 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'chatModelNode': Unsatisfied dependency expressed through field 'toolMcpCreateService': No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 109 common frames omitted
+Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveNotUnique(DependencyDescriptor.java:218)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1641)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785)
+	... 126 common frames omitted
+26-03-30.16:55:54.343 [background-preinit] INFO  Version                - HV000001: Hibernate Validator 8.0.2.Final
+26-03-30.16:55:54.369 [main            ] INFO  AiAgentAutoConfigTest  - Starting AiAgentAutoConfigTest using Java 17.0.17 with PID 14484 (started by Administrator in D:\Project\agent-scaffold-lite\agent-scaffold-lite-app)
+26-03-30.16:55:54.370 [main            ] INFO  AiAgentAutoConfigTest  - The following 1 profile is active: "dev"
+26-03-30.16:55:54.864 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[cn.caliu.agent]' package. Please check your configuration.
+26-03-30.16:55:55.005 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.16:55:55.159 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'clientAnnotatedBeans' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration$ClientMcpAnnotatedBeans] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.16:55:55.166 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.ai.mcp.client.annotation-scanner-org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.16:55:55.221 [main            ] WARN  GenericWebApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'aiAgentAutoConfig': Injection of resource dependencies failed
+26-03-30.16:55:55.240 [main            ] INFO  ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+26-03-30.16:55:55.266 [main            ] ERROR LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field toolMcpCreateService in cn.caliu.agent.domain.agent.service.armory.node.ChatModelNode required a single bean, but 3 were found:
+	- localToolMcpCreateService: defined in file [D:\Project\agent-scaffold-lite\agent-scaffold-lite-domain\target\classes\cn\caliu\agent\domain\agent\service\armory\mcp\client\impl\LocalToolMcpCreateService.class]
+	- SSEToolMcpCreateService: defined in file [D:\Project\agent-scaffold-lite\agent-scaffold-lite-domain\target\classes\cn\caliu\agent\domain\agent\service\armory\mcp\client\impl\SSEToolMcpCreateService.class]
+	- stdioToolMcpCreateService: defined in file [D:\Project\agent-scaffold-lite\agent-scaffold-lite-domain\target\classes\cn\caliu\agent\domain\agent\service\armory\mcp\client\impl\StdioToolMcpCreateService.class]
+
+This may be due to missing parameter name information
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+
+Ensure that your compiler is configured to use the '-parameters' flag.
+You may need to update both your build tool settings as well as your IDE.
+(See https://github.com/spring-projects/spring-framework/wiki/Upgrading-to-Spring-Framework-6.x#parameter-name-retention)
+
+
+26-03-30.16:55:55.270 [main            ] WARN  TestContextManager     - Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener] to prepare test instance [cn.caliu.agent.test.app.AiAgentAutoConfigTest@5d2a86c0]
+java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@2c47a053 testClass = cn.caliu.agent.test.app.AiAgentAutoConfigTest, locations = [], classes = [cn.caliu.agent.Application], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@7bab3f1a, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@12aba8be, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@4efac082, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@72e5a8e, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@121314f7, org.springframework.boot.test.autoconfigure.OnFailureConditionReportContextCustomizerFactory$OnFailureConditionReportContextCustomizer@576d5deb, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@d86a6f, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@0, org.springframework.boot.test.context.SpringBootTestAnnotation@e91f28fa], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:228)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:289)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:291)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:247)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:97)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:69)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater$1.execute(IdeaTestRunner.java:38)
+	at com.intellij.rt.execution.junit.TestsRepeater.repeat(TestsRepeater.java:11)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35)
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:231)
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:55)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'aiAgentAutoConfig': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1155)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1121)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1056)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1461)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+	... 27 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'IArmoryServiceImpl': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1664)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:599)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 51 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'defaultArmoryFactory': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 67 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'rootNode': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 81 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'aiApiNode': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 95 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'chatModelNode': Unsatisfied dependency expressed through field 'toolMcpCreateService': No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 109 common frames omitted
+Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveNotUnique(DependencyDescriptor.java:218)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1641)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785)
+	... 126 common frames omitted
+26-03-30.16:56:22.841 [background-preinit] INFO  Version                - HV000001: Hibernate Validator 8.0.2.Final
+26-03-30.16:56:22.869 [main            ] INFO  AiAgentAutoConfigTest  - Starting AiAgentAutoConfigTest using Java 17.0.17 with PID 13428 (started by Administrator in D:\Project\agent-scaffold-lite\agent-scaffold-lite-app)
+26-03-30.16:56:22.870 [main            ] INFO  AiAgentAutoConfigTest  - The following 1 profile is active: "dev"
+26-03-30.16:56:23.345 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[cn.caliu.agent]' package. Please check your configuration.
+26-03-30.16:56:23.468 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.16:56:23.615 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'clientAnnotatedBeans' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration$ClientMcpAnnotatedBeans] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.16:56:23.622 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.ai.mcp.client.annotation-scanner-org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.16:56:23.675 [main            ] WARN  GenericWebApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'aiAgentAutoConfig': Injection of resource dependencies failed
+26-03-30.16:56:23.692 [main            ] INFO  ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+26-03-30.16:56:23.712 [main            ] ERROR LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field toolMcpCreateService in cn.caliu.agent.domain.agent.service.armory.node.ChatModelNode required a single bean, but 3 were found:
+	- localToolMcpCreateService: defined in file [D:\Project\agent-scaffold-lite\agent-scaffold-lite-domain\target\classes\cn\caliu\agent\domain\agent\service\armory\mcp\client\impl\LocalToolMcpCreateService.class]
+	- SSEToolMcpCreateService: defined in file [D:\Project\agent-scaffold-lite\agent-scaffold-lite-domain\target\classes\cn\caliu\agent\domain\agent\service\armory\mcp\client\impl\SSEToolMcpCreateService.class]
+	- stdioToolMcpCreateService: defined in file [D:\Project\agent-scaffold-lite\agent-scaffold-lite-domain\target\classes\cn\caliu\agent\domain\agent\service\armory\mcp\client\impl\StdioToolMcpCreateService.class]
+
+This may be due to missing parameter name information
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+
+Ensure that your compiler is configured to use the '-parameters' flag.
+You may need to update both your build tool settings as well as your IDE.
+(See https://github.com/spring-projects/spring-framework/wiki/Upgrading-to-Spring-Framework-6.x#parameter-name-retention)
+
+
+26-03-30.16:56:23.716 [main            ] WARN  TestContextManager     - Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener] to prepare test instance [cn.caliu.agent.test.app.AiAgentAutoConfigTest@7c71c889]
+java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@2becfd4c testClass = cn.caliu.agent.test.app.AiAgentAutoConfigTest, locations = [], classes = [cn.caliu.agent.Application], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@7bab3f1a, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@12aba8be, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@4efac082, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@72e5a8e, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@121314f7, org.springframework.boot.test.autoconfigure.OnFailureConditionReportContextCustomizerFactory$OnFailureConditionReportContextCustomizer@576d5deb, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@d86a6f, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@0, org.springframework.boot.test.context.SpringBootTestAnnotation@e91f28fa], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:228)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:289)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:291)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:247)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:97)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:69)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater$1.execute(IdeaTestRunner.java:38)
+	at com.intellij.rt.execution.junit.TestsRepeater.repeat(TestsRepeater.java:11)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35)
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:231)
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:55)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'aiAgentAutoConfig': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1155)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1121)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1056)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1461)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+	... 27 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'IArmoryServiceImpl': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1664)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:599)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 51 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'defaultArmoryFactory': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 67 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'rootNode': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 81 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'aiApiNode': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 95 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'chatModelNode': Unsatisfied dependency expressed through field 'toolMcpCreateService': No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 109 common frames omitted
+Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveNotUnique(DependencyDescriptor.java:218)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1641)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785)
+	... 126 common frames omitted
+26-03-30.17:00:05.338 [background-preinit] INFO  Version                - HV000001: Hibernate Validator 8.0.2.Final
+26-03-30.17:00:05.365 [main            ] INFO  AiAgentAutoConfigTest  - Starting AiAgentAutoConfigTest using Java 17.0.17 with PID 33016 (started by Administrator in D:\Project\agent-scaffold-lite\agent-scaffold-lite-app)
+26-03-30.17:00:05.366 [main            ] INFO  AiAgentAutoConfigTest  - The following 1 profile is active: "dev"
+26-03-30.17:00:05.860 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[cn.caliu.agent]' package. Please check your configuration.
+26-03-30.17:00:05.989 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:00:06.133 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'clientAnnotatedBeans' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration$ClientMcpAnnotatedBeans] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:00:06.139 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.ai.mcp.client.annotation-scanner-org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:00:06.191 [main            ] WARN  GenericWebApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'aiAgentAutoConfig': Injection of resource dependencies failed
+26-03-30.17:00:06.209 [main            ] INFO  ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+26-03-30.17:00:06.228 [main            ] ERROR LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+A component required a single bean, but 3 were found:
+	- localToolMcpCreateService: defined in file [D:\Project\agent-scaffold-lite\agent-scaffold-lite-domain\target\classes\cn\caliu\agent\domain\agent\service\armory\mcp\client\impl\LocalToolMcpCreateService.class]
+	- SSEToolMcpCreateService: defined in file [D:\Project\agent-scaffold-lite\agent-scaffold-lite-domain\target\classes\cn\caliu\agent\domain\agent\service\armory\mcp\client\impl\SSEToolMcpCreateService.class]
+	- stdioToolMcpCreateService: defined in file [D:\Project\agent-scaffold-lite\agent-scaffold-lite-domain\target\classes\cn\caliu\agent\domain\agent\service\armory\mcp\client\impl\StdioToolMcpCreateService.class]
+
+This may be due to missing parameter name information
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+
+Ensure that your compiler is configured to use the '-parameters' flag.
+You may need to update both your build tool settings as well as your IDE.
+(See https://github.com/spring-projects/spring-framework/wiki/Upgrading-to-Spring-Framework-6.x#parameter-name-retention)
+
+
+26-03-30.17:00:06.232 [main            ] WARN  TestContextManager     - Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener] to prepare test instance [cn.caliu.agent.test.app.AiAgentAutoConfigTest@5d2a86c0]
+java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@2c47a053 testClass = cn.caliu.agent.test.app.AiAgentAutoConfigTest, locations = [], classes = [cn.caliu.agent.Application], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@7bab3f1a, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@12aba8be, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@4efac082, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@72e5a8e, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@121314f7, org.springframework.boot.test.autoconfigure.OnFailureConditionReportContextCustomizerFactory$OnFailureConditionReportContextCustomizer@576d5deb, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@d86a6f, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@0, org.springframework.boot.test.context.SpringBootTestAnnotation@e91f28fa], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:228)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:289)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:291)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:247)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:97)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:69)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater$1.execute(IdeaTestRunner.java:38)
+	at com.intellij.rt.execution.junit.TestsRepeater.repeat(TestsRepeater.java:11)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35)
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:231)
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:55)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'aiAgentAutoConfig': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1155)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1121)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1056)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1461)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+	... 27 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'IArmoryServiceImpl': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1664)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:599)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 51 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'defaultArmoryFactory': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 67 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'rootNode': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 81 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'aiApiNode': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 95 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'chatModelNode': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 109 common frames omitted
+Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveNotUnique(DependencyDescriptor.java:218)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1641)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:599)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 123 common frames omitted
+26-03-30.17:00:44.294 [background-preinit] INFO  Version                - HV000001: Hibernate Validator 8.0.2.Final
+26-03-30.17:00:44.320 [main            ] INFO  AiAgentAutoConfigTest  - Starting AiAgentAutoConfigTest using Java 17.0.17 with PID 12300 (started by Administrator in D:\Project\agent-scaffold-lite\agent-scaffold-lite-app)
+26-03-30.17:00:44.321 [main            ] INFO  AiAgentAutoConfigTest  - The following 1 profile is active: "dev"
+26-03-30.17:00:44.803 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[cn.caliu.agent]' package. Please check your configuration.
+26-03-30.17:00:44.926 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:00:45.067 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'clientAnnotatedBeans' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration$ClientMcpAnnotatedBeans] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:00:45.073 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.ai.mcp.client.annotation-scanner-org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:00:45.124 [main            ] WARN  GenericWebApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'aiAgentAutoConfig': Injection of resource dependencies failed
+26-03-30.17:00:45.140 [main            ] INFO  ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+26-03-30.17:00:45.159 [main            ] ERROR LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+A component required a single bean, but 3 were found:
+	- localToolMcpCreateService: defined in file [D:\Project\agent-scaffold-lite\agent-scaffold-lite-domain\target\classes\cn\caliu\agent\domain\agent\service\armory\mcp\client\impl\LocalToolMcpCreateService.class]
+	- SSEToolMcpCreateService: defined in file [D:\Project\agent-scaffold-lite\agent-scaffold-lite-domain\target\classes\cn\caliu\agent\domain\agent\service\armory\mcp\client\impl\SSEToolMcpCreateService.class]
+	- stdioToolMcpCreateService: defined in file [D:\Project\agent-scaffold-lite\agent-scaffold-lite-domain\target\classes\cn\caliu\agent\domain\agent\service\armory\mcp\client\impl\StdioToolMcpCreateService.class]
+
+This may be due to missing parameter name information
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+
+Ensure that your compiler is configured to use the '-parameters' flag.
+You may need to update both your build tool settings as well as your IDE.
+(See https://github.com/spring-projects/spring-framework/wiki/Upgrading-to-Spring-Framework-6.x#parameter-name-retention)
+
+
+26-03-30.17:00:45.164 [main            ] WARN  TestContextManager     - Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener] to prepare test instance [cn.caliu.agent.test.app.AiAgentAutoConfigTest@101330ad]
+java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@5c59a0f7 testClass = cn.caliu.agent.test.app.AiAgentAutoConfigTest, locations = [], classes = [cn.caliu.agent.Application], contextInitializerClasses = [], activeProfiles = [], propertySourceDescriptors = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@7bab3f1a, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@12aba8be, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@4efac082, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@72e5a8e, org.springframework.boot.test.web.reactor.netty.DisableReactorResourceFactoryGlobalResourcesContextCustomizerFactory$DisableReactorResourceFactoryGlobalResourcesContextCustomizerCustomizer@121314f7, org.springframework.boot.test.autoconfigure.OnFailureConditionReportContextCustomizerFactory$OnFailureConditionReportContextCustomizer@576d5deb, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@1f, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizer@d86a6f, org.springframework.test.context.support.DynamicPropertiesContextCustomizer@0, org.springframework.boot.test.context.SpringBootTestAnnotation@e91f28fa], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:180)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:228)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:289)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:291)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:247)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:97)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:191)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:69)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater$1.execute(IdeaTestRunner.java:38)
+	at com.intellij.rt.execution.junit.TestsRepeater.repeat(TestsRepeater.java:11)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35)
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:231)
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:55)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'aiAgentAutoConfig': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1155)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1121)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1056)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:137)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1461)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:553)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:137)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:108)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+	... 27 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'IArmoryServiceImpl': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1664)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:599)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 51 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'defaultArmoryFactory': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 67 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'rootNode': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 81 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'aiApiNode': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 95 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'chatModelNode': Injection of resource dependencies failed
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:462)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:606)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 109 common frames omitted
+Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveNotUnique(DependencyDescriptor.java:218)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1641)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:599)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:577)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$LegacyResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:790)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:272)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
+	... 123 common frames omitted
+26-03-30.17:04:04.553 [background-preinit] INFO  Version                - HV000001: Hibernate Validator 8.0.2.Final
+26-03-30.17:04:04.593 [main            ] INFO  AiAgentAutoConfigTest  - Starting AiAgentAutoConfigTest using Java 17.0.17 with PID 32576 (started by Administrator in D:\Project\agent-scaffold-lite\agent-scaffold-lite-app)
+26-03-30.17:04:04.595 [main            ] INFO  AiAgentAutoConfigTest  - The following 1 profile is active: "dev"
+26-03-30.17:04:05.124 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[cn.caliu.agent]' package. Please check your configuration.
+26-03-30.17:04:05.243 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:04:05.385 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'clientAnnotatedBeans' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration$ClientMcpAnnotatedBeans] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:04:05.391 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.ai.mcp.client.annotation-scanner-org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:04:06.283 [main            ] WARN  SyncMcpSamplingProvider - No sampling methods found
+26-03-30.17:04:06.284 [main            ] WARN  SyncMcpElicitationProvider - No elicitation methods found
+26-03-30.17:04:06.379 [main            ] INFO  AiAgentAutoConfigTest  - Started AiAgentAutoConfigTest in 2.159 seconds (process running for 2.759)
+26-03-30.17:04:06.459 [main            ] INFO  AiAgentAutoConfig      - 智能体装配：[{"agent":{"agentDesc":"并行研究并汇总的智能体管道","agentId":"100003","agentName":"测试智能体03"},"appName":"ResearchAndSynthesisPipeline","module":{"agentWorkflows":[{"description":"Runs multiple research agents in parallel to gather information.","maxIterations":3,"name":"ParallelWebResearchAgent","subAgents":["RenewableEnergyResearcher","EVResearcher","CarbonCaptureResearcher"],"type":"parallel"},{"description":"Coordinates parallel research and synthesizes the results.","maxIterations":3,"name":"ResearchAndSynthesisPipeline","subAgents":["ParallelWebResearchAgent","SynthesisAgent"],"type":"sequential"}],"agents":[{"description":"Researches renewable energy sources.","instruction":"You are an AI Research Assistant specializing in energy.\nResearch the latest advancements in 'renewable energy sources'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"RenewableEnergyResearcher","outputKey":"renewable_energy_result"},{"description":"Researches electric vehicle technology.","instruction":"You are an AI Research Assistant specializing in transportation.\nResearch the latest developments in 'electric vehicle technology'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"EVResearcher","outputKey":"ev_technology_result"},{"description":"Researches carbon capture methods.","instruction":"You are an AI Research Assistant specializing in climate solutions.\nResearch the current state of 'carbon capture methods'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"CarbonCaptureResearcher","outputKey":"carbon_capture_result"},{"description":"Combines research findings into a structured report.","instruction":"You are an AI Assistant responsible for combining research findings into a structured report.\nYour primary task is to synthesize the following research summaries, clearly attributing findings to their source areas. Structure your response using headings for each topic. Ensure the report is coherent and integrates the key points smoothly.\n**Crucially: Your entire response MUST be grounded *exclusively* on the information provided in the 'Input Summaries' below. Do NOT add any external knowledge, facts, or details not present in these specific summaries.**\n**Input Summaries:**\n\n*   **Renewable Energy:**\n    {renewable_energy_result}\n\n*   **Electric Vehicles:**\n    {ev_technology_result}\n\n*   **Carbon Capture:**\n    {carbon_capture_result}\n\n**Output Format:**\n\n## Summary of Recent Sustainable Technology Advancements\n\n### Renewable Energy Findings\n(Based on RenewableEnergyResearcher's findings)\n[Synthesize and elaborate *only* on the renewable energy input summary provided above.]\n\n### Electric Vehicle Findings\n(Based on EVResearcher's findings)\n[Synthesize and elaborate *only* on the EV input summary provided above.]\n\n### Carbon Capture Findings\n(Based on CarbonCaptureResearcher's findings)\n[Synthesize and elaborate *only* on the carbon capture input summary provided above.]\n\n### Overall Conclusion\n[Provide a brief (1-2 sentence) concluding statement that connects *only* the findings presented above.]\n\nOutput *only* the structured report following this format. Do not include introductory or concluding phrases outside this structure, and strictly adhere to using only the provided input summary content.\n","name":"SynthesisAgent"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":500000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}}]},"runner":{"agentName":"ResearchAndSynthesisPipeline"}}},{"agent":{"agentDesc":"单一智能体","agentId":"100002","agentName":"单一智能体"},"appName":"testSingleAgent","module":{"agents":[{"description":"西安电子科技大学就业服务","instruction":"通过百度检索，为用户提供西安电子科技大学就业服务，包括但不限于就业质量报告、平均薪水、读研深造比例等。\n","name":"singleAgent"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":5000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}},{"local":{"name":"myToolCallbackProvider"}}]},"runner":{"agentName":"singleAgent"}}},{"agent":{"agentDesc":"一个测试的智能体","agentId":"100001","agentName":"测试智能体01"},"appName":"testAgent","module":{"agentWorkflows":[{"description":"Executes a sequence of code writing, reviewing, and refactoring.","maxIterations":3,"name":"CodePipelineAgent","subAgents":["CodeWriterAgent","CodeReviewerAgent","CodeRefactorerAgent"],"type":"sequential"}],"agents":[{"description":"Writes initial Java code based on a specification.","instruction":"You are a Java Code Generator.\nBased *only* on the user's request, write Java code that fulfills the requirement.\nOutput *only* the complete Java code block, enclosed in triple backticks (```java ... ```).\n","name":"CodeWriterAgent","outputKey":"generated_code"},{"description":"Reviews code and provides feedback.","instruction":"You are an expert Java Code Reviewer.\nYour task is to provide constructive feedback on the provided code.\n\n**Code to Review:**\n```java\n{generated_code}\n```\n\n**Review Criteria:**\n1.  **Correctness:** Does the code work as intended? Are there logic errors?\n2.  **Readability:** Is the code clear and easy to understand? Follows Java style guidelines?\n3.  **Efficiency:** Is the code reasonably efficient? Any obvious performance bottlenecks?\n4.  **Edge Cases:** Does the code handle potential edge cases or invalid inputs gracefully?\n5.  **Best Practices:** Does the code follow common Java best practices?\n\n**Output:**\nProvide your feedback as a concise, bulleted list. Focus on the most important points for improvement.\nIf the code is excellent and requires no changes, simply state: \"No major issues found.\"\nOutput *only* the review comments or the \"No major issues\" statement.\n","name":"CodeReviewerAgent","outputKey":"review_comments"},{"description":"Refactors code based on review comments.","instruction":"You are a Java Code Refactoring AI.\nYour goal is to improve the given Java code based on the provided review comments.\n\n**Original Code:**\n```java\n{generated_code}\n```\n\n**Review Comments:**\n{review_comments}\n\n**Task:**\nCarefully apply the suggestions from the review comments to refactor the original code.\nIf the review comments state \"No major issues found,\" return the original code unchanged.\nEnsure the final code is complete, functional, and includes necessary imports and docstrings.\n\n**Output:**\nOutput *only* the final, refactored Java code block, enclosed in triple backticks (```java ... ```).\nDo not add any other text before or after the code block.\n","name":"CodeRefactorerAgent","outputKey":"refactored_code"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":5000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}},{"sse":{"baseUri":"https://mcp.map.baidu.com/","name":"baidu-map","requestTimeout":5000,"sseEndpoint":"sse?ak=tV0NsP4Gmj8IL7mhvyjVZ7c6"}}]},"runner":{"agentName":"CodePipelineAgent"}}}]
+26-03-30.17:04:06.460 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.17:04:06.552 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.17:04:06.987 [HttpClient-3-Worker-0] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.17:04:07.068 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.17:04:07.251 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.17:04:07.279 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:04:07.279 [main            ] INFO  ParallelAgentNode      - Agent装配操作-ParallelAgentNode
+26-03-30.17:04:07.280 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: ParallelWebResearchAgent
+26-03-30.17:04:07.280 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:04:07.280 [main            ] INFO  SequentialAgentNode    - Agent装配操作-SequentialAgentNode
+26-03-30.17:04:07.280 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: ResearchAndSynthesisPipeline
+26-03-30.17:04:07.280 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:04:07.280 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.17:04:07.283 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100003
+26-03-30.17:04:07.283 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.17:04:07.288 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.17:04:07.447 [HttpClient-5-Worker-2] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.17:04:07.514 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.17:04:07.568 [main            ] INFO  LocalToolMcpCreateService - tool local mcp initialize myToolCallbackProvider
+26-03-30.17:04:07.571 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.17:04:07.571 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:04:07.571 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.17:04:07.571 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100002
+26-03-30.17:04:07.571 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.17:04:07.574 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.17:04:07.738 [HttpClient-7-Worker-0] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.17:04:07.795 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.17:04:08.478 [HttpClient-8-Worker-1] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=mcp-server-baidu-maps, title=null, version=1.26.0] and Instructions This is a MCP server for Baidu Maps.
+26-03-30.17:04:08.610 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=mcp-server-baidu-maps, title=null, version=1.26.0], instructions=This is a MCP server for Baidu Maps., meta=null]
+26-03-30.17:04:08.738 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.17:04:08.738 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:04:08.738 [main            ] INFO  SequentialAgentNode    - Agent装配操作-SequentialAgentNode
+26-03-30.17:04:08.738 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: CodePipelineAgent
+26-03-30.17:04:08.738 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:04:08.738 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.17:04:08.738 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100001
+26-03-30.17:04:11.538 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=2367ms, tokens=1271
+26-03-30.17:04:13.345 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=1802ms, tokens=1256
+26-03-30.17:04:30.299 [background-preinit] INFO  Version                - HV000001: Hibernate Validator 8.0.2.Final
+26-03-30.17:04:30.332 [main            ] INFO  AiAgentAutoConfigTest  - Starting AiAgentAutoConfigTest using Java 17.0.17 with PID 56492 (started by Administrator in D:\Project\agent-scaffold-lite\agent-scaffold-lite-app)
+26-03-30.17:04:30.332 [main            ] INFO  AiAgentAutoConfigTest  - The following 1 profile is active: "dev"
+26-03-30.17:04:30.886 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[cn.caliu.agent]' package. Please check your configuration.
+26-03-30.17:04:31.029 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:04:31.199 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'clientAnnotatedBeans' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration$ClientMcpAnnotatedBeans] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:04:31.206 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.ai.mcp.client.annotation-scanner-org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:04:32.244 [main            ] WARN  SyncMcpSamplingProvider - No sampling methods found
+26-03-30.17:04:32.246 [main            ] WARN  SyncMcpElicitationProvider - No elicitation methods found
+26-03-30.17:04:32.377 [main            ] INFO  AiAgentAutoConfigTest  - Started AiAgentAutoConfigTest in 2.394 seconds (process running for 3.187)
+26-03-30.17:04:32.526 [main            ] INFO  AiAgentAutoConfig      - 智能体装配：[{"agent":{"agentDesc":"并行研究并汇总的智能体管道","agentId":"100003","agentName":"测试智能体03"},"appName":"ResearchAndSynthesisPipeline","module":{"agentWorkflows":[{"description":"Runs multiple research agents in parallel to gather information.","maxIterations":3,"name":"ParallelWebResearchAgent","subAgents":["RenewableEnergyResearcher","EVResearcher","CarbonCaptureResearcher"],"type":"parallel"},{"description":"Coordinates parallel research and synthesizes the results.","maxIterations":3,"name":"ResearchAndSynthesisPipeline","subAgents":["ParallelWebResearchAgent","SynthesisAgent"],"type":"sequential"}],"agents":[{"description":"Researches renewable energy sources.","instruction":"You are an AI Research Assistant specializing in energy.\nResearch the latest advancements in 'renewable energy sources'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"RenewableEnergyResearcher","outputKey":"renewable_energy_result"},{"description":"Researches electric vehicle technology.","instruction":"You are an AI Research Assistant specializing in transportation.\nResearch the latest developments in 'electric vehicle technology'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"EVResearcher","outputKey":"ev_technology_result"},{"description":"Researches carbon capture methods.","instruction":"You are an AI Research Assistant specializing in climate solutions.\nResearch the current state of 'carbon capture methods'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"CarbonCaptureResearcher","outputKey":"carbon_capture_result"},{"description":"Combines research findings into a structured report.","instruction":"You are an AI Assistant responsible for combining research findings into a structured report.\nYour primary task is to synthesize the following research summaries, clearly attributing findings to their source areas. Structure your response using headings for each topic. Ensure the report is coherent and integrates the key points smoothly.\n**Crucially: Your entire response MUST be grounded *exclusively* on the information provided in the 'Input Summaries' below. Do NOT add any external knowledge, facts, or details not present in these specific summaries.**\n**Input Summaries:**\n\n*   **Renewable Energy:**\n    {renewable_energy_result}\n\n*   **Electric Vehicles:**\n    {ev_technology_result}\n\n*   **Carbon Capture:**\n    {carbon_capture_result}\n\n**Output Format:**\n\n## Summary of Recent Sustainable Technology Advancements\n\n### Renewable Energy Findings\n(Based on RenewableEnergyResearcher's findings)\n[Synthesize and elaborate *only* on the renewable energy input summary provided above.]\n\n### Electric Vehicle Findings\n(Based on EVResearcher's findings)\n[Synthesize and elaborate *only* on the EV input summary provided above.]\n\n### Carbon Capture Findings\n(Based on CarbonCaptureResearcher's findings)\n[Synthesize and elaborate *only* on the carbon capture input summary provided above.]\n\n### Overall Conclusion\n[Provide a brief (1-2 sentence) concluding statement that connects *only* the findings presented above.]\n\nOutput *only* the structured report following this format. Do not include introductory or concluding phrases outside this structure, and strictly adhere to using only the provided input summary content.\n","name":"SynthesisAgent"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":500000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}}]},"runner":{"agentName":"ResearchAndSynthesisPipeline"}}},{"agent":{"agentDesc":"单一智能体","agentId":"100002","agentName":"单一智能体"},"appName":"testSingleAgent","module":{"agents":[{"description":"西安电子科技大学就业服务","instruction":"通过百度检索，为用户提供西安电子科技大学就业服务，包括但不限于就业质量报告、平均薪水、读研深造比例等。\n","name":"singleAgent"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":5000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}},{"local":{"name":"myToolCallbackProvider"}}]},"runner":{"agentName":"singleAgent"}}},{"agent":{"agentDesc":"一个测试的智能体","agentId":"100001","agentName":"测试智能体01"},"appName":"testAgent","module":{"agentWorkflows":[{"description":"Executes a sequence of code writing, reviewing, and refactoring.","maxIterations":3,"name":"CodePipelineAgent","subAgents":["CodeWriterAgent","CodeReviewerAgent","CodeRefactorerAgent"],"type":"sequential"}],"agents":[{"description":"Writes initial Java code based on a specification.","instruction":"You are a Java Code Generator.\nBased *only* on the user's request, write Java code that fulfills the requirement.\nOutput *only* the complete Java code block, enclosed in triple backticks (```java ... ```).\n","name":"CodeWriterAgent","outputKey":"generated_code"},{"description":"Reviews code and provides feedback.","instruction":"You are an expert Java Code Reviewer.\nYour task is to provide constructive feedback on the provided code.\n\n**Code to Review:**\n```java\n{generated_code}\n```\n\n**Review Criteria:**\n1.  **Correctness:** Does the code work as intended? Are there logic errors?\n2.  **Readability:** Is the code clear and easy to understand? Follows Java style guidelines?\n3.  **Efficiency:** Is the code reasonably efficient? Any obvious performance bottlenecks?\n4.  **Edge Cases:** Does the code handle potential edge cases or invalid inputs gracefully?\n5.  **Best Practices:** Does the code follow common Java best practices?\n\n**Output:**\nProvide your feedback as a concise, bulleted list. Focus on the most important points for improvement.\nIf the code is excellent and requires no changes, simply state: \"No major issues found.\"\nOutput *only* the review comments or the \"No major issues\" statement.\n","name":"CodeReviewerAgent","outputKey":"review_comments"},{"description":"Refactors code based on review comments.","instruction":"You are a Java Code Refactoring AI.\nYour goal is to improve the given Java code based on the provided review comments.\n\n**Original Code:**\n```java\n{generated_code}\n```\n\n**Review Comments:**\n{review_comments}\n\n**Task:**\nCarefully apply the suggestions from the review comments to refactor the original code.\nIf the review comments state \"No major issues found,\" return the original code unchanged.\nEnsure the final code is complete, functional, and includes necessary imports and docstrings.\n\n**Output:**\nOutput *only* the final, refactored Java code block, enclosed in triple backticks (```java ... ```).\nDo not add any other text before or after the code block.\n","name":"CodeRefactorerAgent","outputKey":"refactored_code"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":5000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}},{"sse":{"baseUri":"https://mcp.map.baidu.com/","name":"baidu-map","requestTimeout":5000,"sseEndpoint":"sse?ak=tV0NsP4Gmj8IL7mhvyjVZ7c6"}}]},"runner":{"agentName":"CodePipelineAgent"}}}]
+26-03-30.17:04:32.527 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.17:04:32.655 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.17:04:33.010 [HttpClient-3-Worker-1] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.17:04:33.124 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.17:04:33.321 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.17:04:33.350 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:04:33.350 [main            ] INFO  ParallelAgentNode      - Agent装配操作-ParallelAgentNode
+26-03-30.17:04:33.351 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: ParallelWebResearchAgent
+26-03-30.17:04:33.351 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:04:33.351 [main            ] INFO  SequentialAgentNode    - Agent装配操作-SequentialAgentNode
+26-03-30.17:04:33.351 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: ResearchAndSynthesisPipeline
+26-03-30.17:04:33.351 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:04:33.351 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.17:04:33.353 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100003
+26-03-30.17:04:33.353 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.17:04:33.355 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.17:04:33.507 [HttpClient-5-Worker-1] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.17:04:33.556 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.17:04:33.618 [main            ] INFO  LocalToolMcpCreateService - tool local mcp initialize myToolCallbackProvider
+26-03-30.17:04:33.621 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.17:04:33.621 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:04:33.621 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.17:04:33.621 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100002
+26-03-30.17:04:33.621 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.17:04:33.625 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.17:04:33.774 [HttpClient-7-Worker-1] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.17:04:33.825 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.17:04:34.479 [HttpClient-8-Worker-1] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=mcp-server-baidu-maps, title=null, version=1.26.0] and Instructions This is a MCP server for Baidu Maps.
+26-03-30.17:04:34.565 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=mcp-server-baidu-maps, title=null, version=1.26.0], instructions=This is a MCP server for Baidu Maps., meta=null]
+26-03-30.17:04:34.754 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.17:04:34.755 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:04:34.755 [main            ] INFO  SequentialAgentNode    - Agent装配操作-SequentialAgentNode
+26-03-30.17:04:34.755 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: CodePipelineAgent
+26-03-30.17:04:34.755 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:04:34.755 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.17:04:34.755 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100001
+26-03-30.17:04:37.027 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=1803ms, tokens=2699
+26-03-30.17:04:37.035 [main            ] INFO  AiAgentAutoConfigTest  - ===> 最终测试结果: [CALIU]
