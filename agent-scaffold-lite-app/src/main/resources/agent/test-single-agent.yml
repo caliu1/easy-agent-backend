@@ -31,3 +31,6 @@ ai:
                   通过百度检索，为用户提供西安电子科技大学就业服务，包括但不限于就业质量报告、平均薪水、读研深造比例等。
             runner:
               agent-name: singleAgent
+              plugin-name-list:
+                - myTestPlugin
+                - myLogPlugin

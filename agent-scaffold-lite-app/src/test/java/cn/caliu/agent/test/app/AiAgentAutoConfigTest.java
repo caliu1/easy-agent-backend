@@ -77,7 +77,7 @@ public class AiAgentAutoConfigTest {
                 .createSession(appName, "caliu")
                 .blockingGet();
 
-        Content userMsg = Content.fromParts(Part.fromText("评价一下近两年西电本科生和硕士生的就业质量"));
+        Content userMsg = Content.fromParts(Part.fromText("转换为大写caliu"));
         Flowable<Event> events = runner.runAsync("caliu", session.id(), userMsg);
         // Flowable<Event> events = runner.runAsync("caliu", session.id(), userMsg)
         //         .doOnSubscribe(s -> log.info("===> 开始订阅响应式流，准备触发大模型调用..."))

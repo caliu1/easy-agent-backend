@@ -1,10 +1,10 @@
-package cn.caliu.agent.domain.agent.service.armory.mcp.client.factory;
+package cn.caliu.agent.domain.agent.service.armory.matter.mcp.client.factory;
 
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentConfigTableVO;
-import cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService;
-import cn.caliu.agent.domain.agent.service.armory.mcp.client.impl.LocalToolMcpCreateService;
-import cn.caliu.agent.domain.agent.service.armory.mcp.client.impl.SSEToolMcpCreateService;
-import cn.caliu.agent.domain.agent.service.armory.mcp.client.impl.StdioToolMcpCreateService;
+import cn.caliu.agent.domain.agent.service.armory.matter.mcp.client.ToolMcpCreateService;
+import cn.caliu.agent.domain.agent.service.armory.matter.mcp.client.impl.LocalToolMcpCreateService;
+import cn.caliu.agent.domain.agent.service.armory.matter.mcp.client.impl.SSEToolMcpCreateService;
+import cn.caliu.agent.domain.agent.service.armory.matter.mcp.client.impl.StdioToolMcpCreateService;
 import cn.caliu.agent.types.enums.ResponseCode;
 import cn.caliu.agent.types.exception.AppException;
 import jakarta.annotation.Resource;

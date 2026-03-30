@@ -1,7 +1,7 @@
-package cn.caliu.agent.domain.agent.service.armory.mcp.client.impl;
+package cn.caliu.agent.domain.agent.service.armory.matter.mcp.client.impl;
 
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentConfigTableVO;
-import cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService;
+import cn.caliu.agent.domain.agent.service.armory.matter.mcp.client.ToolMcpCreateService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.modelcontextprotocol.client.McpClient;
 import io.modelcontextprotocol.client.McpSyncClient;

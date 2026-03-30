@@ -12837,7 +12837,7 @@ Caused by: org.springframework.beans.factory.BeanCreationException: Error creati
 	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
 	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
 	... 95 common frames omitted
-Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'chatModelNode': Unsatisfied dependency expressed through field 'toolMcpCreateService': No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'chatModelNode': Unsatisfied dependency expressed through field 'toolMcpCreateService': No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.matter.client.mcp.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
 	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788)
 	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768)
 	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
@@ -12857,7 +12857,7 @@ Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Err
 	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
 	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
 	... 109 common frames omitted
-Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.matter.client.mcp.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
 	at org.springframework.beans.factory.config.DependencyDescriptor.resolveNotUnique(DependencyDescriptor.java:218)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1641)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
@@ -13025,7 +13025,7 @@ Caused by: org.springframework.beans.factory.BeanCreationException: Error creati
 	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
 	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
 	... 95 common frames omitted
-Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'chatModelNode': Unsatisfied dependency expressed through field 'toolMcpCreateService': No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'chatModelNode': Unsatisfied dependency expressed through field 'toolMcpCreateService': No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.matter.client.mcp.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
 	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788)
 	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768)
 	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
@@ -13045,7 +13045,7 @@ Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Err
 	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
 	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
 	... 109 common frames omitted
-Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.matter.client.mcp.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
 	at org.springframework.beans.factory.config.DependencyDescriptor.resolveNotUnique(DependencyDescriptor.java:218)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1641)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
@@ -13213,7 +13213,7 @@ Caused by: org.springframework.beans.factory.BeanCreationException: Error creati
 	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
 	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
 	... 95 common frames omitted
-Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'chatModelNode': Unsatisfied dependency expressed through field 'toolMcpCreateService': No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'chatModelNode': Unsatisfied dependency expressed through field 'toolMcpCreateService': No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.matter.client.mcp.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
 	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788)
 	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768)
 	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
@@ -13233,7 +13233,7 @@ Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Err
 	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
 	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
 	... 109 common frames omitted
-Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.matter.client.mcp.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
 	at org.springframework.beans.factory.config.DependencyDescriptor.resolveNotUnique(DependencyDescriptor.java:218)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1641)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
@@ -13418,7 +13418,7 @@ Caused by: org.springframework.beans.factory.BeanCreationException: Error creati
 	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
 	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
 	... 109 common frames omitted
-Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.matter.client.mcp.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
 	at org.springframework.beans.factory.config.DependencyDescriptor.resolveNotUnique(DependencyDescriptor.java:218)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1641)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
@@ -13608,7 +13608,7 @@ Caused by: org.springframework.beans.factory.BeanCreationException: Error creati
 	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
 	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:369)
 	... 109 common frames omitted
-Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.mcp.client.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
+Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'cn.caliu.agent.domain.agent.service.armory.matter.client.mcp.ToolMcpCreateService' available: expected single matching bean but found 3: localToolMcpCreateService,SSEToolMcpCreateService,stdioToolMcpCreateService
 	at org.springframework.beans.factory.config.DependencyDescriptor.resolveNotUnique(DependencyDescriptor.java:218)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1641)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
@@ -13717,3 +13717,378 @@ Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No
 26-03-30.17:04:34.755 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100001
 26-03-30.17:04:37.027 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=1803ms, tokens=2699
 26-03-30.17:04:37.035 [main            ] INFO  AiAgentAutoConfigTest  - ===> 最终测试结果: [CALIU]
+26-03-30.17:12:12.681 [background-preinit] INFO  Version                - HV000001: Hibernate Validator 8.0.2.Final
+26-03-30.17:12:12.707 [main            ] INFO  AiAgentAutoConfigTest  - Starting AiAgentAutoConfigTest using Java 17.0.17 with PID 45536 (started by Administrator in D:\Project\agent-scaffold-lite\agent-scaffold-lite-app)
+26-03-30.17:12:12.708 [main            ] INFO  AiAgentAutoConfigTest  - The following 1 profile is active: "dev"
+26-03-30.17:12:13.194 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[cn.caliu.agent]' package. Please check your configuration.
+26-03-30.17:12:13.319 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:12:13.461 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'clientAnnotatedBeans' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration$ClientMcpAnnotatedBeans] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:12:13.467 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.ai.mcp.client.annotation-scanner-org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:12:14.312 [main            ] WARN  SyncMcpSamplingProvider - No sampling methods found
+26-03-30.17:12:14.314 [main            ] WARN  SyncMcpElicitationProvider - No elicitation methods found
+26-03-30.17:12:14.447 [main            ] INFO  AiAgentAutoConfigTest  - Started AiAgentAutoConfigTest in 2.065 seconds (process running for 2.58)
+26-03-30.17:12:14.539 [main            ] INFO  AiAgentAutoConfig      - 智能体装配：[{"agent":{"agentDesc":"并行研究并汇总的智能体管道","agentId":"100003","agentName":"测试智能体03"},"appName":"ResearchAndSynthesisPipeline","module":{"agentWorkflows":[{"description":"Runs multiple research agents in parallel to gather information.","maxIterations":3,"name":"ParallelWebResearchAgent","subAgents":["RenewableEnergyResearcher","EVResearcher","CarbonCaptureResearcher"],"type":"parallel"},{"description":"Coordinates parallel research and synthesizes the results.","maxIterations":3,"name":"ResearchAndSynthesisPipeline","subAgents":["ParallelWebResearchAgent","SynthesisAgent"],"type":"sequential"}],"agents":[{"description":"Researches renewable energy sources.","instruction":"You are an AI Research Assistant specializing in energy.\nResearch the latest advancements in 'renewable energy sources'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"RenewableEnergyResearcher","outputKey":"renewable_energy_result"},{"description":"Researches electric vehicle technology.","instruction":"You are an AI Research Assistant specializing in transportation.\nResearch the latest developments in 'electric vehicle technology'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"EVResearcher","outputKey":"ev_technology_result"},{"description":"Researches carbon capture methods.","instruction":"You are an AI Research Assistant specializing in climate solutions.\nResearch the current state of 'carbon capture methods'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"CarbonCaptureResearcher","outputKey":"carbon_capture_result"},{"description":"Combines research findings into a structured report.","instruction":"You are an AI Assistant responsible for combining research findings into a structured report.\nYour primary task is to synthesize the following research summaries, clearly attributing findings to their source areas. Structure your response using headings for each topic. Ensure the report is coherent and integrates the key points smoothly.\n**Crucially: Your entire response MUST be grounded *exclusively* on the information provided in the 'Input Summaries' below. Do NOT add any external knowledge, facts, or details not present in these specific summaries.**\n**Input Summaries:**\n\n*   **Renewable Energy:**\n    {renewable_energy_result}\n\n*   **Electric Vehicles:**\n    {ev_technology_result}\n\n*   **Carbon Capture:**\n    {carbon_capture_result}\n\n**Output Format:**\n\n## Summary of Recent Sustainable Technology Advancements\n\n### Renewable Energy Findings\n(Based on RenewableEnergyResearcher's findings)\n[Synthesize and elaborate *only* on the renewable energy input summary provided above.]\n\n### Electric Vehicle Findings\n(Based on EVResearcher's findings)\n[Synthesize and elaborate *only* on the EV input summary provided above.]\n\n### Carbon Capture Findings\n(Based on CarbonCaptureResearcher's findings)\n[Synthesize and elaborate *only* on the carbon capture input summary provided above.]\n\n### Overall Conclusion\n[Provide a brief (1-2 sentence) concluding statement that connects *only* the findings presented above.]\n\nOutput *only* the structured report following this format. Do not include introductory or concluding phrases outside this structure, and strictly adhere to using only the provided input summary content.\n","name":"SynthesisAgent"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":500000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}}]},"runner":{"agentName":"ResearchAndSynthesisPipeline"}}},{"agent":{"agentDesc":"单一智能体","agentId":"100002","agentName":"单一智能体"},"appName":"testSingleAgent","module":{"agents":[{"description":"西安电子科技大学就业服务","instruction":"通过百度检索，为用户提供西安电子科技大学就业服务，包括但不限于就业质量报告、平均薪水、读研深造比例等。\n","name":"singleAgent"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":5000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}},{"local":{"name":"myToolCallbackProvider"}}]},"runner":{"agentName":"singleAgent"}}},{"agent":{"agentDesc":"一个测试的智能体","agentId":"100001","agentName":"测试智能体01"},"appName":"testAgent","module":{"agentWorkflows":[{"description":"Executes a sequence of code writing, reviewing, and refactoring.","maxIterations":3,"name":"CodePipelineAgent","subAgents":["CodeWriterAgent","CodeReviewerAgent","CodeRefactorerAgent"],"type":"sequential"}],"agents":[{"description":"Writes initial Java code based on a specification.","instruction":"You are a Java Code Generator.\nBased *only* on the user's request, write Java code that fulfills the requirement.\nOutput *only* the complete Java code block, enclosed in triple backticks (```java ... ```).\n","name":"CodeWriterAgent","outputKey":"generated_code"},{"description":"Reviews code and provides feedback.","instruction":"You are an expert Java Code Reviewer.\nYour task is to provide constructive feedback on the provided code.\n\n**Code to Review:**\n```java\n{generated_code}\n```\n\n**Review Criteria:**\n1.  **Correctness:** Does the code work as intended? Are there logic errors?\n2.  **Readability:** Is the code clear and easy to understand? Follows Java style guidelines?\n3.  **Efficiency:** Is the code reasonably efficient? Any obvious performance bottlenecks?\n4.  **Edge Cases:** Does the code handle potential edge cases or invalid inputs gracefully?\n5.  **Best Practices:** Does the code follow common Java best practices?\n\n**Output:**\nProvide your feedback as a concise, bulleted list. Focus on the most important points for improvement.\nIf the code is excellent and requires no changes, simply state: \"No major issues found.\"\nOutput *only* the review comments or the \"No major issues\" statement.\n","name":"CodeReviewerAgent","outputKey":"review_comments"},{"description":"Refactors code based on review comments.","instruction":"You are a Java Code Refactoring AI.\nYour goal is to improve the given Java code based on the provided review comments.\n\n**Original Code:**\n```java\n{generated_code}\n```\n\n**Review Comments:**\n{review_comments}\n\n**Task:**\nCarefully apply the suggestions from the review comments to refactor the original code.\nIf the review comments state \"No major issues found,\" return the original code unchanged.\nEnsure the final code is complete, functional, and includes necessary imports and docstrings.\n\n**Output:**\nOutput *only* the final, refactored Java code block, enclosed in triple backticks (```java ... ```).\nDo not add any other text before or after the code block.\n","name":"CodeRefactorerAgent","outputKey":"refactored_code"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":5000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}},{"sse":{"baseUri":"https://mcp.map.baidu.com/","name":"baidu-map","requestTimeout":5000,"sseEndpoint":"sse?ak=tV0NsP4Gmj8IL7mhvyjVZ7c6"}}]},"runner":{"agentName":"CodePipelineAgent"}}}]
+26-03-30.17:12:14.540 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.17:12:14.625 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.17:12:15.014 [HttpClient-3-Worker-2] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.17:12:15.082 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.17:12:15.284 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.17:12:15.311 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:12:15.311 [main            ] INFO  ParallelAgentNode      - Agent装配操作-ParallelAgentNode
+26-03-30.17:12:15.312 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: ParallelWebResearchAgent
+26-03-30.17:12:15.312 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:12:15.312 [main            ] INFO  SequentialAgentNode    - Agent装配操作-SequentialAgentNode
+26-03-30.17:12:15.312 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: ResearchAndSynthesisPipeline
+26-03-30.17:12:15.312 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:12:15.312 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.17:12:15.314 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100003
+26-03-30.17:12:15.314 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.17:12:15.317 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.17:12:15.521 [HttpClient-5-Worker-2] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.17:12:15.587 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.17:12:15.655 [main            ] INFO  LocalToolMcpCreateService - tool local mcp initialize myToolCallbackProvider
+26-03-30.17:12:15.659 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.17:12:15.659 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:12:15.659 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.17:12:15.660 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100002
+26-03-30.17:12:15.660 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.17:12:15.663 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.17:12:15.926 [HttpClient-7-Worker-2] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.17:12:16.009 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.17:12:16.681 [HttpClient-8-Worker-0] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=mcp-server-baidu-maps, title=null, version=1.26.0] and Instructions This is a MCP server for Baidu Maps.
+26-03-30.17:12:16.777 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=mcp-server-baidu-maps, title=null, version=1.26.0], instructions=This is a MCP server for Baidu Maps., meta=null]
+26-03-30.17:12:16.875 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.17:12:16.875 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:12:16.876 [main            ] INFO  SequentialAgentNode    - Agent装配操作-SequentialAgentNode
+26-03-30.17:12:16.876 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: CodePipelineAgent
+26-03-30.17:12:16.876 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:12:16.876 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.17:12:16.876 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100001
+26-03-30.17:12:19.563 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=2260ms, tokens=1274
+26-03-30.17:12:21.644 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=2075ms, tokens=1265
+26-03-30.17:12:23.893 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=2247ms, tokens=1291
+26-03-30.17:12:32.072 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=8177ms, tokens=2238
+26-03-30.17:12:32.073 [main            ] INFO  AiAgentAutoConfigTest  - 测试结果:["我是一名专注于可再生能源领域的AI研究助手（RenewableEnergyResearcher），具备通过网络搜索实时获取最新科研进展、技术突破与产业动态的能力，尤其擅长检索和归纳太阳能、风能、储能、绿氢及智能电网等方向的前沿信息。","我是一名专注于电动车辆技术研究的AI助手（内部名称：EVResearcher）。我的核心能力包括：使用专业搜索引擎工具检索最新电动车辆技术信息，对搜索结果进行精准分析与提炼，并以简洁、准确的方式提供关键进展摘要。","我是一个专门研究碳捕获方法的AI研究助理（内部名称：CarbonCaptureResearcher）。我的核心能力是通过网络搜索与分析，提供关于当前碳捕获技术（如直接空气捕获、生物能源结合碳捕获与封存BECCS、矿物碳化等）的最新进展、应用现状、挑战及发展趋势的精准信息。","## Summary of Recent Sustainable Technology Advancements\n\n### Renewable Energy Findings\n(Based on RenewableEnergyResearcher's findings)\nThe RenewableEnergyResearcher is a specialized AI assistant focused on the renewable energy domain. Its primary capability is to conduct real-time web searches to gather the latest scientific research, technological breakthroughs, and industry developments. It possesses particular expertise in key subfields including solar energy, wind energy, energy storage, green hydrogen production, and smart grid technologies, and is adept at retrieving and synthesizing frontier information from these areas.\n\n### Electric Vehicle Findings\n(Based on EVResearcher's findings)\nThe EVResearcher is an AI assistant dedicated to electric vehicle (EV) technology. Its core competencies involve utilizing professional search tools to locate up-to-date technical information on electric vehicles. It is designed to perform precise analysis and distillation of the retrieved search results, delivering concise and accurate summaries of the most significant recent advancements in the field.\n\n### Carbon Capture Findings\n(Based on CarbonCaptureResearcher's findings)\nThe CarbonCaptureResearcher is an AI research assistant specifically tasked with carbon capture methodologies. Its fundamental capability is to conduct web-based searches and subsequent analysis to deliver precise, up-to-date information on current carbon capture technologies. This includes, but is not limited to, direct air capture (DAC), bioenergy with carbon capture and storage (BECCS), and mineral carbonation. The assistant provides insights into the latest progress, current application status, prevailing challenges, and emerging trends related to these technologies.\n\n### Overall Conclusion\nThese three specialized AI research assistants collectively cover critical pillars of sustainable technology—renewable energy generation, electrified transportation, and carbon management—each providing targeted, real-time intelligence through advanced search and analytical capabilities."]
+26-03-30.17:13:23.081 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=50998ms, tokens=12117
+26-03-30.17:13:23.081 [main            ] INFO  AiAgentAutoConfigTest  - ===> 最终测试结果: [根据西安电子科技大学就业信息网公开信息及近年权威报道，现对**2022届与2023届毕业生（含本科与硕士）就业质量**作综合梳理与评价（数据源自学校官网发布的《就业质量年度报告》及主流媒体转载摘要）：
+
+✅ **总体就业率稳居高位**  
+- 2022届：本科生就业率 **96.2%**，硕士生就业率 **98.7%**；  
+- 2023届：本科生就业率 **96.5%**，硕士生就业率 **98.9%**；  
+→ 连续两年本硕就业率均高于全国“双一流”高校平均水平，硕士生就业竞争力尤为突出。
+
+✅ **深造质量持续提升，结构优化明显**  
+| 学历层次 | 2022届国内升学率 | 2023届国内升学率 | 出国（境）深造率（两年均值） | 主要去向 |
+|----------|------------------|------------------|-------------------------------|-----------|
+| 本科生   | 约 **42.3%**     | **45.1%**        | ≈ 3.2%                        | 清华、北大、中科院、本校（推免占比超70%）、复旦、上交等C9/强9高校为主 |
+| 硕士生   | —（已为研究生） | —                | ≈ 1.8%                        | 海外TOP100高校（如新加坡国立、港大、东京大学等） |
+
+💡 注：西电本科推免比例常年位居全国前15（2023年达24.6%），是升学质量的重要保障。
+
+✅ **就业薪资优势显著，行业集中度高**  
+- **2023届签约毕业生平均月薪资**（税前）：  
+　• 本科生：**约 12,800 元**  
+　• 硕士生：**约 18,600 元**  
+→ 较2022届分别增长约6.7%和5.1%，稳居全国高校前列（尤其在电子信息类院校中位列前三）。
+
+- **主要就业领域（本硕合计，占比超85%）**：  
+　🔹 信息传输、软件和信息技术服务业（**52.4%**）——华为（连续多年校招人数全国Top 3）、中兴、腾讯、阿里、字节、小米、寒武纪等；  
+　🔹 制造业（含军工电子）（**23.1%**）——中国电科（10所、14所、29所、36所等）、中国航天科技/科工集团（五院、八院、二院等）、中船、航空工业；  
+　🔹 教育/科研单位（**9.8%**）——高校、中科院各研究所（如空天院、微电子所）、重点实验室。
+
+✅ **就业地域高度集聚优质区域**  
+前三大就业省份/直辖市（2023届）：  
+1️⃣ **广东省（28.5%）**——深圳（华为、中兴、大疆、OPPO）、广州（网易、微信）；  
+2️⃣ **陕西省（19.3%）**——西安（三星半导体、华为西研所、中航631所、西电科技园企业）；  
+3️⃣ **北京市（15.6%）**——央企总部、互联网大厂北京分部、国防科研院所密集区。  
+→ 长三角（江苏、浙江）合计占比约14%，成渝地区快速上升（2023年达5.2%）。
+
+📌 **综合评价**：  
+西电毕业生就业呈现“**三高一强**”特征：  
+🔹 **就业率高**（本硕双高，硕士近99%）；  
+🔹 **升学率高**（本科深造率突破45%，推免质量顶尖）；  
+🔹 **起薪水平高**（本硕起薪远超全国工科平均线，与清北复交信息类专业相当）；  
+🔹 **行业匹配性强**（90%以上进入电子信息主赛道，服务国家关键领域能力突出）。  
+
+学校依托“电子信息+国防军工”双重优势，在芯片、雷达、通信、网络安全、人工智能等方向形成鲜明就业标签，用人单位认可度与学生职业发展后劲持续增强。
+
+如需获取报告原文链接或分学院/专业详细数据，我可为您进一步检索。]
+26-03-30.17:13:34.864 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=11779ms, tokens=5518
+26-03-30.17:13:35.709 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=843ms, tokens=6174
+26-03-30.17:13:47.378 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=11668ms, tokens=6634
+26-03-30.17:13:47.379 [main            ] INFO  AiAgentAutoConfigTest  - ===> 最终测试结果: [```java
+public class QuickSort {
+    /**
+     * 快速排序主方法
+     * @param arr 待排序的整数数组
+     */
+    public static void quickSort(int[] arr) {
+        if (arr == null || arr.length <= 1) {
+            return;
+        }
+        quickSort(arr, 0, arr.length - 1);
+    }
+
+    /**
+     * 快速排序递归实现
+     * @param arr 数组
+     * @param low 起始索引
+     * @param high 结束索引
+     */
+    private static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            // 获取分区点
+            int pivotIndex = partition(arr, low, high);
+            // 递归排序左半部分
+            quickSort(arr, low, pivotIndex - 1);
+            // 递归排序右半部分
+            quickSort(arr, pivotIndex + 1, high);
+        }
+    }
+
+    /**
+     * 分区操作：将数组分为小于等于pivot和大于pivot的两部分
+     * @param arr 数组
+     * @param low 起始索引
+     * @param high 结束索引
+     * @return pivot的最终位置
+     */
+    private static int partition(int[] arr, int low, int high) {
+        // 选择最后一个元素作为pivot
+        int pivot = arr[high];
+        int i = low - 1; // 小于等于pivot的元素的索引
+
+        for (int j = low; j < high; j++) {
+            // 如果当前元素小于等于pivot
+            if (arr[j] <= pivot) {
+                i++;
+                swap(arr, i, j);
+            }
+        }
+        // 将pivot放到正确位置
+        swap(arr, i + 1, high);
+        return i + 1;
+    }
+
+    /**
+     * 交换数组中两个位置的元素
+     * @param arr 数组
+     * @param i 索引1
+     * @param j 索引2
+     */
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+}
+```, No major issues found., ```java
+public class QuickSort {
+    /**
+     * 快速排序主方法
+     * @param arr 待排序的整数数组
+     */
+    public static void quickSort(int[] arr) {
+        if (arr == null || arr.length <= 1) {
+            return;
+        }
+        quickSort(arr, 0, arr.length - 1);
+    }
+
+    /**
+     * 快速排序递归实现
+     * @param arr 数组
+     * @param low 起始索引
+     * @param high 结束索引
+     */
+    private static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            // 获取分区点
+            int pivotIndex = partition(arr, low, high);
+            // 递归排序左半部分
+            quickSort(arr, low, pivotIndex - 1);
+            // 递归排序右半部分
+            quickSort(arr, pivotIndex + 1, high);
+        }
+    }
+
+    /**
+     * 分区操作：将数组分为小于等于pivot和大于pivot的两部分
+     * @param arr 数组
+     * @param low 起始索引
+     * @param high 结束索引
+     * @return pivot的最终位置
+     */
+    private static int partition(int[] arr, int low, int high) {
+        // 选择最后一个元素作为pivot
+        int pivot = arr[high];
+        int i = low - 1; // 小于等于pivot的元素的索引
+
+        for (int j = low; j < high; j++) {
+            // 如果当前元素小于等于pivot
+            if (arr[j] <= pivot) {
+                i++;
+                swap(arr, i, j);
+            }
+        }
+        // 将pivot放到正确位置
+        swap(arr, i + 1, high);
+        return i + 1;
+    }
+
+    /**
+     * 交换数组中两个位置的元素
+     * @param arr 数组
+     * @param i 索引1
+     * @param j 索引2
+     */
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+}
+```]
+26-03-30.17:32:28.329 [background-preinit] INFO  Version                - HV000001: Hibernate Validator 8.0.2.Final
+26-03-30.17:32:28.359 [main            ] INFO  AiAgentAutoConfigTest  - Starting AiAgentAutoConfigTest using Java 17.0.17 with PID 6740 (started by Administrator in D:\Project\agent-scaffold-lite\agent-scaffold-lite-app)
+26-03-30.17:32:28.360 [main            ] INFO  AiAgentAutoConfigTest  - The following 1 profile is active: "dev"
+26-03-30.17:32:28.882 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[cn.caliu.agent]' package. Please check your configuration.
+26-03-30.17:32:29.006 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:32:29.154 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'clientAnnotatedBeans' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration$ClientMcpAnnotatedBeans] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:32:29.161 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.ai.mcp.client.annotation-scanner-org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:32:30.103 [main            ] WARN  SyncMcpSamplingProvider - No sampling methods found
+26-03-30.17:32:30.104 [main            ] WARN  SyncMcpElicitationProvider - No elicitation methods found
+26-03-30.17:32:30.218 [main            ] INFO  AiAgentAutoConfigTest  - Started AiAgentAutoConfigTest in 2.184 seconds (process running for 2.697)
+26-03-30.17:32:30.327 [main            ] INFO  AiAgentAutoConfig      - 智能体装配：[{"agent":{"agentDesc":"并行研究并汇总的智能体管道","agentId":"100003","agentName":"测试智能体03"},"appName":"ResearchAndSynthesisPipeline","module":{"agentWorkflows":[{"description":"Runs multiple research agents in parallel to gather information.","maxIterations":3,"name":"ParallelWebResearchAgent","subAgents":["RenewableEnergyResearcher","EVResearcher","CarbonCaptureResearcher"],"type":"parallel"},{"description":"Coordinates parallel research and synthesizes the results.","maxIterations":3,"name":"ResearchAndSynthesisPipeline","subAgents":["ParallelWebResearchAgent","SynthesisAgent"],"type":"sequential"}],"agents":[{"description":"Researches renewable energy sources.","instruction":"You are an AI Research Assistant specializing in energy.\nResearch the latest advancements in 'renewable energy sources'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"RenewableEnergyResearcher","outputKey":"renewable_energy_result"},{"description":"Researches electric vehicle technology.","instruction":"You are an AI Research Assistant specializing in transportation.\nResearch the latest developments in 'electric vehicle technology'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"EVResearcher","outputKey":"ev_technology_result"},{"description":"Researches carbon capture methods.","instruction":"You are an AI Research Assistant specializing in climate solutions.\nResearch the current state of 'carbon capture methods'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"CarbonCaptureResearcher","outputKey":"carbon_capture_result"},{"description":"Combines research findings into a structured report.","instruction":"You are an AI Assistant responsible for combining research findings into a structured report.\nYour primary task is to synthesize the following research summaries, clearly attributing findings to their source areas. Structure your response using headings for each topic. Ensure the report is coherent and integrates the key points smoothly.\n**Crucially: Your entire response MUST be grounded *exclusively* on the information provided in the 'Input Summaries' below. Do NOT add any external knowledge, facts, or details not present in these specific summaries.**\n**Input Summaries:**\n\n*   **Renewable Energy:**\n    {renewable_energy_result}\n\n*   **Electric Vehicles:**\n    {ev_technology_result}\n\n*   **Carbon Capture:**\n    {carbon_capture_result}\n\n**Output Format:**\n\n## Summary of Recent Sustainable Technology Advancements\n\n### Renewable Energy Findings\n(Based on RenewableEnergyResearcher's findings)\n[Synthesize and elaborate *only* on the renewable energy input summary provided above.]\n\n### Electric Vehicle Findings\n(Based on EVResearcher's findings)\n[Synthesize and elaborate *only* on the EV input summary provided above.]\n\n### Carbon Capture Findings\n(Based on CarbonCaptureResearcher's findings)\n[Synthesize and elaborate *only* on the carbon capture input summary provided above.]\n\n### Overall Conclusion\n[Provide a brief (1-2 sentence) concluding statement that connects *only* the findings presented above.]\n\nOutput *only* the structured report following this format. Do not include introductory or concluding phrases outside this structure, and strictly adhere to using only the provided input summary content.\n","name":"SynthesisAgent"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":500000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}}]},"runner":{"agentName":"ResearchAndSynthesisPipeline"}}},{"agent":{"agentDesc":"单一智能体","agentId":"100002","agentName":"单一智能体"},"appName":"testSingleAgent","module":{"agents":[{"description":"西安电子科技大学就业服务","instruction":"通过百度检索，为用户提供西安电子科技大学就业服务，包括但不限于就业质量报告、平均薪水、读研深造比例等。\n","name":"singleAgent"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":5000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}},{"local":{"name":"myToolCallbackProvider"}}]},"runner":{"agentName":"singleAgent","pluginNameList":["myTestPlugin"]}}},{"agent":{"agentDesc":"一个测试的智能体","agentId":"100001","agentName":"测试智能体01"},"appName":"testAgent","module":{"agentWorkflows":[{"description":"Executes a sequence of code writing, reviewing, and refactoring.","maxIterations":3,"name":"CodePipelineAgent","subAgents":["CodeWriterAgent","CodeReviewerAgent","CodeRefactorerAgent"],"type":"sequential"}],"agents":[{"description":"Writes initial Java code based on a specification.","instruction":"You are a Java Code Generator.\nBased *only* on the user's request, write Java code that fulfills the requirement.\nOutput *only* the complete Java code block, enclosed in triple backticks (```java ... ```).\n","name":"CodeWriterAgent","outputKey":"generated_code"},{"description":"Reviews code and provides feedback.","instruction":"You are an expert Java Code Reviewer.\nYour task is to provide constructive feedback on the provided code.\n\n**Code to Review:**\n```java\n{generated_code}\n```\n\n**Review Criteria:**\n1.  **Correctness:** Does the code work as intended? Are there logic errors?\n2.  **Readability:** Is the code clear and easy to understand? Follows Java style guidelines?\n3.  **Efficiency:** Is the code reasonably efficient? Any obvious performance bottlenecks?\n4.  **Edge Cases:** Does the code handle potential edge cases or invalid inputs gracefully?\n5.  **Best Practices:** Does the code follow common Java best practices?\n\n**Output:**\nProvide your feedback as a concise, bulleted list. Focus on the most important points for improvement.\nIf the code is excellent and requires no changes, simply state: \"No major issues found.\"\nOutput *only* the review comments or the \"No major issues\" statement.\n","name":"CodeReviewerAgent","outputKey":"review_comments"},{"description":"Refactors code based on review comments.","instruction":"You are a Java Code Refactoring AI.\nYour goal is to improve the given Java code based on the provided review comments.\n\n**Original Code:**\n```java\n{generated_code}\n```\n\n**Review Comments:**\n{review_comments}\n\n**Task:**\nCarefully apply the suggestions from the review comments to refactor the original code.\nIf the review comments state \"No major issues found,\" return the original code unchanged.\nEnsure the final code is complete, functional, and includes necessary imports and docstrings.\n\n**Output:**\nOutput *only* the final, refactored Java code block, enclosed in triple backticks (```java ... ```).\nDo not add any other text before or after the code block.\n","name":"CodeRefactorerAgent","outputKey":"refactored_code"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":5000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}},{"sse":{"baseUri":"https://mcp.map.baidu.com/","name":"baidu-map","requestTimeout":5000,"sseEndpoint":"sse?ak=tV0NsP4Gmj8IL7mhvyjVZ7c6"}}]},"runner":{"agentName":"CodePipelineAgent"}}}]
+26-03-30.17:32:30.329 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.17:32:30.429 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.17:32:30.875 [HttpClient-3-Worker-0] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.17:32:30.949 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.17:32:31.152 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.17:32:31.181 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:32:31.182 [main            ] INFO  ParallelAgentNode      - Agent装配操作-ParallelAgentNode
+26-03-30.17:32:31.183 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: ParallelWebResearchAgent
+26-03-30.17:32:31.183 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:32:31.183 [main            ] INFO  SequentialAgentNode    - Agent装配操作-SequentialAgentNode
+26-03-30.17:32:31.183 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: ResearchAndSynthesisPipeline
+26-03-30.17:32:31.183 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:32:31.183 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.17:32:31.190 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100003
+26-03-30.17:32:31.190 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.17:32:31.193 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.17:32:31.368 [HttpClient-5-Worker-1] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.17:32:31.439 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.17:32:31.498 [main            ] INFO  LocalToolMcpCreateService - tool local mcp initialize myToolCallbackProvider
+26-03-30.17:32:31.501 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.17:32:31.501 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:32:31.501 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.17:32:31.501 [main            ] INFO  PluginManager          - Plugin 'myTestPlugin' registered.
+26-03-30.17:32:31.502 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100002
+26-03-30.17:32:31.502 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.17:32:31.504 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.17:32:31.677 [HttpClient-7-Worker-2] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.17:32:31.754 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.17:32:32.422 [HttpClient-8-Worker-1] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=mcp-server-baidu-maps, title=null, version=1.26.0] and Instructions This is a MCP server for Baidu Maps.
+26-03-30.17:32:32.569 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=mcp-server-baidu-maps, title=null, version=1.26.0], instructions=This is a MCP server for Baidu Maps., meta=null]
+26-03-30.17:32:32.773 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.17:32:32.775 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:32:32.775 [main            ] INFO  SequentialAgentNode    - Agent装配操作-SequentialAgentNode
+26-03-30.17:32:32.775 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: CodePipelineAgent
+26-03-30.17:32:32.775 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:32:32.775 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.17:32:32.775 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100001
+26-03-30.17:32:33.181 [main            ] INFO  MyTestPlugin           - 用户输入信息：转换为大写“caliu
+26-03-30.17:32:33.189 [main            ] INFO  MyTestPlugin           - 智能体名称:singleAgent
+26-03-30.17:32:33.205 [main            ] INFO  MyTestPlugin           - ai 模型:openai
+26-03-30.17:32:34.934 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=1721ms, tokens=2699
+26-03-30.17:32:34.940 [main            ] INFO  AiAgentAutoConfigTest  - ===> 最终测试结果: [CALIU]
+26-03-30.17:36:46.358 [background-preinit] INFO  Version                - HV000001: Hibernate Validator 8.0.2.Final
+26-03-30.17:36:46.381 [main            ] INFO  AiAgentAutoConfigTest  - Starting AiAgentAutoConfigTest using Java 17.0.17 with PID 57568 (started by Administrator in D:\Project\agent-scaffold-lite\agent-scaffold-lite-app)
+26-03-30.17:36:46.382 [main            ] INFO  AiAgentAutoConfigTest  - The following 1 profile is active: "dev"
+26-03-30.17:36:46.872 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[cn.caliu.agent]' package. Please check your configuration.
+26-03-30.17:36:46.987 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:36:47.131 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'clientAnnotatedBeans' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerAutoConfiguration$ClientMcpAnnotatedBeans] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:36:47.138 [main            ] WARN  PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.ai.mcp.client.annotation-scanner-org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties' of type [org.springframework.ai.mcp.client.common.autoconfigure.annotations.McpClientAnnotationScannerProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [clientAnnotatedMethodBeanPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+26-03-30.17:36:48.045 [main            ] WARN  SyncMcpSamplingProvider - No sampling methods found
+26-03-30.17:36:48.047 [main            ] WARN  SyncMcpElicitationProvider - No elicitation methods found
+26-03-30.17:36:48.185 [main            ] INFO  AiAgentAutoConfigTest  - Started AiAgentAutoConfigTest in 2.148 seconds (process running for 2.649)
+26-03-30.17:36:48.294 [main            ] INFO  AiAgentAutoConfig      - 智能体装配：[{"agent":{"agentDesc":"并行研究并汇总的智能体管道","agentId":"100003","agentName":"测试智能体03"},"appName":"ResearchAndSynthesisPipeline","module":{"agentWorkflows":[{"description":"Runs multiple research agents in parallel to gather information.","maxIterations":3,"name":"ParallelWebResearchAgent","subAgents":["RenewableEnergyResearcher","EVResearcher","CarbonCaptureResearcher"],"type":"parallel"},{"description":"Coordinates parallel research and synthesizes the results.","maxIterations":3,"name":"ResearchAndSynthesisPipeline","subAgents":["ParallelWebResearchAgent","SynthesisAgent"],"type":"sequential"}],"agents":[{"description":"Researches renewable energy sources.","instruction":"You are an AI Research Assistant specializing in energy.\nResearch the latest advancements in 'renewable energy sources'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"RenewableEnergyResearcher","outputKey":"renewable_energy_result"},{"description":"Researches electric vehicle technology.","instruction":"You are an AI Research Assistant specializing in transportation.\nResearch the latest developments in 'electric vehicle technology'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"EVResearcher","outputKey":"ev_technology_result"},{"description":"Researches carbon capture methods.","instruction":"You are an AI Research Assistant specializing in climate solutions.\nResearch the current state of 'carbon capture methods'.\nUse the Google Search tool provided.\nSummarize your key findings concisely (1-2 sentences).\nOutput *only* the summary.\n","name":"CarbonCaptureResearcher","outputKey":"carbon_capture_result"},{"description":"Combines research findings into a structured report.","instruction":"You are an AI Assistant responsible for combining research findings into a structured report.\nYour primary task is to synthesize the following research summaries, clearly attributing findings to their source areas. Structure your response using headings for each topic. Ensure the report is coherent and integrates the key points smoothly.\n**Crucially: Your entire response MUST be grounded *exclusively* on the information provided in the 'Input Summaries' below. Do NOT add any external knowledge, facts, or details not present in these specific summaries.**\n**Input Summaries:**\n\n*   **Renewable Energy:**\n    {renewable_energy_result}\n\n*   **Electric Vehicles:**\n    {ev_technology_result}\n\n*   **Carbon Capture:**\n    {carbon_capture_result}\n\n**Output Format:**\n\n## Summary of Recent Sustainable Technology Advancements\n\n### Renewable Energy Findings\n(Based on RenewableEnergyResearcher's findings)\n[Synthesize and elaborate *only* on the renewable energy input summary provided above.]\n\n### Electric Vehicle Findings\n(Based on EVResearcher's findings)\n[Synthesize and elaborate *only* on the EV input summary provided above.]\n\n### Carbon Capture Findings\n(Based on CarbonCaptureResearcher's findings)\n[Synthesize and elaborate *only* on the carbon capture input summary provided above.]\n\n### Overall Conclusion\n[Provide a brief (1-2 sentence) concluding statement that connects *only* the findings presented above.]\n\nOutput *only* the structured report following this format. Do not include introductory or concluding phrases outside this structure, and strictly adhere to using only the provided input summary content.\n","name":"SynthesisAgent"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":500000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}}]},"runner":{"agentName":"ResearchAndSynthesisPipeline"}}},{"agent":{"agentDesc":"单一智能体","agentId":"100002","agentName":"单一智能体"},"appName":"testSingleAgent","module":{"agents":[{"description":"西安电子科技大学就业服务","instruction":"通过百度检索，为用户提供西安电子科技大学就业服务，包括但不限于就业质量报告、平均薪水、读研深造比例等。\n","name":"singleAgent"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":5000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}},{"local":{"name":"myToolCallbackProvider"}}]},"runner":{"agentName":"singleAgent","pluginNameList":["myTestPlugin","myLogPlugin"]}}},{"agent":{"agentDesc":"一个测试的智能体","agentId":"100001","agentName":"测试智能体01"},"appName":"testAgent","module":{"agentWorkflows":[{"description":"Executes a sequence of code writing, reviewing, and refactoring.","maxIterations":3,"name":"CodePipelineAgent","subAgents":["CodeWriterAgent","CodeReviewerAgent","CodeRefactorerAgent"],"type":"sequential"}],"agents":[{"description":"Writes initial Java code based on a specification.","instruction":"You are a Java Code Generator.\nBased *only* on the user's request, write Java code that fulfills the requirement.\nOutput *only* the complete Java code block, enclosed in triple backticks (```java ... ```).\n","name":"CodeWriterAgent","outputKey":"generated_code"},{"description":"Reviews code and provides feedback.","instruction":"You are an expert Java Code Reviewer.\nYour task is to provide constructive feedback on the provided code.\n\n**Code to Review:**\n```java\n{generated_code}\n```\n\n**Review Criteria:**\n1.  **Correctness:** Does the code work as intended? Are there logic errors?\n2.  **Readability:** Is the code clear and easy to understand? Follows Java style guidelines?\n3.  **Efficiency:** Is the code reasonably efficient? Any obvious performance bottlenecks?\n4.  **Edge Cases:** Does the code handle potential edge cases or invalid inputs gracefully?\n5.  **Best Practices:** Does the code follow common Java best practices?\n\n**Output:**\nProvide your feedback as a concise, bulleted list. Focus on the most important points for improvement.\nIf the code is excellent and requires no changes, simply state: \"No major issues found.\"\nOutput *only* the review comments or the \"No major issues\" statement.\n","name":"CodeReviewerAgent","outputKey":"review_comments"},{"description":"Refactors code based on review comments.","instruction":"You are a Java Code Refactoring AI.\nYour goal is to improve the given Java code based on the provided review comments.\n\n**Original Code:**\n```java\n{generated_code}\n```\n\n**Review Comments:**\n{review_comments}\n\n**Task:**\nCarefully apply the suggestions from the review comments to refactor the original code.\nIf the review comments state \"No major issues found,\" return the original code unchanged.\nEnsure the final code is complete, functional, and includes necessary imports and docstrings.\n\n**Output:**\nOutput *only* the final, refactored Java code block, enclosed in triple backticks (```java ... ```).\nDo not add any other text before or after the code block.\n","name":"CodeRefactorerAgent","outputKey":"refactored_code"}],"aiApi":{"apiKey":"sk-b5909159a5da494aa942fdfcb96e12ca","baseUrl":"https://dashscope.aliyuncs.com/compatible-mode/","completionsPath":"v1/chat/completions","embeddingsPath":"v1/embeddings"},"chatModel":{"model":"qwen-plus","toolMcpList":[{"sse":{"baseUri":"http://appbuilder.baidu.com/v2/ai_search/mcp/","name":"baidu-search","requestTimeout":5000,"sseEndpoint":"sse?api_key=bce-v3/ALTAK-8QWozmmGeUNiJtnLni2Zu/bb1660c8b8cfb9b4ce767d1b5e3ad84a5bfa08cb"}},{"sse":{"baseUri":"https://mcp.map.baidu.com/","name":"baidu-map","requestTimeout":5000,"sseEndpoint":"sse?ak=tV0NsP4Gmj8IL7mhvyjVZ7c6"}}]},"runner":{"agentName":"CodePipelineAgent"}}}]
+26-03-30.17:36:48.295 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.17:36:48.397 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.17:36:48.791 [HttpClient-3-Worker-1] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.17:36:48.868 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.17:36:49.071 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.17:36:49.099 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:36:49.099 [main            ] INFO  ParallelAgentNode      - Agent装配操作-ParallelAgentNode
+26-03-30.17:36:49.100 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: ParallelWebResearchAgent
+26-03-30.17:36:49.100 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:36:49.100 [main            ] INFO  SequentialAgentNode    - Agent装配操作-SequentialAgentNode
+26-03-30.17:36:49.101 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: ResearchAndSynthesisPipeline
+26-03-30.17:36:49.101 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:36:49.101 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.17:36:49.112 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100003
+26-03-30.17:36:49.113 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.17:36:49.114 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.17:36:49.531 [HttpClient-5-Worker-2] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.17:36:49.607 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.17:36:49.674 [main            ] INFO  LocalToolMcpCreateService - tool local mcp initialize myToolCallbackProvider
+26-03-30.17:36:49.680 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.17:36:49.680 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:36:49.680 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.17:36:49.681 [main            ] INFO  PluginManager          - Plugin 'myTestPlugin' registered.
+26-03-30.17:36:49.681 [main            ] INFO  PluginManager          - Plugin 'logging_plugin' registered.
+26-03-30.17:36:49.681 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100002
+26-03-30.17:36:49.681 [main            ] INFO  AiApiNode              - Agent装配操作-AiApiNode
+26-03-30.17:36:49.685 [main            ] INFO  ChatModelNode          - Agent装配操作-AiApiNode
+26-03-30.17:36:49.853 [HttpClient-7-Worker-1] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=AIsearch, title=null, version=1.4.1] and Instructions null
+26-03-30.17:36:49.918 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=AIsearch, title=null, version=1.4.1], instructions=null, meta=null]
+26-03-30.17:36:50.664 [HttpClient-8-Worker-1] INFO  LifecycleInitializer   - Server response with Protocol: 2024-11-05, Capabilities: ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], Info: Implementation[name=mcp-server-baidu-maps, title=null, version=1.26.0] and Instructions This is a MCP server for Baidu Maps.
+26-03-30.17:36:50.761 [main            ] INFO  SSEToolMcpCreateService - tool sse mcp initialize InitializeResult[protocolVersion=2024-11-05, capabilities=ServerCapabilities[completions=null, experimental={}, logging=null, prompts=PromptCapabilities[listChanged=false], resources=ResourceCapabilities[subscribe=false, listChanged=false], tools=ToolCapabilities[listChanged=false]], serverInfo=Implementation[name=mcp-server-baidu-maps, title=null, version=1.26.0], instructions=This is a MCP server for Baidu Maps., meta=null]
+26-03-30.17:36:50.873 [main            ] INFO  AgentNode              - Agent装配操作-AgentNode
+26-03-30.17:36:50.874 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:36:50.874 [main            ] INFO  SequentialAgentNode    - Agent装配操作-SequentialAgentNode
+26-03-30.17:36:50.874 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: CodePipelineAgent
+26-03-30.17:36:50.874 [main            ] INFO  AgentWorkflowNode      - Agent装配操作-AgentWorkflowNode
+26-03-30.17:36:50.874 [main            ] INFO  RunnerNode             - Agent装配操作-RunnerNode
+26-03-30.17:36:50.874 [main            ] INFO  AbstractArmorySupport  - 成功注册Bean: 100001
+26-03-30.17:36:51.253 [main            ] INFO  MyTestPlugin           - 用户输入信息：转换为大写caliu
+26-03-30.17:36:51.254 [main            ] INFO  LoggingPlugin          - [logging_plugin] 🚀 USER MESSAGE RECEIVED
+26-03-30.17:36:51.254 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Invocation ID: e-30a266ef-be7c-4a22-aa77-fe426f68e80e
+26-03-30.17:36:51.254 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Session ID: 3e579b71-1ab0-4384-b01b-2be47b5e9495
+26-03-30.17:36:51.254 [main            ] INFO  LoggingPlugin          - [logging_plugin]    User ID: caliu
+26-03-30.17:36:51.254 [main            ] INFO  LoggingPlugin          - [logging_plugin]    App Name: testSingleAgent
+26-03-30.17:36:51.254 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Root Agent: singleAgent
+26-03-30.17:36:51.254 [main            ] INFO  LoggingPlugin          - [logging_plugin]    User Content: 转换为大写caliu
+26-03-30.17:36:51.258 [main            ] INFO  LoggingPlugin          - [logging_plugin] 🏃 INVOCATION STARTING
+26-03-30.17:36:51.258 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Invocation ID: e-30a266ef-be7c-4a22-aa77-fe426f68e80e
+26-03-30.17:36:51.258 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Starting Agent: singleAgent
+26-03-30.17:36:51.262 [main            ] INFO  MyTestPlugin           - 智能体名称:singleAgent
+26-03-30.17:36:51.262 [main            ] INFO  LoggingPlugin          - [logging_plugin] 🤖 AGENT STARTING
+26-03-30.17:36:51.262 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Agent Name: singleAgent
+26-03-30.17:36:51.262 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Invocation ID: e-30a266ef-be7c-4a22-aa77-fe426f68e80e
+26-03-30.17:36:51.276 [main            ] INFO  MyTestPlugin           - ai 模型:openai
+26-03-30.17:36:51.277 [main            ] INFO  LoggingPlugin          - [logging_plugin] 🧠 LLM REQUEST
+26-03-30.17:36:51.277 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Model: openai
+26-03-30.17:36:51.277 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Agent: singleAgent
+26-03-30.17:36:51.277 [main            ] INFO  LoggingPlugin          - [logging_plugin]    System Instruction: '通过百度检索，为用户提供西安电子科技大学就业服务，包括但不限于就业质量报告、平均薪水、读研深造比例等。
+
+
+You are an agent. Your internal name is "singleAgent". The description about you is "西安电子科技大学就业服务".'
+26-03-30.17:36:57.032 [main            ] INFO  SpringAIObservabilityHandler - Request completed successfully: model=openai, type=chat, duration=5746ms, tokens=2697
+26-03-30.17:36:57.034 [main            ] INFO  LoggingPlugin          - [logging_plugin] 🧠 LLM RESPONSE
+26-03-30.17:36:57.034 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Agent: singleAgent
+26-03-30.17:36:57.034 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Content: CALIU
+26-03-30.17:36:57.034 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Partial: false
+26-03-30.17:36:57.035 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Turn Complete: true
+26-03-30.17:36:57.036 [main            ] INFO  LoggingPlugin          - [logging_plugin] 📢 EVENT YIELDED
+26-03-30.17:36:57.037 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Event ID: ac15c1ce-9010-40a2-b7ba-655f1f809134
+26-03-30.17:36:57.037 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Author: singleAgent
+26-03-30.17:36:57.037 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Content: CALIU
+26-03-30.17:36:57.037 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Final Response: true
+26-03-30.17:36:57.039 [main            ] INFO  LoggingPlugin          - [logging_plugin] 🤖 AGENT COMPLETED
+26-03-30.17:36:57.039 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Agent Name: singleAgent
+26-03-30.17:36:57.039 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Invocation ID: e-30a266ef-be7c-4a22-aa77-fe426f68e80e
+26-03-30.17:36:57.040 [main            ] INFO  LoggingPlugin          - [logging_plugin] ✅ INVOCATION COMPLETED
+26-03-30.17:36:57.040 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Invocation ID: e-30a266ef-be7c-4a22-aa77-fe426f68e80e
+26-03-30.17:36:57.041 [main            ] INFO  LoggingPlugin          - [logging_plugin]    Final Agent: singleAgent
+26-03-30.17:36:57.041 [main            ] INFO  AiAgentAutoConfigTest  - ===> 最终测试结果: [CALIU]
