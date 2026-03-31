@@ -61,7 +61,7 @@ public class AgentServiceController implements IAgentService {
         }
     }
 
-    @RequestMapping(value = "create_session", method = RequestMethod.GET)
+    @RequestMapping(value = "create_session", method = RequestMethod.POST)
     @Override
     public Response<CreateSessionResponseDTO> createSession(@RequestBody CreateSessionRequestDTO requestDTO) {
         try {
@@ -118,7 +118,7 @@ public class AgentServiceController implements IAgentService {
                     .info(e.getInfo())
                     .build();
         } catch (Exception e) {
-            log.error("智能体对话败 agentId:{} userId:{}", requestDTO.getAgentId(), requestDTO.getUserId(), e);
+            log.error("智能体对话失败 agentId:{} userId:{}", requestDTO.getAgentId(), requestDTO.getUserId(), e);
             return Response.<ChatResponseDTO>builder()
                     .code(ResponseCode.UN_ERROR.getCode())
                     .info(ResponseCode.UN_ERROR.getInfo())

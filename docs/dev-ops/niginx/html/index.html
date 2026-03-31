@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 智能体对话平台</title>
+    <!-- 引入配置文件 -->
+    <script src="js/config.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            overflow: hidden;
+        }
+
+        /* 侧边栏样式 */
+        .sidebar {
+            width: 280px;
+            background-color: #ffffff;
+            border-right: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.02);
+            z-index: 10;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 12px;
+        }
+
+        .user-info .username {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .user-info .role {
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: #4b5563;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .control-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+            background-color: #f9fafb;
+            cursor: pointer;
+        }
+
+        .control-group select:focus {
+            border-color: #2a5298;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background-color: #2a5298;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1e3c72;
+        }
+
+        .btn-outline {
+            background-color: white;
+            color: #ef4444;
+            border: 1px solid #fca5a5;
+        }
+
+        .btn-outline:hover {
+            background-color: #fef2f2;
+        }
+        
+        .sidebar-spacer {
+            flex: 1;
+        }
+
+        /* 主聊天区域样式 */
+        .main-chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #f3f4f6;
+            position: relative;
+        }
+
+        .chat-header {
+            height: 60px;
+            background-color: white;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            justify-content: space-between;
+        }
+
+        .chat-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .session-badge {
+            background-color: #e0e7ff;
+            color: #4338ca;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-family: monospace;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* 聊天气泡通用样式 */
+        .message-row {
+            display: flex;
+            width: 100%;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            word-wrap: break-word;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            white-space: pre-wrap;
+        }
+
+        /* 用户消息（左侧） */
+        .message-row.user-msg {
+            justify-content: flex-start;
+        }
+
+        .message-row.user-msg .message-content {
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            color: #1f2937;
+            border-top-left-radius: 2px;
+        }
+
+        /* 接口返回信息（右侧） */
+        .message-row.bot-msg {
+            justify-content: flex-end;
+        }
+
+        .message-row.bot-msg .message-content {
+            background-color: #2a5298;
+            color: white;
+            border-top-right-radius: 2px;
+        }
+
+        .avatar-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .user-msg .avatar-sm {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            margin-right: 12px;
+        }
+
+        .bot-msg .avatar-sm {
+            background-color: #10b981;
+            color: white;
+            margin-left: 12px;
+            order: 2;
+        }
+
+        .bot-msg .message-content {
+            order: 1;
+        }
+
+        .loading-dots {
+            display: inline-block;
+        }
+
+        .loading-dots::after {
+            content: '.';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
+        /* 输入区域样式 */
+        .chat-input-area {
+            background-color: white;
+            padding: 20px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input-area textarea {
+            flex: 1;
+            height: 60px;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            resize: none;
+            outline: none;
+            font-size: 0.95rem;
+            background-color: #f9fafb;
+            transition: border-color 0.2s;
+        }
+
+        .chat-input-area textarea:focus {
+            border-color: #2a5298;
+            background-color: white;
+        }
+
+        .send-btn {
+            width: 80px;
+            background-color: #2a5298;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .send-btn:hover {
+            background-color: #1e3c72;
+        }
+        
+        .send-btn:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 侧边栏 -->
+    <div class="sidebar">
+        <div class="user-profile">
+            <div class="avatar" id="sidebarAvatar">U</div>
+            <div class="user-info">
+                <div class="username" id="sidebarUsername">加载中...</div>
+                <div class="role">登录用户</div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label for="agentSelect">选择智能体</label>
+            <select id="agentSelect">
+                <option value="">加载中...</option>
+            </select>
+        </div>
+
+        <button id="newSessionBtn" class="btn btn-primary">发起新对话</button>
+        
+        <div class="sidebar-spacer"></div>
+        
+        <button id="logoutBtn" class="btn btn-outline">退出登录</button>
+    </div>
+
+    <!-- 主聊天区域 -->
+    <div class="main-chat">
+        <div class="chat-header">
+            <h2 id="currentAgentName">请选择智能体</h2>
+            <span id="currentSessionId" class="session-badge" style="display:none;"></span>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <!-- 欢迎消息 -->
+            <div class="message-row bot-msg">
+                <div class="message-content">欢迎来到 AI 智能体平台，请在左侧选择智能体并开始对话！</div>
+                <div class="avatar-sm">AI</div>
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <textarea id="messageInput" placeholder="输入你想说的话... (按 Enter 发送，Shift+Enter 换行)"></textarea>
+            <button id="sendBtn" class="send-btn">发送</button>
+        </div>
+    </div>
+
+    <script>
+        // --- 0. 登录态校验 ---
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        const isLoggedIn = getCookie('isLoggedIn');
+        const userId = getCookie('username');
+
+        if (isLoggedIn !== 'true' || !userId) {
+            // 未登录，跳转到登录页
+            window.location.href = 'login.html';
+        }
+
+        // 初始化侧边栏用户信息
+        document.getElementById('sidebarUsername').innerText = userId;
+        document.getElementById('sidebarAvatar').innerText = userId.charAt(0).toUpperCase();
+
+        // --- 全局状态 ---
+        let currentSessionId = '';
+        let isWaitingForResponse = false;
+
+        // --- 退出登录 ---
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            document.cookie = "isLoggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location.href = 'login.html';
+        });
+
+        // --- 1. 获取智能体列表 ---
+        async function fetchAgentList() {
+            try {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/v1/query_ai_agent_config_list`);
+                const result = await response.json();
+                
+                const selectEl = document.getElementById('agentSelect');
+                selectEl.innerHTML = ''; // 清空
+                
+                if (result.code === '0000' && result.data && result.data.length > 0) {
+                    result.data.forEach((agent, index) => {
+                        const option = document.createElement('option');
+                        option.value = agent.agentId;
+                        option.text = agent.agentName;
+                        // 可选：将描述保存到 data 属性中
+                        option.dataset.desc = agent.agentDesc;
+                        selectEl.appendChild(option);
+                    });
+                    
+                    // 初始化选中第一个，并创建会话
+                    updateCurrentAgentName();
+                    await createSession();
+                } else {
+                    selectEl.innerHTML = '<option value="">暂无可用智能体</option>';
+                }
+            } catch (error) {
+                console.error("获取智能体列表失败:", error);
+                const selectEl = document.getElementById('agentSelect');
+                selectEl.innerHTML = '<option value="">获取失败，请检查服务</option>';
+            }
+        }
+
+        // 更新头部显示的智能体名称
+        function updateCurrentAgentName() {
+            const selectEl = document.getElementById('agentSelect');
+            if (selectEl.options.length > 0 && selectEl.value) {
+                const selectedText = selectEl.options[selectEl.selectedIndex].text;
+                document.getElementById('currentAgentName').innerText = selectedText;
+            }
+        }
+
+        // 监听智能体切换，切换时创建新会话
+        document.getElementById('agentSelect').addEventListener('change', async () => {
+            updateCurrentAgentName();
+            await createSession();
+        });
+
+        // 点击发起新对话按钮
+        document.getElementById('newSessionBtn').addEventListener('click', async () => {
+            await createSession();
+        });
+
+        // --- 2. 创建会话 ID ---
+        async function createSession() {
+            const agentId = document.getElementById('agentSelect').value;
+            if (!agentId) return;
+
+            try {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/v1/create_session`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        agentId: agentId,
+                        userId: userId
+                    })
+                });
+                
+                const result = await response.json();
+                if (result.code === '0000' && result.data) {
+                    // 后端返回的对象里获取 sessionId (注意检查后端是返回 sessionId 还是 data 本身就是 sessionId 字符串)
+                    // 如果后端返回的是类似 { data: { sessionId: "xxx" } }
+                    currentSessionId = result.data.sessionId || result.data; 
+                    
+                    // 更新 UI 上的 Session ID 显示
+                    const badge = document.getElementById('currentSessionId');
+                    badge.innerText = `Session: ${currentSessionId.substring(0, 8)}...`;
+                    badge.style.display = 'block';
+                    
+                    // 清空聊天区域，加入系统提示
+                    const chatMessages = document.getElementById('chatMessages');
+                    chatMessages.innerHTML = `
+                        <div class="message-row bot-msg">
+                            <div class="message-content">已为您创建新会话。我是 ${document.getElementById('currentAgentName').innerText}，有什么我可以帮您的？</div>
+                            <div class="avatar-sm">AI</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error("创建会话失败:", error);
+                appendMessage('bot', '创建会话失败，请检查网络或后端服务。');
+            }
+        }
+
+        // --- 3. 对话交互 ---
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const chatMessages = document.getElementById('chatMessages');
+
+        // 发送消息处理
+        async function sendMessage() {
+            if (isWaitingForResponse) return;
+            
+            const text = messageInput.value.trim();
+            if (!text) return;
+
+            const agentId = document.getElementById('agentSelect').value;
+            if (!agentId) {
+                alert("请先选择智能体");
+                return;
+            }
+
+            if (!currentSessionId) {
+                // 如果没有 session，强制创建一个
+                await createSession();
+            }
+
+            // 1. 追加用户消息 (左侧)
+            appendMessage('user', text);
+            messageInput.value = '';
+            
+            // 2. 准备 AI 返回消息的容器 (右侧)
+            const responseId = 'msg-' + Date.now();
+            appendMessage('bot', '', responseId);
+            const responseContentEl = document.querySelector(`#${responseId} .message-content`);
+            
+            isWaitingForResponse = true;
+            sendBtn.disabled = true;
+
+            // 3. 调用 Chat Stream 接口
+            try {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/api/v1/chat_stream`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        agentId: agentId,
+                        userId: userId,
+                        sessionId: currentSessionId,
+                        message: text
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                // 处理流式响应
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder('utf-8');
+                let done = false;
+
+                while (!done) {
+                    const { value, done: readerDone } = await reader.read();
+                    done = readerDone;
+                    if (value) {
+                        const chunk = decoder.decode(value, { stream: true });
+                        // 直接将返回的文本追加到内容中
+                        responseContentEl.innerText += chunk;
+                        scrollToBottom();
+                    }
+                }
+                
+            } catch (error) {
+                console.error("对话接口请求失败:", error);
+                if (responseContentEl.innerText === '') {
+                    responseContentEl.innerText = '网络异常，无法连接到智能体服务。';
+                } else {
+                    responseContentEl.innerText += '\n[连接中断]';
+                }
+            } finally {
+                isWaitingForResponse = false;
+                sendBtn.disabled = false;
+                messageInput.focus();
+            }
+        }
+
+        // 在界面上追加消息
+        // type: 'user' (左侧) | 'bot' (右侧)
+        function appendMessage(type, content, id = null) {
+            const row = document.createElement('div');
+            row.className = `message-row ${type}-msg`;
+            if (id) row.id = id;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerText = content;
+
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = 'avatar-sm';
+            avatarDiv.innerText = type === 'user' ? userId.charAt(0).toUpperCase() : 'AI';
+
+            // 根据要求：用户在左，AI在右（CSS中通过 flex direction / order 控制）
+            row.appendChild(contentDiv);
+            row.appendChild(avatarDiv);
+
+            chatMessages.appendChild(row);
+            scrollToBottom();
+        }
+
+        // 追加加载中状态
+        function appendLoadingMessage() {
+            const id = 'loading-' + Date.now();
+            const row = document.createElement('div');
+            row.className = `message-row bot-msg`;
+            row.id = id;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = '正在思考<span class="loading-dots"></span>';
+
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = 'avatar-sm';
+            avatarDiv.innerText = 'AI';
+
+            row.appendChild(contentDiv);
+            row.appendChild(avatarDiv);
+
+            chatMessages.appendChild(row);
+            scrollToBottom();
+            return id;
+        }
+
+        function removeMessage(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+        function scrollToBottom() {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // 事件监听：按钮点击
+        sendBtn.addEventListener('click', sendMessage);
+
+        // 事件监听：输入框回车
+        messageInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault(); // 阻止默认换行
+                sendMessage();
+            }
+        });
+
+        // --- 初始化加载 ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // 如果已登录，则加载智能体列表
+            if (isLoggedIn === 'true' && userId) {
+                fetchAgentList();
+            }
+        });
+    </script>
+</body>
+</html>

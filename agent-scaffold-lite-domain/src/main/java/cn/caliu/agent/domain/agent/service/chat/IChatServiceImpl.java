@@ -62,11 +62,9 @@ public class IChatServiceImpl implements IChatService {
         String appName = aiAgentRegisterVO.getAppName();
         InMemoryRunner runner = aiAgentRegisterVO.getRunner();
 
-        return userSessions.computeIfAbsent(userId, uid ->{
-            Session session = runner.sessionService().createSession(appName, uid)
-                    .blockingGet();
-            return session.id();
-        });
+        Session session = runner.sessionService().createSession(appName, userId).blockingGet();
+        userSessions.put(agentId + ":" + userId, session.id());
+        return session.id();
     }
 
     @Override
