@@ -1,4 +1,4 @@
-# xfg-frame-archetype - DDD 脚手架
+AI Agent 脚手架
 
 v1:
     提供简单的AI Agent开发骨架：
