@@ -1,15 +1,32 @@
 package cn.caliu.agent.trigger.http;
 
+import com.alibaba.fastjson.JSON;
 import cn.caliu.agent.api.IAgentService;
-import cn.caliu.agent.api.dto.*;
+import cn.caliu.agent.api.dto.AiAgentConfigResponseDTO;
+import cn.caliu.agent.api.dto.ChatRequestDTO;
+import cn.caliu.agent.api.dto.ChatResponseDTO;
+import cn.caliu.agent.api.dto.ChatStreamEventResponseDTO;
+import cn.caliu.agent.api.dto.CreateSessionRequestDTO;
+import cn.caliu.agent.api.dto.CreateSessionResponseDTO;
 import cn.caliu.agent.api.response.Response;
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentConfigTableVO;
 import cn.caliu.agent.domain.agent.service.IChatService;
+import cn.caliu.agent.types.common.AgentStreamMarker;
 import cn.caliu.agent.types.enums.ResponseCode;
 import cn.caliu.agent.types.exception.AppException;
+import com.google.adk.events.Event;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,8 +45,6 @@ public class AgentServiceController implements IAgentService {
     @Override
     public Response<List<AiAgentConfigResponseDTO>> queryAiAgentConfigList() {
         try {
-            log.info("查询智能体配置列表");
-
             List<AiAgentConfigTableVO.Agent> agentConfigs = chatService.queryAiAgentConfigList();
 
             List<AiAgentConfigResponseDTO> responseDTOS = agentConfigs.stream().map(agentConfig -> {
@@ -47,13 +62,13 @@ public class AgentServiceController implements IAgentService {
                     .build();
 
         } catch (AppException e) {
-            log.error("查询智能体配置列表异常", e);
+            log.error("query ai agent config list failed", e);
             return Response.<List<AiAgentConfigResponseDTO>>builder()
                     .code(e.getCode())
                     .info(e.getInfo())
                     .build();
         } catch (Exception e) {
-            log.error("查询智能体配置列表失败", e);
+            log.error("query ai agent config list failed", e);
             return Response.<List<AiAgentConfigResponseDTO>>builder()
                     .code(ResponseCode.UN_ERROR.getCode())
                     .info(ResponseCode.UN_ERROR.getInfo())
@@ -65,7 +80,6 @@ public class AgentServiceController implements IAgentService {
     @Override
     public Response<CreateSessionResponseDTO> createSession(@RequestBody CreateSessionRequestDTO requestDTO) {
         try {
-            log.info("创建会话 agentId:{} userId:{}", requestDTO.getAgentId(), requestDTO.getUserId());
             String sessionId = chatService.createSession(requestDTO.getAgentId(), requestDTO.getUserId());
 
             CreateSessionResponseDTO responseDTO = new CreateSessionResponseDTO();
@@ -77,13 +91,13 @@ public class AgentServiceController implements IAgentService {
                     .data(responseDTO)
                     .build();
         } catch (AppException e) {
-            log.error("查询智能体配置列表异常", e);
+            log.error("create session failed", e);
             return Response.<CreateSessionResponseDTO>builder()
                     .code(e.getCode())
                     .info(e.getInfo())
                     .build();
         } catch (Exception e) {
-            log.error("创建会话失败 agentId:{} userId:{}", requestDTO.getAgentId(), requestDTO.getUserId(), e);
+            log.error("create session failed", e);
             return Response.<CreateSessionResponseDTO>builder()
                     .code(ResponseCode.UN_ERROR.getCode())
                     .info(ResponseCode.UN_ERROR.getInfo())
@@ -95,9 +109,8 @@ public class AgentServiceController implements IAgentService {
     @Override
     public Response<ChatResponseDTO> chat(@RequestBody ChatRequestDTO requestDTO) {
         try {
-            log.info("智能体对话 agentId:{} userId:{}", requestDTO.getAgentId(), requestDTO.getUserId());
             String sessionId = requestDTO.getSessionId();
-            if (sessionId == null || sessionId.isEmpty()) {
+            if (StringUtils.isBlank(sessionId)) {
                 sessionId = chatService.createSession(requestDTO.getAgentId(), requestDTO.getUserId());
             }
 
@@ -112,13 +125,13 @@ public class AgentServiceController implements IAgentService {
                     .data(responseDTO)
                     .build();
         } catch (AppException e) {
-            log.error("智能体对话异常", e);
+            log.error("chat failed", e);
             return Response.<ChatResponseDTO>builder()
                     .code(e.getCode())
                     .info(e.getInfo())
                     .build();
         } catch (Exception e) {
-            log.error("智能体对话失败 agentId:{} userId:{}", requestDTO.getAgentId(), requestDTO.getUserId(), e);
+            log.error("chat failed", e);
             return Response.<ChatResponseDTO>builder()
                     .code(ResponseCode.UN_ERROR.getCode())
                     .info(ResponseCode.UN_ERROR.getInfo())
@@ -126,30 +139,101 @@ public class AgentServiceController implements IAgentService {
         }
     }
 
-    @RequestMapping(value = "chat_stream", method = RequestMethod.POST)
+    @RequestMapping(
+            value = "chat_stream",
+            method = RequestMethod.POST,
+            produces = MediaType.TEXT_EVENT_STREAM_VALUE
+    )
     @Override
-    public ResponseBodyEmitter chatStream(@RequestBody ChatRequestDTO requestDTO) {
-        ResponseBodyEmitter emitter = new ResponseBodyEmitter(3 * 60 * 1000L);
+    public SseEmitter chatStream(@RequestBody ChatRequestDTO requestDTO) {
+        SseEmitter emitter = new SseEmitter(3 * 60 * 1000L);
         try {
-            log.info("流式对话 agentId:{} userId:{} sessionId:{} message:{}", requestDTO.getAgentId(), requestDTO.getUserId(), requestDTO.getSessionId(), requestDTO.getMessage());
-            chatService.handleMessageStream(requestDTO.getAgentId(), requestDTO.getUserId(), requestDTO.getSessionId(), requestDTO.getMessage())
+            String sessionId = requestDTO.getSessionId();
+            if (StringUtils.isBlank(sessionId)) {
+                sessionId = chatService.createSession(requestDTO.getAgentId(), requestDTO.getUserId());
+            }
+
+            Disposable disposable = chatService
+                    .handleMessageStream(requestDTO.getAgentId(), requestDTO.getUserId(), sessionId, requestDTO.getMessage())
+                    .subscribeOn(Schedulers.io())
                     .subscribe(
                             event -> {
                                 try {
-                                    emitter.send(event.stringifyContent());
+                                    ChatStreamEventResponseDTO streamEvent = mapToStreamEvent(event);
+                                    boolean completionSignal =
+                                            ("final".equals(streamEvent.getType()) || "reply".equals(streamEvent.getType()))
+                                                    && !Boolean.TRUE.equals(streamEvent.getPartial());
+                                    if (StringUtils.isBlank(streamEvent.getContent())
+                                            && !"route".equals(streamEvent.getType())
+                                            && !completionSignal) {
+                                        return;
+                                    }
+                                    emitter.send(SseEmitter.event()
+                                            .name("message")
+                                            .data(JSON.toJSONString(streamEvent)));
                                 } catch (Exception e) {
-                                    log.error("流式对话发送失败", e);
+                                    log.error("chat stream send event failed", e);
                                     emitter.completeWithError(e);
                                 }
                             },
                             emitter::completeWithError,
                             emitter::complete
                     );
+
+            emitter.onCompletion(disposable::dispose);
+            emitter.onTimeout(() -> {
+                disposable.dispose();
+                emitter.complete();
+            });
+            emitter.onError(throwable -> disposable.dispose());
         } catch (Exception e) {
-            log.error("流式对话失败", e);
+            log.error("chat stream failed", e);
             emitter.completeWithError(e);
         }
         return emitter;
+    }
+
+    private ChatStreamEventResponseDTO mapToStreamEvent(Event event) {
+        String content = StringUtils.defaultString(event.stringifyContent());
+        ChatStreamEventResponseDTO dto = new ChatStreamEventResponseDTO();
+
+        dto.setAgentName(event.author());
+        dto.setPartial(event.partial().orElse(false));
+        dto.setFinalResponse(event.finalResponse());
+
+        if (content.startsWith(AgentStreamMarker.THINKING)) {
+            dto.setType("thinking");
+            dto.setContent(content.substring(AgentStreamMarker.THINKING.length()));
+            dto.setFinalResponse(false);
+            return dto;
+        }
+
+        if (content.startsWith(AgentStreamMarker.ROUTE)) {
+            String nextAgent = StringUtils.trimToEmpty(content.substring(AgentStreamMarker.ROUTE.length()));
+            dto.setType("route");
+            dto.setRouteTarget(nextAgent);
+            dto.setContent(nextAgent);
+            dto.setFinalResponse(false);
+            return dto;
+        }
+
+        if (content.startsWith(AgentStreamMarker.REPLY)) {
+            dto.setType("reply");
+            dto.setContent(StringUtils.defaultString(content.substring(AgentStreamMarker.REPLY.length())));
+            dto.setFinalResponse(false);
+            return dto;
+        }
+
+        if (content.startsWith(AgentStreamMarker.FINAL)) {
+            dto.setType("final");
+            dto.setContent(StringUtils.defaultString(content.substring(AgentStreamMarker.FINAL.length())));
+            dto.setFinalResponse(!dto.getPartial());
+            return dto;
+        }
+
+        dto.setType(event.finalResponse() ? "final" : "thinking");
+        dto.setContent(content);
+        return dto;
     }
 
 }

@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public enum AgentTypeEnum {
 
-    Loop("循环执行", "loop", "loopAgentNode"),
-    Parallel("并行执行", "parallel", "parallelAgentNode"),
-    Sequential("串行执行", "sequential", "sequentialAgentNode");
+    Supervisor("supervisor", "supervisor", "supervisorAgentNode"),
+    Loop("loop", "loop", "loopAgentNode"),
+    Parallel("parallel", "parallel", "parallelAgentNode"),
+    Sequential("sequential", "sequential", "sequentialAgentNode");
 
     private String name;
     private String type;

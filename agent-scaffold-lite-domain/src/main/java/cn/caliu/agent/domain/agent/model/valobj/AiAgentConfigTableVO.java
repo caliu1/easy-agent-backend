@@ -108,6 +108,7 @@ public class AiAgentConfigTableVO {
             private String type;
             private String name;
             private List<String> subAgents;
+            private String routerAgent;
             private String description;
             private Integer maxIterations = 3;
 

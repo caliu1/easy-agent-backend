@@ -10,6 +10,7 @@ import cn.caliu.agent.domain.agent.service.armory.factory.DefaultArmoryFactory;
 import cn.caliu.agent.domain.agent.service.armory.node.workflow.LoopAgentNode;
 import cn.caliu.agent.domain.agent.service.armory.node.workflow.ParallelAgentNode;
 import cn.caliu.agent.domain.agent.service.armory.node.workflow.SequentialAgentNode;
+import cn.caliu.agent.domain.agent.service.armory.node.workflow.SupervisorAgentNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,8 @@ public class AgentWorkflowNode extends AbstractArmorySupport {
     private ParallelAgentNode parallelAgentNode;
     @Resource
     private SequentialAgentNode sequentialAgentNode;
+    @Resource
+    private SupervisorAgentNode supervisorAgentNode;
     @Resource
     private RunnerNode runnerNode;
 
@@ -70,6 +73,7 @@ public class AgentWorkflowNode extends AbstractArmorySupport {
             case "loopAgentNode" -> loopAgentNode;
             case "parallelAgentNode" -> parallelAgentNode;
             case "sequentialAgentNode" -> sequentialAgentNode;
+            case "supervisorAgentNode" -> supervisorAgentNode;
             default -> runnerNode;
         };
     }
