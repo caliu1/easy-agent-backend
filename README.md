@@ -35,8 +35,25 @@ v1.2 聚焦“动态装配 + 配置中心 + 广场化 + 创建体验增强”，
 - `agent-scaffold-lite-api`：接口定义与 DTO
 - `agent-scaffold-lite-types`：通用类型与常量
 
-## 数据库脚本
+v1.1 重点引入 Supervisor 动态路由能力和标准化流式事件：
 
+- 新增 `SupervisorRoutingAgent`，支持主 Agent 根据上下文动态选择子 Agent
+- `chat_stream` 支持 `thinking / route / reply / final` 事件类型
+- 支持主 Agent 阶段性回复与最终回复的流式输出
+
+详细内容请查看：
+
+- [v1.1 详细更新日志](./docs/changelog/v1.1.md)
+
+## 目录建议
+
+- `agent-scaffold-lite-app`：应用与配置
+- `agent-scaffold-lite-domain`：领域与工作流编排
+- `agent-scaffold-lite-trigger`：HTTP 触发层（含 SSE）
+- `agent-scaffold-lite-api`：接口与 DTO
+- `agent-scaffold-lite-types`：通用类型与常量
+
+## 数据库脚本
 - 基础建表（含配置中心核心表）：`docs/dev-ops/mysql/sql/agent-config-v1.1.sql`
 - 广场扩展脚本：`docs/dev-ops/mysql/sql/agent-config-v1.2-plaza.sql`
 
