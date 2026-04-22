@@ -1,1 +1,1 @@
-docker stop agent-scaffold-lite
+docker stop easy-agent

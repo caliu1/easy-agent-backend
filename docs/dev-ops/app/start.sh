@@ -1,5 +1,5 @@
-CONTAINER_NAME=agent-scaffold-lite
-IMAGE_NAME=system/agent-scaffold-lite:1.0-SNAPSHOT
+CONTAINER_NAME=easy-agent
+IMAGE_NAME=system/easy-agent:1.0-SNAPSHOT
 PORT=8091
 
 echo "容器部署开始 ${CONTAINER_NAME}"

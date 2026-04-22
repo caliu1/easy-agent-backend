@@ -1,62 +1,145 @@
-# AI Agent 脚手架（agent-scaffold-lite）
+# EasyAgent Backend
 
-一个基于 Java + Spring + DDD 的 AI Agent 开发脚手架，支持通过 YML 与数据库双通道装配 Agent、工作流编排、流式会话输出与前端管理平台。
+`EasyAgent` 是一个面向智能体编排与运营的后端服务，支持：
 
-## 项目能力
+- 多种 Agent 工作流（`sequential / parallel / loop / supervisor`）
+- 动态 Agent 配置中心（创建、发布、下线、回滚、分页检索）
+- Agent 广场（我的 Agent / 广场 Agent 隔离）
+- 用户注册登录与账号落库
+- 广场 Agent 订阅能力（订阅/取消订阅/我的订阅）
+- `chat_stream` 流式事件输出（SSE）
 
-- Agent 配置化装配：支持 `YML` 系统 Agent + `DB` 动态 Agent 并存
-- 多种编排模式：`sequential` / `parallel` / `loop` / `supervisor`
-- 标准会话接口：`chat` / `chat_stream`（SSE 流式）
-- 配置中心能力：Agent 配置 CRUD、发布、下线、回滚、分页检索
-- Agent 广场能力：我的 Agent / 广场 Agent 隔离展示与发布控制
-- 前端创建页增强：接入固定系统 Agent（Agent Config Writer）辅助生成配置
+---
 
-## v1.2 更新（简述）
+## 1. 项目结构（当前）
 
-v1.2 聚焦“动态装配 + 配置中心 + 广场化 + 创建体验增强”，核心变化如下：
+```text
+easy-agent-backend
+├── easy-agent-api              # API 接口定义与 DTO
+├── easy-agent-types            # 通用枚举/异常/常量
+├── easy-agent-domain           # 领域服务与编排逻辑
+├── easy-agent-infrastructure   # 持久层（MyBatis-Plus）
+├── easy-agent-trigger          # HTTP 触发层 Controller
+└── easy-agent-app              # Spring Boot 启动模块
+```
 
-- 新增 Agent 配置中心（DB 存储，支持 CRUD + 发布生命周期）
-- 引入 MyBatis-Plus 纯 MP 化实现（BaseMapper + Wrapper + 分页插件）
-- 新增 Agent 广场（官方 Agent + 用户发布 Agent），并与“我的 Agent”分区
-- 新建 Agent 页面支持与 `AgentConfigWriterAgent` 对话并动态回填表单
-- 流式输出链路继续增强，前后端按 SSE 事件稳定拼装
+说明：本项目已从早期 `agent-scaffold-lite-*` 命名演进到 `easy-agent-*` 模块命名，本文档以当前项目结构为准。
 
-详细内容请查看：
+---
 
-- [v1.2 详细更新日志](./docs/changelog/v1.2.md)
-- [v1.1 详细更新日志](./docs/changelog/v1.1.md)
+## 2. 环境要求
 
-## 目录建议
+- JDK 17
+- Maven 3.8+
+- MySQL 8.x
+- Node.js 20+（前端在 `easy-agent-front`）
 
-- `agent-scaffold-lite-app`：应用启动与系统配置
-- `agent-scaffold-lite-domain`：领域逻辑与工作流编排
-- `agent-scaffold-lite-trigger`：HTTP 触发层（含 SSE）
-- `agent-scaffold-lite-infrastructure`：持久化与仓储实现
-- `agent-scaffold-lite-api`：接口定义与 DTO
-- `agent-scaffold-lite-types`：通用类型与常量
+---
 
-v1.1 重点引入 Supervisor 动态路由能力和标准化流式事件：
+## 3. 数据库初始化
 
-- 新增 `SupervisorRoutingAgent`，支持主 Agent 根据上下文动态选择子 Agent
-- `chat_stream` 支持 `thinking / route / reply / final` 事件类型
-- 支持主 Agent 阶段性回复与最终回复的流式输出
+按顺序执行以下 SQL：
 
-详细内容请查看：
+1. `docs/dev-ops/mysql/sql/agent-config-v1.1.sql`
+2. `docs/dev-ops/mysql/sql/agent-config-v1.2-plaza.sql`
+3. `docs/dev-ops/mysql/sql/agent-config-v1.3-user-auth.sql`
+4. `docs/dev-ops/mysql/sql/agent-config-v1.4-subscribe.sql`
 
-- [v1.1 详细更新日志](./docs/changelog/v1.1.md)
+新增表说明：
 
-## 目录建议
+- `ai_user_account`：用户账号（登录凭据、状态、最后登录时间）
+- `ai_agent_subscribe`：用户与广场 Agent 的订阅关系
 
-- `agent-scaffold-lite-app`：应用与配置
-- `agent-scaffold-lite-domain`：领域与工作流编排
-- `agent-scaffold-lite-trigger`：HTTP 触发层（含 SSE）
-- `agent-scaffold-lite-api`：接口与 DTO
-- `agent-scaffold-lite-types`：通用类型与常量
+---
 
-## 数据库脚本
-- 基础建表（含配置中心核心表）：`docs/dev-ops/mysql/sql/agent-config-v1.1.sql`
-- 广场扩展脚本：`docs/dev-ops/mysql/sql/agent-config-v1.2-plaza.sql`
+## 4. 启动方式
 
-## License
+### 4.1 启动后端
 
-按项目实际 License 文件为准。
+在 `easy-agent-backend` 目录执行：
+
+```bash
+mvn -pl easy-agent-app -am spring-boot:run
+```
+
+或先编译：
+
+```bash
+mvn -pl easy-agent-app -am -DskipTests compile
+```
+
+### 4.2 启动前端
+
+在 `easy-agent-front` 目录执行：
+
+```bash
+npm install
+npm run dev
+```
+
+默认访问：`http://localhost:3000`  
+默认后端地址：`http://127.0.0.1:8091`（可通过前端环境变量覆盖）
+
+---
+
+## 5. 关键接口
+
+### 5.1 用户认证
+
+- `POST /api/v1/user_register`：注册
+- `POST /api/v1/user_login`：登录
+
+### 5.2 Agent 配置中心
+
+- `POST /api/v1/agent_config_create`
+- `POST /api/v1/agent_config_update`
+- `POST /api/v1/agent_config_delete`
+- `GET  /api/v1/agent_config_detail`
+- `GET  /api/v1/agent_config_list`
+- `GET  /api/v1/agent_config_my_list`
+- `POST /api/v1/agent_config_publish`
+- `POST /api/v1/agent_config_offline`
+- `POST /api/v1/agent_config_rollback`
+
+### 5.3 Agent 广场与订阅
+
+- `GET  /api/v1/agent_config_plaza_list`
+- `POST /api/v1/agent_config_plaza_publish`
+- `POST /api/v1/agent_config_plaza_offline`
+- `GET  /api/v1/agent_config_my_subscribe_list`
+- `POST /api/v1/agent_config_subscribe`
+- `POST /api/v1/agent_config_unsubscribe`
+
+### 5.4 会话能力
+
+- `POST /api/v1/create_session`
+- `POST /api/v1/chat`
+- `POST /api/v1/chat_stream`
+
+---
+
+## 6. 前端页面能力（对应当前实现）
+
+- 登录页：支持注册/登录，成功后写入会话 cookie
+- 首页：
+- `我的Agent`
+- `我的订阅`
+- `Agent广场`
+- 广场卡片右下角爱心订阅按钮：
+- 未订阅：空心
+- 已订阅：实心
+
+---
+
+## 7. 版本日志
+
+- [v1.1](./docs/changelog/v1.1.md)：Supervisor 动态路由与流式事件标准化
+- [v1.2](./docs/changelog/v1.2.md)：配置中心、广场能力、前端创建体验增强
+- [v1.3](./docs/changelog/v1.3.md)：用户认证落库 + 广场订阅体系
+
+---
+
+## 8. License
+
+请以仓库中的 `LICENSE` 文件为准。
+

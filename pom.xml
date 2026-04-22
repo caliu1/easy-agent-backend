@@ -3,17 +3,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.caliu.agent</groupId>
-    <artifactId>agent-scaffold-lite</artifactId>
+    <artifactId>easy-agent-backend</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>agent-scaffold-lite-api</module>
-        <module>agent-scaffold-lite-app</module>
-        <module>agent-scaffold-lite-domain</module>
-        <module>agent-scaffold-lite-trigger</module>
-        <module>agent-scaffold-lite-infrastructure</module>
-        <module>agent-scaffold-lite-types</module>
+        <module>easy-agent-api</module>
+        <module>easy-agent-app</module>
+        <module>easy-agent-domain</module>
+        <module>easy-agent-trigger</module>
+        <module>easy-agent-infrastructure</module>
+        <module>easy-agent-types</module>
     </modules>
 
     <repositories>
@@ -185,27 +185,27 @@
             <!-- 工程模块 -->
             <dependency>
                 <groupId>cn.caliu.agent</groupId>
-                <artifactId>agent-scaffold-lite-domain</artifactId>
+                <artifactId>easy-agent-domain</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>cn.caliu.agent</groupId>
-                <artifactId>agent-scaffold-lite-infrastructure</artifactId>
+                <artifactId>easy-agent-infrastructure</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>cn.caliu.agent</groupId>
-                <artifactId>agent-scaffold-lite-types</artifactId>
+                <artifactId>easy-agent-types</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>cn.caliu.agent</groupId>
-                <artifactId>agent-scaffold-lite-trigger</artifactId>
+                <artifactId>easy-agent-trigger</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>cn.caliu.agent</groupId>
-                <artifactId>agent-scaffold-lite-api</artifactId>
+                <artifactId>easy-agent-api</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
         </dependencies>
@@ -219,7 +219,7 @@
                 <artifactId>maven-archetype-plugin</artifactId>
                 <version>3.4.1</version>
                 <configuration>
-                    <outputDirectory>${project.build.directory}/agent-scaffold-lite-archetype</outputDirectory>
+                    <outputDirectory>${project.build.directory}/easy-agent-archetype</outputDirectory>
                 </configuration>
             </plugin>
 
@@ -256,21 +256,21 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <java_jvm>-Xms1G -Xmx1G -server  -XX:MaxPermSize=256M -Xss256K -Dspring.profiles.active=test -XX:+DisableExplicitGC -XX:+UseG1GC  -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/export/Logs/agent-scaffold-lite-boot -Xloggc:/export/Logs/agent-scaffold-lite-boot/gc-agent-scaffold-lite-boot.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps</java_jvm>
+                <java_jvm>-Xms1G -Xmx1G -server  -XX:MaxPermSize=256M -Xss256K -Dspring.profiles.active=test -XX:+DisableExplicitGC -XX:+UseG1GC  -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/export/Logs/easy-agent-boot -Xloggc:/export/Logs/easy-agent-boot/gc-easy-agent-boot.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps</java_jvm>
                 <profileActive>dev</profileActive>
             </properties>
         </profile>
         <profile>
             <id>test</id>
             <properties>
-                <java_jvm>-Xms1G -Xmx1G -server  -XX:MaxPermSize=256M -Xss256K -Dspring.profiles.active=test -XX:+DisableExplicitGC -XX:+UseG1GC  -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/export/Logs/agent-scaffold-lite-boot -Xloggc:/export/Logs/agent-scaffold-lite-boot/gc-agent-scaffold-lite-boot.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps</java_jvm>
+                <java_jvm>-Xms1G -Xmx1G -server  -XX:MaxPermSize=256M -Xss256K -Dspring.profiles.active=test -XX:+DisableExplicitGC -XX:+UseG1GC  -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/export/Logs/easy-agent-boot -Xloggc:/export/Logs/easy-agent-boot/gc-easy-agent-boot.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps</java_jvm>
                 <profileActive>test</profileActive>
             </properties>
         </profile>
         <profile>
             <id>prod</id>
             <properties>
-                <java_jvm>-Xms6G -Xmx6G -server  -XX:MaxPermSize=256M -Xss256K -Dspring.profiles.active=release -XX:+DisableExplicitGC -XX:+UseG1GC  -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/export/Logs/fq-mall-activity-app -Xloggc:/export/Logs/agent-scaffold-lite-boot/gc-agent-scaffold-lite-boot.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps</java_jvm>
+                <java_jvm>-Xms6G -Xmx6G -server  -XX:MaxPermSize=256M -Xss256K -Dspring.profiles.active=release -XX:+DisableExplicitGC -XX:+UseG1GC  -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/export/Logs/fq-mall-activity-app -Xloggc:/export/Logs/easy-agent-boot/gc-easy-agent-boot.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps</java_jvm>
                 <profileActive>prod</profileActive>
             </properties>
         </profile>
