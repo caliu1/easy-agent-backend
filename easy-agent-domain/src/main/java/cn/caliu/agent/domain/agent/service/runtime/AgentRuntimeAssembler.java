@@ -1,6 +1,6 @@
 package cn.caliu.agent.domain.agent.service.runtime;
 
-import cn.caliu.agent.domain.agent.model.valobj.AgentConfigManageVO;
+import cn.caliu.agent.domain.agent.model.entity.AgentConfigEntity;
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentConfigTableVO;
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentRegisterVO;
 import cn.caliu.agent.domain.agent.service.IArmoryService;
@@ -24,7 +24,7 @@ public class AgentRuntimeAssembler {
     @Resource
     private DefaultArmoryFactory defaultArmoryFactory;
 
-    public AiAgentRegisterVO assemble(AgentConfigManageVO configVO) {
+    public AiAgentRegisterVO assemble(AgentConfigEntity configVO) {
         if (configVO == null) {
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "agent config is null");
         }
@@ -61,7 +61,7 @@ public class AgentRuntimeAssembler {
         }
     }
 
-    public AiAgentConfigTableVO mergeConfigAndMetadata(AgentConfigManageVO configVO) {
+    public AiAgentConfigTableVO mergeConfigAndMetadata(AgentConfigEntity configVO) {
         AiAgentConfigTableVO tableVO = parseConfigJson(configVO.getConfigJson());
 
         if (tableVO.getAgent() == null) {
@@ -92,4 +92,3 @@ public class AgentRuntimeAssembler {
     }
 
 }
-

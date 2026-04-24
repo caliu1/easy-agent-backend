@@ -146,6 +146,14 @@
         <!-- 工程模块；启动依赖 trigger->domain, infrastructure-->
         <dependency>
             <groupId>cn.caliu.agent</groupId>
+            <artifactId>easy-agent-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.caliu.agent</groupId>
+            <artifactId>easy-agent-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.caliu.agent</groupId>
             <artifactId>easy-agent-trigger</artifactId>
         </dependency>
         <dependency>

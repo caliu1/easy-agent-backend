@@ -1,7 +1,7 @@
 package cn.caliu.agent.infrastructure.persistent.repository;
 
-import cn.caliu.agent.domain.agent.model.valobj.UserAccountVO;
-import cn.caliu.agent.domain.agent.repository.IUserAccountRepository;
+import cn.caliu.agent.domain.user.model.entity.UserAccountEntity;
+import cn.caliu.agent.domain.user.repository.IUserAccountRepository;
 import cn.caliu.agent.infrastructure.persistent.dao.IUserAccountDao;
 import cn.caliu.agent.infrastructure.persistent.po.UserAccountPO;
 import cn.caliu.agent.types.enums.ResponseCode;
@@ -30,7 +30,7 @@ public class UserAccountRepository implements IUserAccountRepository {
     }
 
     @Override
-    public void insert(UserAccountVO userAccount) {
+    public void insert(UserAccountEntity userAccount) {
         UserAccountPO po = toPO(userAccount);
         po.setIsDeleted(0);
         int affected = userAccountDao.insert(po);
@@ -40,11 +40,11 @@ public class UserAccountRepository implements IUserAccountRepository {
     }
 
     @Override
-    public UserAccountVO queryByUserId(String userId) {
+    public UserAccountEntity queryByUserId(String userId) {
         LambdaQueryWrapper<UserAccountPO> queryWrapper = new LambdaQueryWrapper<UserAccountPO>()
                 .eq(UserAccountPO::getUserId, userId)
                 .last("LIMIT 1");
-        return toVO(userAccountDao.selectOne(queryWrapper));
+        return toEntity(userAccountDao.selectOne(queryWrapper));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class UserAccountRepository implements IUserAccountRepository {
         userAccountDao.update(null, updateWrapper);
     }
 
-    private UserAccountPO toPO(UserAccountVO source) {
+    private UserAccountPO toPO(UserAccountEntity source) {
         if (source == null) {
             return null;
         }
@@ -72,11 +72,11 @@ public class UserAccountRepository implements IUserAccountRepository {
         return target;
     }
 
-    private UserAccountVO toVO(UserAccountPO source) {
+    private UserAccountEntity toEntity(UserAccountPO source) {
         if (source == null) {
             return null;
         }
-        return UserAccountVO.builder()
+        return UserAccountEntity.builder()
                 .userId(source.getUserId())
                 .nickname(source.getNickname())
                 .passwordHash(source.getPasswordHash())
@@ -103,4 +103,3 @@ public class UserAccountRepository implements IUserAccountRepository {
         return LocalDateTime.ofInstant(java.time.Instant.ofEpochMilli(epochMilli), ZoneId.systemDefault());
     }
 }
-

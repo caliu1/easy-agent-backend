@@ -1,16 +1,15 @@
 package cn.caliu.agent.domain.agent.service.config;
 
-import cn.caliu.agent.domain.agent.model.valobj.AgentConfigManageVO;
+import cn.caliu.agent.domain.agent.model.entity.AgentConfigEntity;
 import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryVO;
-import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageResultVO;
+import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryResult;
 import cn.caliu.agent.domain.agent.model.valobj.AgentConfigVersionVO;
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentConfigTableVO;
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentRegisterVO;
 import cn.caliu.agent.domain.agent.model.valobj.properties.AiAgentAutoConfigProperties;
 import cn.caliu.agent.domain.agent.repository.IAgentConfigRepository;
 import cn.caliu.agent.domain.agent.repository.IAgentConfigVersionRepository;
-import cn.caliu.agent.domain.agent.repository.IAgentSubscribeRepository;
-import cn.caliu.agent.domain.agent.repository.IAgentSessionBindRepository;
+import cn.caliu.agent.domain.session.repository.IAgentSessionBindRepository;
 import cn.caliu.agent.domain.agent.service.IAgentConfigManageService;
 import cn.caliu.agent.domain.agent.service.runtime.AgentRuntimeAssembler;
 import cn.caliu.agent.domain.agent.service.runtime.AgentRuntimeRegistry;
@@ -25,23 +24,14 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class IAgentConfigManageServiceImpl implements IAgentConfigManageService {
 
-    private static final String STATUS_DRAFT = "DRAFT";
-    private static final String STATUS_PUBLISHED = "PUBLISHED";
-    private static final String STATUS_OFFLINE = "OFFLINE";
-    private static final String SOURCE_USER = "USER";
-    private static final String SOURCE_OFFICIAL = "OFFICIAL";
-    private static final String PLAZA_ON = "ON";
-    private static final String PLAZA_OFF = "OFF";
     private static final String SYSTEM_OPERATOR = "system";
 
     @Resource
@@ -51,8 +41,6 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
     @Resource
     private IAgentSessionBindRepository agentSessionBindRepository;
     @Resource
-    private IAgentSubscribeRepository agentSubscribeRepository;
-    @Resource
     private AgentRuntimeRegistry agentRuntimeRegistry;
     @Resource
     private AgentRuntimeAssembler agentRuntimeAssembler;
@@ -61,7 +49,7 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public synchronized AgentConfigManageVO createAgentConfig(AgentConfigManageVO request) {
+    public synchronized AgentConfigEntity createAgentConfig(AgentConfigEntity request) {
         validateCreateRequest(request);
 
         String agentId = request.getAgentId().trim();
@@ -78,24 +66,16 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
         );
 
         long now = System.currentTimeMillis();
-        AgentConfigManageVO created = AgentConfigManageVO.builder()
-                .agentId(agentId)
-                .appName(configMeta.appName)
-                .agentName(configMeta.agentName)
-                .agentDesc(configMeta.agentDesc)
-                .configJson(request.getConfigJson())
-                .status(STATUS_DRAFT)
-                .currentVersion(1L)
-                .publishedVersion(null)
-                .operator(trimToEmpty(request.getOperator()))
-                // 新建动态 Agent 默认归属创建人，来源为 USER，且默认不在广场中。
-                .ownerUserId(resolveOwnerUserId(request.getOwnerUserId(), request.getOperator()))
-                .sourceType(SOURCE_USER)
-                .plazaStatus(PLAZA_OFF)
-                .plazaPublishTime(null)
-                .createTime(now)
-                .updateTime(now)
-                .build();
+        AgentConfigEntity created = AgentConfigEntity.createUserDraft(
+                agentId,
+                configMeta.appName,
+                configMeta.agentName,
+                configMeta.agentDesc,
+                request.getConfigJson(),
+                request.getOperator(),
+                request.getOwnerUserId(),
+                now
+        );
 
         agentConfigRepository.insert(created);
         insertVersionSnapshot(created);
@@ -104,11 +84,11 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public synchronized AgentConfigManageVO updateAgentConfig(AgentConfigManageVO request) {
+    public synchronized AgentConfigEntity updateAgentConfig(AgentConfigEntity request) {
         validateUpdateRequest(request);
 
         String agentId = request.getAgentId().trim();
-        AgentConfigManageVO existed = requireConfig(agentId);
+        AgentConfigEntity existed = requireConfig(agentId);
 
         String mergedConfigJson = choose(request.getConfigJson(), existed.getConfigJson());
         if (StringUtils.isBlank(mergedConfigJson)) {
@@ -124,23 +104,15 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
         );
 
         long nextVersion = defaultLong(existed.getCurrentVersion(), 1L) + 1;
-        AgentConfigManageVO updated = AgentConfigManageVO.builder()
-                .agentId(agentId)
-                .appName(configMeta.appName)
-                .agentName(configMeta.agentName)
-                .agentDesc(configMeta.agentDesc)
-                .configJson(mergedConfigJson)
-                .status(STATUS_DRAFT)
-                .currentVersion(nextVersion)
-                .publishedVersion(existed.getPublishedVersion())
-                .operator(choose(request.getOperator(), existed.getOperator()))
-                .ownerUserId(resolveOwnerUserId(existed))
-                .sourceType(normalizeSourceType(existed.getSourceType()))
-                .plazaStatus(normalizePlazaStatus(existed.getPlazaStatus()))
-                .plazaPublishTime(existed.getPlazaPublishTime())
-                .createTime(existed.getCreateTime())
-                .updateTime(System.currentTimeMillis())
-                .build();
+        AgentConfigEntity updated = existed.toDraftUpdate(
+                configMeta.appName,
+                configMeta.agentName,
+                configMeta.agentDesc,
+                mergedConfigJson,
+                nextVersion,
+                request.getOperator(),
+                System.currentTimeMillis()
+        );
 
         agentConfigRepository.update(updated);
         insertVersionSnapshot(updated);
@@ -157,7 +129,7 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
         String key = agentId.trim();
         boolean deleted = agentConfigRepository.softDelete(key, trimToEmpty(operator));
         if (deleted) {
-            // 先删除数据库绑定，再在事务提交后清理运行时，避免回滚导致内存态不一致。
+            // Delete DB bindings first, then clear runtime after transaction commit.
             agentSessionBindRepository.deleteByAgentId(key);
             runAfterCommit(() -> agentRuntimeRegistry.remove(key));
         }
@@ -165,7 +137,7 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
     }
 
     @Override
-    public AgentConfigManageVO queryAgentConfigDetail(String agentId) {
+    public AgentConfigEntity queryAgentConfigDetail(String agentId) {
         if (isBlank(agentId)) {
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "agentId is blank");
         }
@@ -173,74 +145,21 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
     }
 
     @Override
-    public List<AgentConfigManageVO> queryAgentConfigList() {
-        return agentConfigRepository.queryList().stream()
-                .sorted(Comparator.comparingLong(item -> -defaultLong(item.getUpdateTime(), 0L)))
-                .collect(Collectors.toList());
-    }
+    public List<AgentConfigEntity> queryAgentPlazaList() {
+        Map<String, AgentConfigEntity> merged = new LinkedHashMap<>();
 
-    @Override
-    public List<AgentConfigManageVO> queryMyAgentConfigList(String userId) {
-        if (isBlank(userId)) {
-            return new ArrayList<>();
-        }
-        return agentConfigRepository.queryMyList(userId.trim()).stream()
-                .sorted(Comparator.comparingLong(item -> -defaultLong(item.getUpdateTime(), 0L)))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<AgentConfigManageVO> queryAgentPlazaList() {
-        Map<String, AgentConfigManageVO> merged = new LinkedHashMap<>();
-
-        // 先放官方 Agent，再用用户发布到广场的 Agent 覆盖同名项。
-        for (AgentConfigManageVO official : buildOfficialPlazaAgents()) {
+        // Put official agents first, then allow user-published agents to override by id.
+        for (AgentConfigEntity official : buildOfficialPlazaAgents()) {
             merged.put(official.getAgentId(), official);
         }
-        for (AgentConfigManageVO userAgent : agentConfigRepository.queryPlazaList()) {
+        for (AgentConfigEntity userAgent : agentConfigRepository.queryPlazaList()) {
             merged.put(userAgent.getAgentId(), userAgent);
         }
         return new ArrayList<>(merged.values());
     }
 
     @Override
-    public List<AgentConfigManageVO> queryMySubscribedAgentList(String userId) {
-        if (isBlank(userId)) {
-            return new ArrayList<>();
-        }
-
-        List<String> subscribedAgentIds = agentSubscribeRepository.querySubscribedAgentIds(userId.trim());
-        if (subscribedAgentIds == null || subscribedAgentIds.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-        Map<String, AgentConfigManageVO> plazaAgentMap = queryAgentPlazaList().stream()
-                .collect(Collectors.toMap(
-                        AgentConfigManageVO::getAgentId,
-                        item -> item,
-                        (left, right) -> right,
-                        LinkedHashMap::new
-                ));
-
-        List<AgentConfigManageVO> subscribedAgents = new ArrayList<>();
-        for (String subscribedAgentId : subscribedAgentIds) {
-            AgentConfigManageVO subscribed = plazaAgentMap.get(subscribedAgentId);
-            if (subscribed != null) {
-                subscribedAgents.add(subscribed);
-            }
-        }
-        return subscribedAgents;
-    }
-
-    @Override
-    public List<AgentConfigManageVO> queryPublishedAgentConfigList() {
-        return agentConfigRepository.queryPublishedList().stream()
-                .sorted(Comparator.comparingLong(item -> -defaultLong(item.getUpdateTime(), 0L)))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public AgentConfigPageResultVO queryAgentConfigPage(AgentConfigPageQueryVO queryVO) {
+    public AgentConfigPageQueryResult queryAgentConfigPage(AgentConfigPageQueryVO queryVO) {
         AgentConfigPageQueryVO safeQuery = queryVO == null
                 ? AgentConfigPageQueryVO.builder().build()
                 : queryVO;
@@ -249,13 +168,13 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public synchronized AgentConfigManageVO publishAgentConfig(String agentId, String operator) {
+    public synchronized AgentConfigEntity publishAgentConfig(String agentId, String operator) {
         if (isBlank(agentId)) {
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "agentId is blank");
         }
 
         String key = agentId.trim();
-        AgentConfigManageVO existed = requireConfig(key);
+        AgentConfigEntity existed = requireConfig(key);
         if (isBlank(existed.getConfigJson())) {
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "configJson is blank");
         }
@@ -267,7 +186,7 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
                 existed.getAgentName(),
                 existed.getAgentDesc()
         );
-        AgentConfigManageVO publishCandidate = AgentConfigManageVO.builder()
+        AgentConfigEntity publishCandidate = AgentConfigEntity.builder()
                 .agentId(key)
                 .appName(configMeta.appName)
                 .agentName(configMeta.agentName)
@@ -275,27 +194,18 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
                 .configJson(existed.getConfigJson())
                 .build();
 
-        // 发布前先做装配校验, 保证发布后可运行
+        // Validate assembly before publish to ensure runtime availability.
         AiAgentRegisterVO registerVO = agentRuntimeAssembler.assemble(publishCandidate);
 
         Long publishedVersion = defaultLong(existed.getCurrentVersion(), 1L);
-        AgentConfigManageVO published = AgentConfigManageVO.builder()
-                .agentId(key)
-                .appName(configMeta.appName)
-                .agentName(configMeta.agentName)
-                .agentDesc(configMeta.agentDesc)
-                .configJson(existed.getConfigJson())
-                .status(STATUS_PUBLISHED)
-                .currentVersion(publishedVersion)
-                .publishedVersion(publishedVersion)
-                .operator(choose(operator, existed.getOperator()))
-                .ownerUserId(resolveOwnerUserId(existed))
-                .sourceType(normalizeSourceType(existed.getSourceType()))
-                .plazaStatus(normalizePlazaStatus(existed.getPlazaStatus()))
-                .plazaPublishTime(existed.getPlazaPublishTime())
-                .createTime(existed.getCreateTime())
-                .updateTime(System.currentTimeMillis())
-                .build();
+        AgentConfigEntity published = existed.toPublished(
+                configMeta.appName,
+                configMeta.agentName,
+                configMeta.agentDesc,
+                publishedVersion,
+                operator,
+                System.currentTimeMillis()
+        );
 
         agentConfigRepository.update(published);
         saveOrUpdateVersionSnapshot(published);
@@ -305,43 +215,26 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public synchronized AgentConfigManageVO offlineAgentConfig(String agentId, String operator) {
+    public synchronized AgentConfigEntity offlineAgentConfig(String agentId, String operator) {
         if (isBlank(agentId)) {
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "agentId is blank");
         }
 
         String key = agentId.trim();
-        AgentConfigManageVO existed = requireConfig(key);
+        AgentConfigEntity existed = requireConfig(key);
 
-        AgentConfigManageVO offline = AgentConfigManageVO.builder()
-                .agentId(key)
-                .appName(existed.getAppName())
-                .agentName(existed.getAgentName())
-                .agentDesc(existed.getAgentDesc())
-                .configJson(existed.getConfigJson())
-                .status(STATUS_OFFLINE)
-                .currentVersion(existed.getCurrentVersion())
-                .publishedVersion(existed.getPublishedVersion())
-                .operator(choose(operator, existed.getOperator()))
-                .ownerUserId(resolveOwnerUserId(existed))
-                .sourceType(normalizeSourceType(existed.getSourceType()))
-                // 下线后强制从广场移除，避免广场出现不可用 Agent。
-                .plazaStatus(PLAZA_OFF)
-                .plazaPublishTime(null)
-                .createTime(existed.getCreateTime())
-                .updateTime(System.currentTimeMillis())
-                .build();
+        AgentConfigEntity offline = existed.toOffline(operator, System.currentTimeMillis());
 
         agentConfigRepository.update(offline);
         saveOrUpdateVersionSnapshot(offline);
-        // 事务提交后再变更运行时状态，避免数据库回滚后内存状态已切换。
+        // Switch runtime state after commit to keep DB/memory consistent.
         runAfterCommit(() -> agentRuntimeRegistry.deactivate(key));
         return requireConfig(key);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public synchronized AgentConfigManageVO rollbackAgentConfig(String agentId, Long targetVersion, String operator) {
+    public synchronized AgentConfigEntity rollbackAgentConfig(String agentId, Long targetVersion, String operator) {
         if (isBlank(agentId)) {
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "agentId is blank");
         }
@@ -355,7 +248,7 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
             throw new AppException(ResponseCode.E0001.getCode(), "target version not found: " + targetVersion);
         }
 
-        AgentConfigManageVO existed = requireConfig(key);
+        AgentConfigEntity existed = requireConfig(key);
         long nextVersion = defaultLong(existed.getCurrentVersion(), 1L) + 1;
 
         ConfigMeta configMeta = resolveConfigMeta(
@@ -366,23 +259,15 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
                 existed.getAgentDesc()
         );
 
-        AgentConfigManageVO rollbackConfig = AgentConfigManageVO.builder()
-                .agentId(key)
-                .appName(configMeta.appName)
-                .agentName(configMeta.agentName)
-                .agentDesc(configMeta.agentDesc)
-                .configJson(targetSnapshot.getConfigJson())
-                .status(STATUS_PUBLISHED)
-                .currentVersion(nextVersion)
-                .publishedVersion(nextVersion)
-                .operator(choose(operator, targetSnapshot.getOperator()))
-                .ownerUserId(resolveOwnerUserId(existed))
-                .sourceType(normalizeSourceType(existed.getSourceType()))
-                .plazaStatus(normalizePlazaStatus(existed.getPlazaStatus()))
-                .plazaPublishTime(existed.getPlazaPublishTime())
-                .createTime(existed.getCreateTime())
-                .updateTime(System.currentTimeMillis())
-                .build();
+        AgentConfigEntity rollbackConfig = existed.toRollbackPublished(
+                configMeta.appName,
+                configMeta.agentName,
+                configMeta.agentDesc,
+                targetSnapshot.getConfigJson(),
+                nextVersion,
+                choose(operator, targetSnapshot.getOperator()),
+                System.currentTimeMillis()
+        );
 
         AiAgentRegisterVO registerVO = agentRuntimeAssembler.assemble(rollbackConfig);
 
@@ -394,106 +279,40 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public synchronized AgentConfigManageVO publishAgentToPlaza(String agentId, String operator) {
+    public synchronized AgentConfigEntity publishAgentToPlaza(String agentId, String operator) {
         if (isBlank(agentId)) {
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "agentId is blank");
         }
 
         String key = agentId.trim();
-        AgentConfigManageVO existed = requireConfig(key);
-        ensurePlazaPermission(existed, operator);
-        if (!STATUS_PUBLISHED.equals(existed.getStatus())) {
-            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "only published agent can be listed in plaza");
-        }
+        AgentConfigEntity existed = requireConfig(key);
+        existed.assertCanOperatePlaza(operator);
+        existed.assertCanBeListedInPlaza();
 
-        AgentConfigManageVO updated = AgentConfigManageVO.builder()
-                .agentId(key)
-                .appName(existed.getAppName())
-                .agentName(existed.getAgentName())
-                .agentDesc(existed.getAgentDesc())
-                .configJson(existed.getConfigJson())
-                .status(existed.getStatus())
-                .currentVersion(existed.getCurrentVersion())
-                .publishedVersion(existed.getPublishedVersion())
-                .operator(choose(operator, existed.getOperator()))
-                .ownerUserId(resolveOwnerUserId(existed))
-                .sourceType(normalizeSourceType(existed.getSourceType()))
-                .plazaStatus(PLAZA_ON)
-                .plazaPublishTime(System.currentTimeMillis())
-                .createTime(existed.getCreateTime())
-                .updateTime(System.currentTimeMillis())
-                .build();
+        long now = System.currentTimeMillis();
+        AgentConfigEntity updated = existed.toPlazaPublished(operator, now, now);
         agentConfigRepository.update(updated);
         return requireConfig(key);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public synchronized AgentConfigManageVO unpublishAgentFromPlaza(String agentId, String operator) {
+    public synchronized AgentConfigEntity unpublishAgentFromPlaza(String agentId, String operator) {
         if (isBlank(agentId)) {
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "agentId is blank");
         }
 
         String key = agentId.trim();
-        AgentConfigManageVO existed = requireConfig(key);
-        ensurePlazaPermission(existed, operator);
+        AgentConfigEntity existed = requireConfig(key);
+        existed.assertCanOperatePlaza(operator);
 
-        AgentConfigManageVO updated = AgentConfigManageVO.builder()
-                .agentId(key)
-                .appName(existed.getAppName())
-                .agentName(existed.getAgentName())
-                .agentDesc(existed.getAgentDesc())
-                .configJson(existed.getConfigJson())
-                .status(existed.getStatus())
-                .currentVersion(existed.getCurrentVersion())
-                .publishedVersion(existed.getPublishedVersion())
-                .operator(choose(operator, existed.getOperator()))
-                .ownerUserId(resolveOwnerUserId(existed))
-                .sourceType(normalizeSourceType(existed.getSourceType()))
-                .plazaStatus(PLAZA_OFF)
-                .plazaPublishTime(null)
-                .createTime(existed.getCreateTime())
-                .updateTime(System.currentTimeMillis())
-                .build();
+        AgentConfigEntity updated = existed.toPlazaUnpublished(operator, System.currentTimeMillis());
         agentConfigRepository.update(updated);
         return requireConfig(key);
     }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean subscribeAgent(String userId, String agentId) {
-        if (isBlank(userId)) {
-            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "userId is blank");
-        }
-        if (isBlank(agentId)) {
-            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "agentId is blank");
-        }
-
-        String normalizedAgentId = agentId.trim();
-        if (!existsInPlaza(normalizedAgentId)) {
-            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "agent is not available in plaza");
-        }
-
-        agentSubscribeRepository.subscribe(userId.trim(), normalizedAgentId);
-        return true;
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean unsubscribeAgent(String userId, String agentId) {
-        if (isBlank(userId)) {
-            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "userId is blank");
-        }
-        if (isBlank(agentId)) {
-            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "agentId is blank");
-        }
-
-        return agentSubscribeRepository.unsubscribe(userId.trim(), agentId.trim());
-    }
-
     @Override
     public synchronized int reloadPublishedAgentRuntime() {
-        List<AgentConfigManageVO> publishedConfigs = agentConfigRepository.queryPublishedList();
+        List<AgentConfigEntity> publishedConfigs = agentConfigRepository.queryPublishedList();
         agentRuntimeRegistry.clear();
 
         if (publishedConfigs == null || publishedConfigs.isEmpty()) {
@@ -501,7 +320,7 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
         }
 
         int loaded = 0;
-        for (AgentConfigManageVO config : publishedConfigs) {
+        for (AgentConfigEntity config : publishedConfigs) {
             try {
                 ConfigMeta configMeta = resolveConfigMeta(
                         config.getAgentId(),
@@ -511,7 +330,7 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
                         config.getAgentDesc()
                 );
 
-                AgentConfigManageVO candidate = AgentConfigManageVO.builder()
+                AgentConfigEntity candidate = AgentConfigEntity.builder()
                         .agentId(config.getAgentId())
                         .appName(configMeta.appName)
                         .agentName(configMeta.agentName)
@@ -531,15 +350,15 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
         return loaded;
     }
 
-    private AgentConfigManageVO requireConfig(String agentId) {
-        AgentConfigManageVO config = agentConfigRepository.queryByAgentId(agentId);
+    private AgentConfigEntity requireConfig(String agentId) {
+        AgentConfigEntity config = agentConfigRepository.queryByAgentId(agentId);
         if (config == null) {
             throw new AppException(ResponseCode.E0001.getCode(), "agent config not found: " + agentId);
         }
         return config;
     }
 
-    private void insertVersionSnapshot(AgentConfigManageVO config) {
+    private void insertVersionSnapshot(AgentConfigEntity config) {
         agentConfigVersionRepository.insert(AgentConfigVersionVO.builder()
                 .agentId(config.getAgentId())
                 .version(config.getCurrentVersion())
@@ -550,7 +369,7 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
                 .build());
     }
 
-    private void saveOrUpdateVersionSnapshot(AgentConfigManageVO config) {
+    private void saveOrUpdateVersionSnapshot(AgentConfigEntity config) {
         agentConfigVersionRepository.saveOrUpdate(AgentConfigVersionVO.builder()
                 .agentId(config.getAgentId())
                 .version(config.getCurrentVersion())
@@ -562,7 +381,7 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
     }
 
     private void runAfterCommit(Runnable runnable) {
-        // 事务中延迟到提交后执行，保证内存态与数据库最终状态一致。
+        // Defer runtime mutation until transaction commit when possible.
         if (TransactionSynchronizationManager.isActualTransactionActive()
                 && TransactionSynchronizationManager.isSynchronizationActive()) {
             TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
@@ -573,36 +392,36 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
             });
             return;
         }
-        // 无事务场景（如应用初始化）直接执行。
+        // Execute directly when there is no active transaction.
         runnable.run();
     }
 
-    private List<AgentConfigManageVO> buildOfficialPlazaAgents() {
+    private List<AgentConfigEntity> buildOfficialPlazaAgents() {
         Map<String, AiAgentConfigTableVO> tables = aiAgentAutoConfigProperties.getTables();
         if (tables == null || tables.isEmpty()) {
             return new ArrayList<>();
         }
 
-        List<AgentConfigManageVO> officialAgents = new ArrayList<>();
+        List<AgentConfigEntity> officialAgents = new ArrayList<>();
         for (AiAgentConfigTableVO table : tables.values()) {
             if (table == null || table.getAgent() == null || isBlank(table.getAgent().getAgentId())) {
                 continue;
             }
 
             AiAgentConfigTableVO.Agent agent = table.getAgent();
-            officialAgents.add(AgentConfigManageVO.builder()
+            officialAgents.add(AgentConfigEntity.builder()
                     .agentId(agent.getAgentId())
                     .appName(StringUtils.defaultString(table.getAppName()))
                     .agentName(StringUtils.defaultString(agent.getAgentName()))
                     .agentDesc(StringUtils.defaultString(agent.getAgentDesc()))
                     .configJson(null)
-                    .status(STATUS_PUBLISHED)
+                    .status(AgentConfigEntity.STATUS_PUBLISHED)
                     .currentVersion(0L)
                     .publishedVersion(0L)
                     .operator(SYSTEM_OPERATOR)
                     .ownerUserId(SYSTEM_OPERATOR)
-                    .sourceType(SOURCE_OFFICIAL)
-                    .plazaStatus(PLAZA_ON)
+                    .sourceType(AgentConfigEntity.SOURCE_OFFICIAL)
+                    .plazaStatus(AgentConfigEntity.PLAZA_ON)
                     .plazaPublishTime(null)
                     .createTime(null)
                     .updateTime(null)
@@ -610,49 +429,6 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
         }
         return officialAgents;
     }
-
-    private boolean existsInPlaza(String agentId) {
-        if (isBlank(agentId)) {
-            return false;
-        }
-        String targetAgentId = agentId.trim();
-        return queryAgentPlazaList().stream().anyMatch(item -> targetAgentId.equals(item.getAgentId()));
-    }
-
-    private void ensurePlazaPermission(AgentConfigManageVO existed, String operator) {
-        if (SOURCE_OFFICIAL.equalsIgnoreCase(normalizeSourceType(existed.getSourceType()))) {
-            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "official agent can not be changed by this api");
-        }
-        if (isBlank(operator)) {
-            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "operator is blank");
-        }
-
-        String owner = resolveOwnerUserId(existed);
-        String currentOperator = operator.trim();
-        if (isBlank(owner) || !owner.equals(currentOperator)) {
-            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "no permission to update plaza status");
-        }
-    }
-
-    private String resolveOwnerUserId(AgentConfigManageVO existed) {
-        return resolveOwnerUserId(existed.getOwnerUserId(), existed.getOperator());
-    }
-
-    private String resolveOwnerUserId(String ownerUserId, String operator) {
-        if (StringUtils.isNotBlank(ownerUserId)) {
-            return ownerUserId.trim();
-        }
-        return trimToEmpty(operator);
-    }
-
-    private String normalizeSourceType(String sourceType) {
-        return StringUtils.isBlank(sourceType) ? SOURCE_USER : sourceType.trim();
-    }
-
-    private String normalizePlazaStatus(String plazaStatus) {
-        return StringUtils.isBlank(plazaStatus) ? PLAZA_OFF : plazaStatus.trim();
-    }
-
     private ConfigMeta resolveConfigMeta(
             String expectedAgentId,
             String configJson,
@@ -690,7 +466,7 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
         );
     }
 
-    private void validateCreateRequest(AgentConfigManageVO request) {
+    private void validateCreateRequest(AgentConfigEntity request) {
         if (request == null) {
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "request is null");
         }
@@ -702,7 +478,7 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
         }
     }
 
-    private void validateUpdateRequest(AgentConfigManageVO request) {
+    private void validateUpdateRequest(AgentConfigEntity request) {
         if (request == null) {
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "request is null");
         }
@@ -740,3 +516,5 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
     }
 
 }
+
+

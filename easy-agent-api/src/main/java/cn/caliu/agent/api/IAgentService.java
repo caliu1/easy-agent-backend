@@ -1,8 +1,11 @@
 package cn.caliu.agent.api;
 
-import cn.caliu.agent.api.dto.*;
+import cn.caliu.agent.api.dto.agent.chat.request.ChatRequestDTO;
+import cn.caliu.agent.api.dto.agent.chat.request.CreateSessionRequestDTO;
+import cn.caliu.agent.api.dto.agent.chat.response.AiAgentConfigResponseDTO;
+import cn.caliu.agent.api.dto.agent.chat.response.ChatResponseDTO;
+import cn.caliu.agent.api.dto.agent.chat.response.CreateSessionResponseDTO;
 import cn.caliu.agent.api.response.Response;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
 import java.util.List;
 
@@ -13,7 +16,5 @@ public interface IAgentService {
     Response<CreateSessionResponseDTO> createSession(CreateSessionRequestDTO requestDTO);
 
     Response<ChatResponseDTO> chat(ChatRequestDTO requestDTO);
-
-    ResponseBodyEmitter chatStream(ChatRequestDTO requestDTO);
 
 }

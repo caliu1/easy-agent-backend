@@ -11,10 +11,6 @@ public interface IChatService {
 
     List<AiAgentConfigTableVO.Agent> queryAiAgentConfigList();
 
-    String createSession(String agentId, String userId);
-
-    List<String> handleMessage(String agentId, String userId, String message);
-
     List<String> handleMessage(String agentId, String userId, String sessionId, String message);
 
     Flowable<Event> handleMessageStream(String agentId, String userId, String sessionId, String message);

@@ -2,6 +2,7 @@ package cn.caliu.agent.test.domain.agent;
 
 import cn.caliu.agent.domain.agent.model.entity.ChatCommandEntity;
 import cn.caliu.agent.domain.agent.service.IChatService;
+import cn.caliu.agent.domain.session.service.ISessionService;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -22,13 +23,16 @@ public class ChatServiceTest {
 
     @Resource
     private IChatService chatService;
+    @Resource
+    private ISessionService sessionService;
 
     @Value("classpath:file/fox_a_ji.jpg")
     private org.springframework.core.io.Resource imageResource;
 
     @Test
     public void test_handleMessage_01() {
-        List<String> message = chatService.handleMessage("100002", "caliu", "你有什么skill");
+        String sessionId = sessionService.createSession("100002", "caliu");
+        List<String> message = chatService.handleMessage("100002", "caliu", sessionId, "你有什么skill");
         // log.info("测试结果:{}", JSON.toJSONString(message));
     }
 
@@ -36,8 +40,7 @@ public class ChatServiceTest {
     public void test_handleMessage_04_withImage() throws IOException {
         String agentId = "100002";
         String userId = "caliu";
-
-        String sessionId = chatService.createSession(agentId, userId);
+        String sessionId = sessionService.createSession(agentId, userId);
 
         ChatCommandEntity chatCommandEntity = ChatCommandEntity.builder()
                 .agentId(agentId)
@@ -45,7 +48,10 @@ public class ChatServiceTest {
                 .sessionId(sessionId)
                 .texts(List.of(new ChatCommandEntity.Content.Text("请识别这个图片。告诉我它是哪个漫画人物，并用一句话描述。")))
                 .files(List.of())
-                .inlineDatas(List.of(new ChatCommandEntity.Content.InlineData(imageResource.getContentAsByteArray(), MimeTypeUtils.IMAGE_PNG_VALUE)))
+                .inlineDatas(List.of(new ChatCommandEntity.Content.InlineData(
+                        imageResource.getContentAsByteArray(),
+                        MimeTypeUtils.IMAGE_PNG_VALUE
+                )))
                 .build();
 
         List<String> message = chatService.handleMessage(chatCommandEntity);
@@ -53,3 +59,4 @@ public class ChatServiceTest {
     }
 
 }
+

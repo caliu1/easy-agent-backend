@@ -1,52 +1,40 @@
 package cn.caliu.agent.domain.agent.service;
 
-import cn.caliu.agent.domain.agent.model.valobj.AgentConfigManageVO;
+import cn.caliu.agent.domain.agent.model.entity.AgentConfigEntity;
 import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryVO;
-import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageResultVO;
+import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryResult;
 
 import java.util.List;
 
 public interface IAgentConfigManageService {
 
-    AgentConfigManageVO createAgentConfig(AgentConfigManageVO request);
+    AgentConfigEntity createAgentConfig(AgentConfigEntity request);
 
-    AgentConfigManageVO updateAgentConfig(AgentConfigManageVO request);
+    AgentConfigEntity updateAgentConfig(AgentConfigEntity request);
 
     boolean deleteAgentConfig(String agentId, String operator);
 
-    AgentConfigManageVO queryAgentConfigDetail(String agentId);
+    AgentConfigEntity queryAgentConfigDetail(String agentId);
 
-    List<AgentConfigManageVO> queryAgentConfigList();
+    List<AgentConfigEntity> queryAgentPlazaList();
 
-    List<AgentConfigManageVO> queryMyAgentConfigList(String userId);
+    AgentConfigPageQueryResult queryAgentConfigPage(AgentConfigPageQueryVO queryVO);
 
-    List<AgentConfigManageVO> queryAgentPlazaList();
+    AgentConfigEntity publishAgentConfig(String agentId, String operator);
 
-    List<AgentConfigManageVO> queryMySubscribedAgentList(String userId);
+    AgentConfigEntity offlineAgentConfig(String agentId, String operator);
 
-    List<AgentConfigManageVO> queryPublishedAgentConfigList();
+    AgentConfigEntity rollbackAgentConfig(String agentId, Long targetVersion, String operator);
 
-    AgentConfigPageResultVO queryAgentConfigPage(AgentConfigPageQueryVO queryVO);
+    AgentConfigEntity publishAgentToPlaza(String agentId, String operator);
 
-    AgentConfigManageVO publishAgentConfig(String agentId, String operator);
-
-    AgentConfigManageVO offlineAgentConfig(String agentId, String operator);
-
-    AgentConfigManageVO rollbackAgentConfig(String agentId, Long targetVersion, String operator);
-
-    AgentConfigManageVO publishAgentToPlaza(String agentId, String operator);
-
-    AgentConfigManageVO unpublishAgentFromPlaza(String agentId, String operator);
-
-    boolean subscribeAgent(String userId, String agentId);
-
-    boolean unsubscribeAgent(String userId, String agentId);
+    AgentConfigEntity unpublishAgentFromPlaza(String agentId, String operator);
 
     /**
-     * 启动或手动触发：从数据库已发布配置重建运行时注册表。
-     *
-     * @return 成功装配并激活的 Agent 数量
+     * 鍚姩鎴栨墜鍔ㄨЕ鍙戯細浠庢暟鎹簱宸插彂甯冮厤缃噸寤鸿繍琛屾椂娉ㄥ唽琛ㄣ€?     *
+     * @return 鎴愬姛瑁呴厤骞舵縺娲荤殑 Agent 鏁伴噺
      */
     int reloadPublishedAgentRuntime();
 
 }
+

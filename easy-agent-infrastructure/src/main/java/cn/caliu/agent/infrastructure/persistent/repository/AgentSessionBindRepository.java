@@ -2,8 +2,8 @@ package cn.caliu.agent.infrastructure.persistent.repository;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import cn.caliu.agent.domain.agent.model.valobj.AgentSessionBindVO;
-import cn.caliu.agent.domain.agent.repository.IAgentSessionBindRepository;
+import cn.caliu.agent.domain.session.model.entity.AgentSessionBindEntity;
+import cn.caliu.agent.domain.session.repository.IAgentSessionBindRepository;
 import cn.caliu.agent.infrastructure.persistent.dao.IAgentSessionBindDao;
 import cn.caliu.agent.infrastructure.persistent.po.AgentSessionBindPO;
 import org.springframework.dao.DuplicateKeyException;
@@ -20,8 +20,8 @@ public class AgentSessionBindRepository implements IAgentSessionBindRepository {
     private IAgentSessionBindDao agentSessionBindDao;
 
     @Override
-    public void bindSession(AgentSessionBindVO bindVO) {
-        // 纯 MP 写法：优先更新，若不存在则插入；并发插入冲突时回退更新。
+    public void bindSession(AgentSessionBindEntity bindVO) {
+        // Upsert semantics: update first, insert when absent, retry update on duplicate insert.
         LocalDateTime now = LocalDateTime.now();
         LambdaUpdateWrapper<AgentSessionBindPO> updateWrapper = new LambdaUpdateWrapper<AgentSessionBindPO>()
                 .eq(AgentSessionBindPO::getSessionId, bindVO.getSessionId())
@@ -46,7 +46,7 @@ public class AgentSessionBindRepository implements IAgentSessionBindRepository {
     }
 
     @Override
-    public AgentSessionBindVO queryBySessionId(String sessionId) {
+    public AgentSessionBindEntity queryBySessionId(String sessionId) {
         LambdaQueryWrapper<AgentSessionBindPO> queryWrapper = new LambdaQueryWrapper<AgentSessionBindPO>()
                 .eq(AgentSessionBindPO::getSessionId, sessionId)
                 .last("LIMIT 1");
@@ -60,7 +60,7 @@ public class AgentSessionBindRepository implements IAgentSessionBindRepository {
         agentSessionBindDao.delete(updateWrapper);
     }
 
-    private AgentSessionBindPO toPO(AgentSessionBindVO source) {
+    private AgentSessionBindPO toPO(AgentSessionBindEntity source) {
         if (source == null) {
             return null;
         }
@@ -72,11 +72,11 @@ public class AgentSessionBindRepository implements IAgentSessionBindRepository {
         return target;
     }
 
-    private AgentSessionBindVO toVO(AgentSessionBindPO source) {
+    private AgentSessionBindEntity toVO(AgentSessionBindPO source) {
         if (source == null) {
             return null;
         }
-        return AgentSessionBindVO.builder()
+        return AgentSessionBindEntity.builder()
                 .sessionId(source.getSessionId())
                 .agentId(source.getAgentId())
                 .configVersion(source.getConfigVersion())
@@ -94,3 +94,4 @@ public class AgentSessionBindRepository implements IAgentSessionBindRepository {
     }
 
 }
+

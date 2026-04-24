@@ -1,6 +1,6 @@
 package cn.caliu.agent.infrastructure.persistent.repository;
 
-import cn.caliu.agent.domain.agent.repository.IAgentSubscribeRepository;
+import cn.caliu.agent.domain.user.repository.IAgentSubscribeRepository;
 import cn.caliu.agent.infrastructure.persistent.dao.IAgentSubscribeDao;
 import cn.caliu.agent.infrastructure.persistent.po.AgentSubscribePO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;

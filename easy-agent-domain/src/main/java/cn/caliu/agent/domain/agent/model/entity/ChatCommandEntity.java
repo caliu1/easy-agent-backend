@@ -1,5 +1,6 @@
 package cn.caliu.agent.domain.agent.model.entity;
 
+import com.google.genai.types.Part;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -72,6 +73,57 @@ public class ChatCommandEntity {
         chatCommandEntity.setTexts(texts);
 
         return chatCommandEntity;
+    }
+
+    public com.google.genai.types.Content toUserContent() {
+        return com.google.genai.types.Content.builder()
+                .role("user")
+                .parts(toParts())
+                .build();
+    }
+
+    public List<Part> toParts() {
+        List<Part> parts = new ArrayList<>();
+        appendTextParts(parts);
+        appendFileParts(parts);
+        appendInlineDataParts(parts);
+        return parts;
+    }
+
+    private void appendTextParts(List<Part> parts) {
+        if (texts == null || texts.isEmpty()) {
+            return;
+        }
+        for (Content.Text text : texts) {
+            if (text == null) {
+                continue;
+            }
+            parts.add(Part.fromText(text.getMessage()));
+        }
+    }
+
+    private void appendFileParts(List<Part> parts) {
+        if (files == null || files.isEmpty()) {
+            return;
+        }
+        for (Content.File file : files) {
+            if (file == null) {
+                continue;
+            }
+            parts.add(Part.fromUri(file.getFileUri(), file.getMimeType()));
+        }
+    }
+
+    private void appendInlineDataParts(List<Part> parts) {
+        if (inlineDatas == null || inlineDatas.isEmpty()) {
+            return;
+        }
+        for (Content.InlineData inlineData : inlineDatas) {
+            if (inlineData == null) {
+                continue;
+            }
+            parts.add(Part.fromBytes(inlineData.getBytes(), inlineData.getMimeType()));
+        }
     }
 
 }

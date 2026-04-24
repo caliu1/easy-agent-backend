@@ -1,34 +1,30 @@
 package cn.caliu.agent.domain.agent.repository;
 
-import cn.caliu.agent.domain.agent.model.valobj.AgentConfigManageVO;
+import cn.caliu.agent.domain.agent.model.entity.AgentConfigEntity;
 import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryVO;
-import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageResultVO;
+import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryResult;
 
 import java.util.List;
 
 /**
- * Agent 当前配置仓储接口。
- */
+ * Agent 褰撳墠閰嶇疆浠撳偍鎺ュ彛銆? */
 public interface IAgentConfigRepository {
 
     boolean exists(String agentId);
 
-    void insert(AgentConfigManageVO config);
+    void insert(AgentConfigEntity config);
 
-    void update(AgentConfigManageVO config);
+    void update(AgentConfigEntity config);
 
     boolean softDelete(String agentId, String operator);
 
-    AgentConfigManageVO queryByAgentId(String agentId);
+    AgentConfigEntity queryByAgentId(String agentId);
 
-    List<AgentConfigManageVO> queryList();
+    List<AgentConfigEntity> queryPublishedList();
 
-    List<AgentConfigManageVO> queryPublishedList();
+    List<AgentConfigEntity> queryPlazaList();
 
-    List<AgentConfigManageVO> queryMyList(String userId);
-
-    List<AgentConfigManageVO> queryPlazaList();
-
-    AgentConfigPageResultVO queryPage(AgentConfigPageQueryVO queryVO);
+    AgentConfigPageQueryResult queryPage(AgentConfigPageQueryVO queryVO);
 
 }
+

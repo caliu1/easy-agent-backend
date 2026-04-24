@@ -2,9 +2,9 @@ package cn.caliu.agent.infrastructure.persistent.repository;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import cn.caliu.agent.domain.agent.model.valobj.AgentConfigManageVO;
+import cn.caliu.agent.domain.agent.model.entity.AgentConfigEntity;
 import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryVO;
-import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageResultVO;
+import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryResult;
 import cn.caliu.agent.domain.agent.repository.IAgentConfigRepository;
 import cn.caliu.agent.infrastructure.persistent.dao.IAgentConfigDao;
 import cn.caliu.agent.infrastructure.persistent.po.AgentConfigPO;
@@ -26,7 +26,6 @@ public class AgentConfigRepository implements IAgentConfigRepository {
 
     private static final String STATUS_PUBLISHED = "PUBLISHED";
     private static final String SOURCE_USER = "USER";
-    private static final String SOURCE_OFFICIAL = "OFFICIAL";
     private static final String PLAZA_ON = "ON";
     private static final String PLAZA_OFF = "OFF";
 
@@ -42,7 +41,7 @@ public class AgentConfigRepository implements IAgentConfigRepository {
     }
 
     @Override
-    public void insert(AgentConfigManageVO config) {
+    public void insert(AgentConfigEntity config) {
         AgentConfigPO po = toPO(config);
         po.setIsDeleted(0);
         if (StringUtils.isBlank(po.getOwnerUserId())) {
@@ -61,7 +60,7 @@ public class AgentConfigRepository implements IAgentConfigRepository {
     }
 
     @Override
-    public void update(AgentConfigManageVO config) {
+    public void update(AgentConfigEntity config) {
         LambdaUpdateWrapper<AgentConfigPO> updateWrapper = new LambdaUpdateWrapper<AgentConfigPO>()
                 .eq(AgentConfigPO::getAgentId, config.getAgentId())
                 .eq(AgentConfigPO::getIsDeleted, 0)
@@ -99,7 +98,7 @@ public class AgentConfigRepository implements IAgentConfigRepository {
     }
 
     @Override
-    public AgentConfigManageVO queryByAgentId(String agentId) {
+    public AgentConfigEntity queryByAgentId(String agentId) {
         LambdaQueryWrapper<AgentConfigPO> queryWrapper = new LambdaQueryWrapper<AgentConfigPO>()
                 .eq(AgentConfigPO::getAgentId, agentId)
                 .eq(AgentConfigPO::getIsDeleted, 0)
@@ -108,19 +107,7 @@ public class AgentConfigRepository implements IAgentConfigRepository {
     }
 
     @Override
-    public List<AgentConfigManageVO> queryList() {
-        LambdaQueryWrapper<AgentConfigPO> queryWrapper = new LambdaQueryWrapper<AgentConfigPO>()
-                .eq(AgentConfigPO::getIsDeleted, 0)
-                .orderByDesc(AgentConfigPO::getUpdateTime);
-        List<AgentConfigPO> poList = agentConfigDao.selectList(queryWrapper);
-        if (poList == null || poList.isEmpty()) {
-            return Collections.emptyList();
-        }
-        return poList.stream().map(this::toVO).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<AgentConfigManageVO> queryPublishedList() {
+    public List<AgentConfigEntity> queryPublishedList() {
         LambdaQueryWrapper<AgentConfigPO> queryWrapper = new LambdaQueryWrapper<AgentConfigPO>()
                 .eq(AgentConfigPO::getIsDeleted, 0)
                 .eq(AgentConfigPO::getStatus, STATUS_PUBLISHED)
@@ -133,30 +120,7 @@ public class AgentConfigRepository implements IAgentConfigRepository {
     }
 
     @Override
-    public List<AgentConfigManageVO> queryMyList(String userId) {
-        if (StringUtils.isBlank(userId)) {
-            return Collections.emptyList();
-        }
-
-        String owner = userId.trim();
-        LambdaQueryWrapper<AgentConfigPO> queryWrapper = new LambdaQueryWrapper<AgentConfigPO>()
-                .eq(AgentConfigPO::getIsDeleted, 0)
-                .orderByDesc(AgentConfigPO::getUpdateTime);
-
-        List<AgentConfigPO> poList = agentConfigDao.selectList(queryWrapper);
-        if (poList == null || poList.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        return poList.stream()
-                .filter(po -> !SOURCE_OFFICIAL.equalsIgnoreCase(StringUtils.defaultString(po.getSourceType())))
-                .filter(po -> owner.equals(resolveOwnerUserId(po)))
-                .map(this::toVO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<AgentConfigManageVO> queryPlazaList() {
+    public List<AgentConfigEntity> queryPlazaList() {
         LambdaQueryWrapper<AgentConfigPO> queryWrapper = new LambdaQueryWrapper<AgentConfigPO>()
                 .eq(AgentConfigPO::getIsDeleted, 0)
                 .eq(AgentConfigPO::getStatus, STATUS_PUBLISHED)
@@ -171,7 +135,7 @@ public class AgentConfigRepository implements IAgentConfigRepository {
     }
 
     @Override
-    public AgentConfigPageResultVO queryPage(AgentConfigPageQueryVO queryVO) {
+    public AgentConfigPageQueryResult queryPage(AgentConfigPageQueryVO queryVO) {
         long pageNo = normalizePageNo(queryVO.getPageNo());
         long pageSize = normalizePageSize(queryVO.getPageSize());
         String agentId = trimToNull(queryVO.getAgentId());
@@ -195,13 +159,13 @@ public class AgentConfigRepository implements IAgentConfigRepository {
                 .eq(StringUtils.isNotBlank(plazaStatus), AgentConfigPO::getPlazaStatus, plazaStatus)
                 .orderByDesc(AgentConfigPO::getUpdateTime);
 
-        // 使用 MP 原生分页查询，避免手写分页 SQL。
+        // Use MyBatis-Plus native pagination to avoid handwritten paging SQL.
         Page<AgentConfigPO> page = agentConfigDao.selectPage(new Page<>(pageNo, pageSize), queryWrapper);
-        List<AgentConfigManageVO> records = page.getRecords() == null
+        List<AgentConfigEntity> records = page.getRecords() == null
                 ? Collections.emptyList()
                 : page.getRecords().stream().map(this::toVO).collect(Collectors.toList());
 
-        return AgentConfigPageResultVO.builder()
+        return AgentConfigPageQueryResult.builder()
                 .pageNo(page.getCurrent())
                 .pageSize(page.getSize())
                 .total(page.getTotal())
@@ -209,7 +173,7 @@ public class AgentConfigRepository implements IAgentConfigRepository {
                 .build();
     }
 
-    private AgentConfigPO toPO(AgentConfigManageVO source) {
+    private AgentConfigPO toPO(AgentConfigEntity source) {
         if (source == null) {
             return null;
         }
@@ -230,11 +194,11 @@ public class AgentConfigRepository implements IAgentConfigRepository {
         return target;
     }
 
-    private AgentConfigManageVO toVO(AgentConfigPO source) {
+    private AgentConfigEntity toVO(AgentConfigPO source) {
         if (source == null) {
             return null;
         }
-        return AgentConfigManageVO.builder()
+        return AgentConfigEntity.builder()
                 .agentId(source.getAgentId())
                 .appName(source.getAppName())
                 .agentName(source.getAgentName())
@@ -297,3 +261,5 @@ public class AgentConfigRepository implements IAgentConfigRepository {
     }
 
 }
+
+

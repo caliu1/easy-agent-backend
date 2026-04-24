@@ -1,0 +1,47 @@
+package cn.caliu.agent.api.application;
+
+import cn.caliu.agent.api.dto.agent.config.request.AgentConfigDeleteRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.response.AgentConfigDetailResponseDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentConfigOfflineRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentConfigPageQueryRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.response.AgentConfigPageResponseDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentConfigPublishRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentConfigRollbackRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentConfigSubscribeRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.response.AgentConfigSummaryResponseDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentConfigUpsertRequestDTO;
+
+import java.util.List;
+
+public interface IAgentConfigApplicationService {
+
+    AgentConfigDetailResponseDTO createAgentConfig(AgentConfigUpsertRequestDTO requestDTO);
+
+    AgentConfigDetailResponseDTO updateAgentConfig(AgentConfigUpsertRequestDTO requestDTO);
+
+    boolean deleteAgentConfig(AgentConfigDeleteRequestDTO requestDTO);
+
+    AgentConfigDetailResponseDTO queryAgentConfigDetail(String agentId);
+
+    List<AgentConfigSummaryResponseDTO> queryAgentPlazaList();
+
+    List<AgentConfigSummaryResponseDTO> queryMySubscribedAgentConfigList(String userId);
+
+    AgentConfigPageResponseDTO queryAgentConfigPage(AgentConfigPageQueryRequestDTO requestDTO);
+
+    AgentConfigDetailResponseDTO publishAgentConfig(AgentConfigPublishRequestDTO requestDTO);
+
+    AgentConfigDetailResponseDTO offlineAgentConfig(AgentConfigOfflineRequestDTO requestDTO);
+
+    AgentConfigDetailResponseDTO rollbackAgentConfig(AgentConfigRollbackRequestDTO requestDTO);
+
+    AgentConfigDetailResponseDTO publishAgentToPlaza(AgentConfigPublishRequestDTO requestDTO);
+
+    AgentConfigDetailResponseDTO unpublishAgentFromPlaza(AgentConfigOfflineRequestDTO requestDTO);
+
+    boolean subscribeAgentConfig(AgentConfigSubscribeRequestDTO requestDTO);
+
+    boolean unsubscribeAgentConfig(AgentConfigSubscribeRequestDTO requestDTO);
+
+}
+
