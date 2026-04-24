@@ -8,5 +8,6 @@ public final class AgentStreamMarker {
     public static final String ROUTE = "[[AGENT_ROUTE]]";
     public static final String REPLY = "[[AGENT_REPLY]]";
     public static final String FINAL = "[[AGENT_FINAL]]";
+    public static final String HISTORY_EVENT = "[[AGENT_HISTORY_EVENT]]";
 
 }

@@ -9,10 +9,8 @@ import cn.caliu.agent.domain.agent.service.armory.factory.DefaultArmoryFactory;
 import cn.caliu.agent.types.enums.ResponseCode;
 import cn.caliu.agent.types.exception.AppException;
 import com.google.adk.agents.BaseAgent;
-import com.google.adk.agents.SequentialAgent;
 import com.google.adk.plugins.BasePlugin;
 import com.google.adk.runner.InMemoryRunner;
-import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 执行节点
@@ -70,19 +69,41 @@ public class RunnerNode extends AbstractArmorySupport {
 
         BaseAgent baseAgent = dynamicContext.getAgentGroup().get(agentName);
 
-        List<BasePlugin> plugins;
+        List<BasePlugin> plugins = new ArrayList<>();
         List<String> pluginNameList = runnerConfig.getPluginNameList();
         if (null != pluginNameList && !pluginNameList.isEmpty()) {
-            plugins = new ArrayList<>();
             for (String pluginName : pluginNameList) {
                 BasePlugin plugin = getBean(pluginName);
-                plugins.add(plugin);
+                addPluginIfAbsent(plugins, plugin);
             }
-        } else {
-            plugins = ImmutableList.of();
         }
 
+        // Token statistics is a cross-cutting concern and should always be enabled.
+        tryAddPluginByBeanName(plugins, "myTokenUsagePlugin");
+
         return new InMemoryRunner(baseAgent, appName, plugins);
+    }
+
+    private void tryAddPluginByBeanName(List<BasePlugin> plugins, String beanName) {
+        try {
+            BasePlugin plugin = getBean(beanName);
+            addPluginIfAbsent(plugins, plugin);
+        } catch (Exception e) {
+            log.warn("Optional plugin not found, beanName:{}", beanName);
+        }
+    }
+
+    private void addPluginIfAbsent(List<BasePlugin> plugins, BasePlugin plugin) {
+        if (plugin == null) {
+            return;
+        }
+
+        boolean exists = plugins.stream()
+                .filter(Objects::nonNull)
+                .anyMatch(item -> StringUtils.equals(item.getName(), plugin.getName()));
+        if (!exists) {
+            plugins.add(plugin);
+        }
     }
 
 

@@ -6,6 +6,8 @@ import cn.caliu.agent.domain.agent.model.valobj.AiAgentConfigTableVO;
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentRegisterVO;
 import cn.caliu.agent.domain.agent.model.valobj.properties.AiAgentAutoConfigProperties;
 import cn.caliu.agent.domain.session.repository.IAgentSessionBindRepository;
+import cn.caliu.agent.domain.session.model.entity.AgentSessionMessageEntity;
+import cn.caliu.agent.domain.session.service.ISessionHistoryService;
 import cn.caliu.agent.domain.agent.service.IChatService;
 import cn.caliu.agent.domain.agent.service.armory.factory.DefaultArmoryFactory;
 import cn.caliu.agent.domain.agent.service.runtime.AgentRuntimeRegistry;
@@ -14,6 +16,7 @@ import cn.caliu.agent.types.exception.AppException;
 import com.google.adk.agents.RunConfig;
 import com.google.adk.events.Event;
 import com.google.adk.runner.InMemoryRunner;
+import com.google.adk.sessions.Session;
 import com.google.genai.types.Content;
 import com.google.genai.types.Part;
 import io.reactivex.rxjava3.core.Flowable;
@@ -23,9 +26,13 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -39,6 +46,8 @@ public class IChatServiceImpl implements IChatService {
     private AgentRuntimeRegistry agentRuntimeRegistry;
     @Resource
     private IAgentSessionBindRepository agentSessionBindRepository;
+    @Resource
+    private ISessionHistoryService sessionHistoryService;
 
     @Override
     public List<AiAgentConfigTableVO.Agent> queryAiAgentConfigList() {
@@ -77,8 +86,9 @@ public class IChatServiceImpl implements IChatService {
     @Override
     public List<String> handleMessage(String agentId, String userId, String sessionId, String message) {
         ResolvedAgentContext resolvedAgentContext = resolveAgentForSession(agentId, userId, sessionId);
-
         InMemoryRunner runner = resolvedAgentContext.registerVO.getRunner();
+        ensureSessionContextRecovered(runner, resolvedAgentContext.registerVO.getAppName(), userId, sessionId, message);
+
         Content userMsg = Content.fromParts(Part.fromText(message));
         Flowable<Event> events = runner.runAsync(userId, sessionId, userMsg);
 
@@ -91,6 +101,7 @@ public class IChatServiceImpl implements IChatService {
     public Flowable<Event> handleMessageStream(String agentId, String userId, String sessionId, String message) {
         ResolvedAgentContext resolvedAgentContext = resolveAgentForSession(agentId, userId, sessionId);
         InMemoryRunner runner = resolvedAgentContext.registerVO.getRunner();
+        ensureSessionContextRecovered(runner, resolvedAgentContext.registerVO.getAppName(), userId, sessionId, message);
 
         RunConfig runConfig = RunConfig.builder()
                 .setStreamingMode(RunConfig.StreamingMode.SSE)
@@ -109,11 +120,159 @@ public class IChatServiceImpl implements IChatService {
 
         Content content = chatCommandEntity.toUserContent();
         InMemoryRunner runner = resolvedAgentContext.registerVO.getRunner();
+        ensureSessionContextRecovered(
+                runner,
+                resolvedAgentContext.registerVO.getAppName(),
+                chatCommandEntity.getUserId(),
+                chatCommandEntity.getSessionId(),
+                extractContentText(content)
+        );
         Flowable<Event> events = runner.runAsync(chatCommandEntity.getUserId(), chatCommandEntity.getSessionId(), content);
 
         List<String> outputs = new ArrayList<>();
         events.blockingForEach(event -> outputs.add(event.stringifyContent()));
         return outputs;
+    }
+
+    private void ensureSessionContextRecovered(
+            InMemoryRunner runner,
+            String appName,
+            String userId,
+            String sessionId,
+            String latestUserInput
+    ) {
+        if (runner == null || StringUtils.isAnyBlank(appName, userId, sessionId)) {
+            return;
+        }
+
+        Session existingSession = findSession(runner, appName, userId, sessionId);
+        if (existingSession != null) {
+            return;
+        }
+
+        Session session = createSessionIfAbsent(runner, appName, userId, sessionId);
+        replaySessionHistory(runner, session, sessionId, latestUserInput);
+        log.info("Recovered session context from persistence, sessionId:{}, replayed", sessionId);
+    }
+
+    private Session findSession(InMemoryRunner runner, String appName, String userId, String sessionId) {
+        try {
+            return runner.sessionService()
+                    .getSession(appName, userId, sessionId, Optional.empty())
+                    .blockingGet();
+        } catch (Exception e) {
+            log.warn("Find session failed, sessionId:{}", sessionId, e);
+            return null;
+        }
+    }
+
+    private Session createSessionIfAbsent(InMemoryRunner runner, String appName, String userId, String sessionId) {
+        Session session = findSession(runner, appName, userId, sessionId);
+        if (session != null) {
+            return session;
+        }
+
+        try {
+            return runner.sessionService()
+                    .createSession(appName, userId, new ConcurrentHashMap<>(), sessionId)
+                    .blockingGet();
+        } catch (Exception e) {
+            Session concurrentSession = findSession(runner, appName, userId, sessionId);
+            if (concurrentSession != null) {
+                return concurrentSession;
+            }
+            throw e;
+        }
+    }
+
+    private void replaySessionHistory(
+            InMemoryRunner runner,
+            Session session,
+            String sessionId,
+            String latestUserInput
+    ) {
+        List<AgentSessionMessageEntity> historyMessages = sessionHistoryService.querySessionMessageList(sessionId);
+        if (historyMessages == null || historyMessages.isEmpty()) {
+            return;
+        }
+
+        int replaySize = historyMessages.size();
+        if (shouldSkipLatestUserMessage(historyMessages, latestUserInput)) {
+            replaySize = replaySize - 1;
+        }
+
+        for (int i = 0; i < replaySize; i++) {
+            Event replayEvent = toReplayEvent(historyMessages.get(i));
+            if (replayEvent == null) {
+                continue;
+            }
+
+            try {
+                runner.sessionService().appendEvent(session, replayEvent).blockingGet();
+            } catch (Exception e) {
+                log.warn("Append replay event failed, sessionId:{}, eventIndex:{}", sessionId, i, e);
+            }
+        }
+    }
+
+    private boolean shouldSkipLatestUserMessage(List<AgentSessionMessageEntity> historyMessages, String latestUserInput) {
+        if (historyMessages == null || historyMessages.isEmpty() || StringUtils.isBlank(latestUserInput)) {
+            return false;
+        }
+
+        AgentSessionMessageEntity tail = historyMessages.get(historyMessages.size() - 1);
+        if (tail == null || !AgentSessionMessageEntity.ROLE_USER.equalsIgnoreCase(tail.getRole())) {
+            return false;
+        }
+
+        return StringUtils.equals(
+                StringUtils.trimToEmpty(tail.getContent()),
+                StringUtils.trimToEmpty(latestUserInput)
+        );
+    }
+
+    private Event toReplayEvent(AgentSessionMessageEntity messageEntity) {
+        if (messageEntity == null || StringUtils.isBlank(messageEntity.getRole()) || StringUtils.isBlank(messageEntity.getContent())) {
+            return null;
+        }
+
+        String role = StringUtils.lowerCase(messageEntity.getRole().trim(), Locale.ROOT);
+        if (AgentSessionMessageEntity.ROLE_SYSTEM.equals(role)) {
+            return null;
+        }
+        if (!AgentSessionMessageEntity.ROLE_USER.equals(role)
+                && !AgentSessionMessageEntity.ROLE_ASSISTANT.equals(role)
+                && !AgentSessionMessageEntity.ROLE_TOOL.equals(role)) {
+            return null;
+        }
+
+        Content content = Content.builder()
+                .role(role)
+                .parts(Collections.singletonList(Part.fromText(messageEntity.getContent())))
+                .build();
+
+        long timestamp = messageEntity.getCreateTime() == null ? System.currentTimeMillis() : messageEntity.getCreateTime();
+        return Event.builder()
+                .id(Event.generateEventId())
+                .author(role)
+                .content(content)
+                .partial(false)
+                .turnComplete(true)
+                .timestamp(timestamp)
+                .build();
+    }
+
+    private String extractContentText(Content content) {
+        if (content == null) {
+            return "";
+        }
+
+        try {
+            return StringUtils.defaultString(content.text());
+        } catch (Exception e) {
+            log.debug("Extract content text failed", e);
+            return "";
+        }
     }
 
     private ResolvedAgentContext resolveAgentForSession(String agentId, String userId, String sessionId) {

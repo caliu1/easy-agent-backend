@@ -16,6 +16,9 @@
               embeddings-path: v1/embeddings
             chat-model:
               model: qwen-plus
+              tool-skills-list:
+                - type: resource
+                  path: agent/skills/drawio-skill
 
             agents:
               - name: SupervisorRouter
@@ -33,6 +36,7 @@
                      - nextAgent=""
                      - reply 直接回答用户，不调用任何子 Agent
                   2) 只有当用户明确要“画图、生成图、流程图、架构图、UML、时序图、draw.io XML”等任务时，才允许 action=route。
+
 
                   【信息不足时的强制交互流程】
                   3) 当识别到“用户有画图需求但关键信息不完整”时，第一步必须 action=final（禁止直接 route）。
@@ -52,20 +56,24 @@
                   7) DrawioXmlBuilder 产出 XML 后 => route 到 QualityReviewer。
                   8) 当已得到可导入 draw.io 的完整 XML（包含 mxfile + diagram + mxGraphModel）且质量可接受 => action=final。
 
+                  【流程图硬规则（强制）】
+                  9) 凡是条件/判断步骤（是否/成功/通过/有效/存在/if），必须使用 decision 菱形节点，不得使用 process 矩形。
+                  10) 每个 decision 节点必须且仅有两条带标签分支（Yes/No 或 Pass/Fail）。
+
                   【防循环硬约束】
-                  9) 禁止在“同一轮用户输入”下连续两次 route 到同一个 nextAgent，尤其是 RequirementAnalyst。
-                  10) 若 RequirementAnalyst 输出 status=need_user_input，必须 action=final 向用户发问，等待用户回复，禁止继续 route。
-                  11) 如果已经路由 >=2 次仍无实质进展，必须 action=final 给用户当前最有用的结果或明确下一步所需信息。
+                  11) 禁止在“同一轮用户输入”下连续两次 route 到同一个 nextAgent，尤其是 RequirementAnalyst。
+                  12) 若 RequirementAnalyst 输出 status=need_user_input，必须 action=final 向用户发问，等待用户回复，禁止继续 route。
+                  13) 如果已经路由 >=2 次仍无实质进展，必须 action=final 给用户当前最有用的结果或明确下一步所需信息。
 
                   【reply 规则（重点优化）】
-                  12) action=route 时，reply 必须是“基于本轮思考与最新结果”的阶段性汇报，不能只写泛化句子。
-                  13) action=route 的 reply 建议 2~4 句，必须包含这三部分：
+                  14) action=route 时，reply 必须是“基于本轮思考与最新结果”的阶段性汇报，不能只写泛化句子。
+                  15) action=route 的 reply 建议 2~4 句，必须包含这三部分：
                       - 已完成内容：本轮具体完成了什么（例如：已明确图类型、已产出节点关系、已完成布局草案）。
                       - 当前结论：提炼 1~3 个关键结果（可引用数量/字段，如节点数、异常分支、页面尺寸等）。
                       - 下一步动作：下一步将产出什么（例如：生成 XML、做语法质检、修复连线）。
-                  14) 禁止仅回复“正在处理/请稍候/进入下一阶段/已收到需求”等空泛话术；必须带事实细节。
-                  15) 如果有待用户确认点（如默认假设、风格偏好冲突），在 reply 最后明确提出 1 个可执行确认问题；若无则不要强行提问。
-                  16) action=final 时，reply 必须是可直接发送给用户的最终内容。
+                  16) 禁止仅回复“正在处理/请稍候/进入下一阶段/已收到需求”等空泛话术；必须带事实细节。
+                  17) 如果有待用户确认点（如默认假设、风格偏好冲突），在 reply 最后明确提出 1 个可执行确认问题；若无则不要强行提问。
+                  18) action=final 时，reply 必须是可直接发送给用户的最终内容。
 
                   【action=route 的 reply 参考风格】
                   - 示例1（需求分析后）：
@@ -113,6 +121,7 @@
                   - 用户只说“画一个XX图”这类粗粒度需求时，通常应输出 status=need_user_input。
                   - 若用户回复“你来补全/按默认继续/你决定”之类授权语句，可直接输出 status=ready，并在 assumptions 中写清默认假设。
                   - 不要编造与用户目标冲突的业务细节；默认补全应保持通用、可解释。
+                  - 若 diagramType=flowchart，凡“条件/判断”语义必须输出 type=decision（菱形），且该 decision 节点必须规划两条带标签分支（Yes/No 或 Pass/Fail）。
 
               - name: DiagramArchitect
                 description: 设计节点布局、连线与样式参数
@@ -140,6 +149,7 @@
                   12) 除“上下严格对齐的单链路”外，每条 edge 必须至少包含 2 个 waypoints。
                   13) 边标签必须短且可读（建议 <= 8 个汉字），放在边中段空白区域。
                   14) 产出前自检：`overlapCount=0`、`outOfBoundsCount=0`、`edgeCrossCount<=2`、`parallelOverlapCount=0`。
+                  15) 流程图中凡条件/判断节点必须为 decision 菱形，并且每个 decision 仅允许两条带标签出边（Yes/No 或 Pass/Fail）。
 
                   输出 JSON schema（严格）：
                   {
@@ -194,6 +204,8 @@
                   7) 边标签尽量短（建议 <= 8 个汉字）；冗长协议说明不要全部堆在边上。
                   8) 如果输入里 overlapCount>0 或 outOfBoundsCount>0 或 parallelOverlapCount>0，先按约束修复布局再生成 XML。
                   9) XML 必须可直接导入 app.diagrams.net，且包含 mxfile/diagram/mxGraphModel/root/mxCell。
+                  10) 流程图中条件/判断节点必须渲染为 decision 菱形样式，不得渲染为 process 矩形。
+                  11) 每个 decision 节点必须且仅有两条带标签分支（Yes/No 或 Pass/Fail）。
 
               - name: QualityReviewer
                 description: 检查 XML 完整性并给出修正版
@@ -211,6 +223,7 @@
                   5) 连线尽量不穿过节点主体；拥挤区域需重布线。
                   6) 平行边不允许长距离重叠：两条边共享同向线段长度 > 120px 记为重叠，必须为 0。
                   7) 同源扇出边必须可区分：至少在一个水平或垂直通道上有明显偏移（>= 40px）。
+                  8) 流程图中凡条件/判断节点必须是 decision 菱形，且每个 decision 节点恰好两条带标签分支（Yes/No 或 Pass/Fail）。
 
                   修复策略（按顺序）：
                   1) 若拥挤或重叠，先将画布宽高扩大 25% 再重排同层节点。
@@ -218,6 +231,7 @@
                   3) 连线改为正交，并为同 routeGroup 的边增加错位 waypoints（偏移建议 ±40/±80/±120）。
                   4) 为边补齐 entry/exit 锚点，避免从节点中心穿越。
                   5) 清理过密边标签，保留必要短标签。
+                  6) 将错误的判断矩形节点修正为 decision 菱形，并补齐/修正两条分支标签。
 
                   最终只返回修复后的 drawio JSON。
 
@@ -239,4 +253,3 @@
               plugin-name-list:
                 - myTestPlugin
                 - myLogPlugin
-

@@ -5,6 +5,7 @@ import cn.caliu.agent.domain.agent.service.armory.factory.DefaultArmoryFactory;
 import cn.caliu.agent.domain.agent.service.runtime.AgentRuntimeRegistry;
 import cn.caliu.agent.domain.session.model.entity.AgentSessionBindEntity;
 import cn.caliu.agent.domain.session.repository.IAgentSessionBindRepository;
+import cn.caliu.agent.domain.session.service.ISessionHistoryService;
 import cn.caliu.agent.domain.session.service.ISessionService;
 import cn.caliu.agent.types.enums.ResponseCode;
 import cn.caliu.agent.types.exception.AppException;
@@ -24,6 +25,8 @@ public class SessionServiceImpl implements ISessionService {
     private AgentRuntimeRegistry agentRuntimeRegistry;
     @Resource
     private IAgentSessionBindRepository agentSessionBindRepository;
+    @Resource
+    private ISessionHistoryService sessionHistoryService;
 
     @Override
     public String createSession(String agentId, String userId) {
@@ -41,6 +44,7 @@ public class SessionServiceImpl implements ISessionService {
                         userId
                 )
         );
+        sessionHistoryService.createSession(session.id(), registerVO.getAgentId(), userId);
         return session.id();
     }
 
@@ -78,4 +82,3 @@ public class SessionServiceImpl implements ISessionService {
     }
 
 }
-

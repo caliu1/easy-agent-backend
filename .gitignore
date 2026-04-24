@@ -2,6 +2,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+**/log
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
@@ -36,3 +37,20 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Local Runtime Logs ###
+data/log/*.log
+data/log/**/*.log
+
+### Local Lock / Temp Files ###
+*.LCK~
+docs/googleadk/.LCKGoogleADK~
+
+### IntelliJ Local State ###
+.idea/workspace.xml
+.idea/dataSources.xml
+.idea/dataSources.local.xml
+.idea/dataSources/
+.idea/sqldialects.xml
+.idea/setting.xml
+.idea/git_toolbox_prj.xml

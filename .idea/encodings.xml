@@ -2,8 +2,6 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/easy-agent-api/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/easy-agent-api/src/main/java/cn/caliu/agent/api/dto/agent/chat/request/ChatRequestDTO.java" charset="ISO-8859-1" />
-    <file url="file://$PROJECT_DIR$/easy-agent-api/src/main/java/cn/caliu/agent/api/dto/agent/chat/request/CreateSessionRequestDTO.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/easy-agent-api/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/easy-agent-app/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/easy-agent-app/src/main/resources" charset="UTF-8" />
@@ -12,7 +10,6 @@
     <file url="file://$PROJECT_DIR$/easy-agent-infrastructure/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/easy-agent-infrastructure/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/easy-agent-trigger/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/easy-agent-trigger/src/main/java/cn/caliu/agent/trigger/http/UserAuthController.java" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/easy-agent-trigger/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/easy-agent-types/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/easy-agent-types/src/main/resources" charset="UTF-8" />

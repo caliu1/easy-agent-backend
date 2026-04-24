@@ -69,6 +69,7 @@ public class ChatModelNode extends AbstractArmorySupport {
                 .openAiApi(openAiApi)
                 .defaultOptions(OpenAiChatOptions.builder()
                         .model(chatModelConfig.getModel())
+                        .streamUsage(true)
                         .toolCallbacks(toolCallbackList)
                         .build())
                 .build();

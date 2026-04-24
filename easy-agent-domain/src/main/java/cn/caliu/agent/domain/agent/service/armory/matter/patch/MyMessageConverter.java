@@ -1,10 +1,15 @@
 package cn.caliu.agent.domain.agent.service.armory.matter.patch;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.adk.models.LlmResponse;
 import com.google.adk.models.LlmRequest;
 import com.google.adk.models.springai.MessageConverter;
+import com.google.genai.types.GenerateContentResponseUsageMetadata;
 import com.google.genai.types.Content;
 import com.google.genai.types.Part;
+import org.springframework.ai.chat.metadata.ChatResponseMetadata;
+import org.springframework.ai.chat.metadata.Usage;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.content.Media;
 import org.springframework.util.MimeType;
@@ -64,6 +69,63 @@ public class MyMessageConverter extends MessageConverter {
         llmPrompt.getUserMessage().getMedia().addAll(mediaList);
 
         return llmPrompt;
+    }
+
+    @Override
+    public LlmResponse toLlmResponse(ChatResponse chatResponse) {
+        return attachUsageMetadata(super.toLlmResponse(chatResponse), chatResponse);
+    }
+
+    @Override
+    public LlmResponse toLlmResponse(ChatResponse chatResponse, boolean stream) {
+        return attachUsageMetadata(super.toLlmResponse(chatResponse, stream), chatResponse);
+    }
+
+    private LlmResponse attachUsageMetadata(LlmResponse source, ChatResponse chatResponse) {
+        if (source == null || chatResponse == null) {
+            return source;
+        }
+
+        ChatResponseMetadata metadata = chatResponse.getMetadata();
+        if (metadata == null) {
+            return source;
+        }
+
+        Usage usage = metadata.getUsage();
+        if (usage == null) {
+            return source;
+        }
+
+        Integer promptTokens = usage.getPromptTokens();
+        Integer completionTokens = usage.getCompletionTokens();
+        Integer totalTokens = usage.getTotalTokens();
+
+        if (totalTokens == null && (promptTokens != null || completionTokens != null)) {
+            totalTokens = defaultInt(promptTokens) + defaultInt(completionTokens);
+        }
+
+        if (promptTokens == null && completionTokens == null && totalTokens == null) {
+            return source;
+        }
+
+        GenerateContentResponseUsageMetadata.Builder usageBuilder = GenerateContentResponseUsageMetadata.builder();
+        if (promptTokens != null) {
+            usageBuilder.promptTokenCount(promptTokens);
+        }
+        if (completionTokens != null) {
+            usageBuilder.candidatesTokenCount(completionTokens);
+        }
+        if (totalTokens != null) {
+            usageBuilder.totalTokenCount(totalTokens);
+        }
+
+        return source.toBuilder()
+                .usageMetadata(usageBuilder.build())
+                .build();
+    }
+
+    private int defaultInt(Integer value) {
+        return value == null ? 0 : value;
     }
 
 }

@@ -2,6 +2,7 @@ package cn.caliu.agent.domain.agent.service.armory.matter.skills.impl;
 
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentConfigTableVO;
 import cn.caliu.agent.domain.agent.service.armory.matter.skills.IToolSkillsCreateService;
+import lombok.extern.slf4j.Slf4j;
 import org.springaicommunity.agent.tools.SkillsTool;
 import org.springframework.ai.tool.ToolCallback;
 import org.springframework.core.io.ClassPathResource;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class DefaultToolSkillsCreateService implements IToolSkillsCreateService {
 
@@ -19,6 +21,8 @@ public class DefaultToolSkillsCreateService implements IToolSkillsCreateService 
         String path = toolSkills.getPath();
 
         List<ToolCallback> toolCallbackList = new ArrayList<>();
+
+        log.info("读取skill");
 
         if (type.equals("resource")){
             ToolCallback toolCallback = SkillsTool.builder()

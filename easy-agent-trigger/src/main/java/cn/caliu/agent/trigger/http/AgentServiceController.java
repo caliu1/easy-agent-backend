@@ -8,6 +8,8 @@ import cn.caliu.agent.api.dto.agent.chat.request.ChatRequestDTO;
 import cn.caliu.agent.api.dto.agent.chat.response.ChatResponseDTO;
 import cn.caliu.agent.api.dto.agent.chat.request.CreateSessionRequestDTO;
 import cn.caliu.agent.api.dto.agent.chat.response.CreateSessionResponseDTO;
+import cn.caliu.agent.api.dto.agent.chat.response.SessionHistoryMessageResponseDTO;
+import cn.caliu.agent.api.dto.agent.chat.response.SessionHistorySummaryResponseDTO;
 import cn.caliu.agent.api.response.Response;
 import cn.caliu.agent.types.enums.ResponseCode;
 import cn.caliu.agent.types.exception.AppException;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -106,6 +109,61 @@ public class AgentServiceController implements IAgentService {
         } catch (Exception e) {
             log.error("chat failed", e);
             return Response.<ChatResponseDTO>builder()
+                    .code(ResponseCode.UN_ERROR.getCode())
+                    .info(ResponseCode.UN_ERROR.getInfo())
+                    .build();
+        }
+    }
+
+    @RequestMapping(value = "query_session_history_list", method = RequestMethod.GET)
+    @Override
+    public Response<List<SessionHistorySummaryResponseDTO>> querySessionHistoryList(
+            @RequestParam("userId") String userId,
+            @RequestParam(value = "agentId", required = false) String agentId
+    ) {
+        try {
+            List<SessionHistorySummaryResponseDTO> sessionList =
+                    agentChatApplicationService.querySessionHistoryList(userId, agentId);
+            return Response.<List<SessionHistorySummaryResponseDTO>>builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .info(ResponseCode.SUCCESS.getInfo())
+                    .data(sessionList)
+                    .build();
+        } catch (AppException e) {
+            log.error("query session history list failed", e);
+            return Response.<List<SessionHistorySummaryResponseDTO>>builder()
+                    .code(e.getCode())
+                    .info(e.getInfo())
+                    .build();
+        } catch (Exception e) {
+            log.error("query session history list failed", e);
+            return Response.<List<SessionHistorySummaryResponseDTO>>builder()
+                    .code(ResponseCode.UN_ERROR.getCode())
+                    .info(ResponseCode.UN_ERROR.getInfo())
+                    .build();
+        }
+    }
+
+    @RequestMapping(value = "query_session_message_list", method = RequestMethod.GET)
+    @Override
+    public Response<List<SessionHistoryMessageResponseDTO>> querySessionMessageList(@RequestParam("sessionId") String sessionId) {
+        try {
+            List<SessionHistoryMessageResponseDTO> messageList =
+                    agentChatApplicationService.querySessionMessageList(sessionId);
+            return Response.<List<SessionHistoryMessageResponseDTO>>builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .info(ResponseCode.SUCCESS.getInfo())
+                    .data(messageList)
+                    .build();
+        } catch (AppException e) {
+            log.error("query session message list failed", e);
+            return Response.<List<SessionHistoryMessageResponseDTO>>builder()
+                    .code(e.getCode())
+                    .info(e.getInfo())
+                    .build();
+        } catch (Exception e) {
+            log.error("query session message list failed", e);
+            return Response.<List<SessionHistoryMessageResponseDTO>>builder()
                     .code(ResponseCode.UN_ERROR.getCode())
                     .info(ResponseCode.UN_ERROR.getInfo())
                     .build();
