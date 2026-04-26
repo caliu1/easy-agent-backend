@@ -28,8 +28,8 @@ Generate importable draw.io XML from natural-language requirements.
 - XML must be directly importable in draw.io.
 - No fake paths and no fake export-success statements.
 - Follow workflow output schema if one is defined by the agent prompt.
-- For this project final render contract, prefer:
-`{"type":"drawio","content":"<mxfile ...>...</mxfile>"}`.
+- For this project final render contract, output raw complete XML string only:
+`<mxfile ...>...</mxfile>`.
 
 ## Draw.io XML Minimum Structure
 Always include:
@@ -48,6 +48,38 @@ Always include:
 - Use orthogonal edges for clarity:
 `edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;`
 - Avoid edge crossing unrelated nodes when possible (use waypoints if needed).
+- Edge anchors must connect on node borders, not centers:
+`exitPerimeter=1;entryPerimeter=1;`
+- Every edge must explicitly include:
+  - `exitX/exitY/entryX/entryY`
+  - `exitPerimeter/entryPerimeter`
+  - do not rely on draw.io default anchor values
+- Do not use center anchor on either side:
+  - forbidden start anchor: `exitX=0.5;exitY=0.5`
+  - forbidden end anchor: `entryX=0.5;entryY=0.5`
+- Edge must be perpendicular to the connected border:
+  - connect top/bottom border => first/last segment vertical
+  - connect left/right border => first/last segment horizontal
+- If waypoints violate the perpendicular rule, regenerate waypoints before output.
+- Anchor-direction consistency is mandatory:
+  - first segment vertical => `fromAnchor` must be `top|bottom`
+  - first segment horizontal => `fromAnchor` must be `left|right`
+  - last segment vertical => `toAnchor` must be `top|bottom`
+  - last segment horizontal => `toAnchor` must be `left|right`
+  - mismatch requires anchor + waypoint repair
+- For fan-in routing, use shared merge bus:
+  - if multiple branches point to one target node, merge first on a shared bus (`fanInBusX` or `fanInBusY`)
+  - then use short straight segment to enter target node from the intended border
+- For cross-column return to sink/terminal nodes, use outer return channel:
+  - leave source node to `outerReturnY` (outside the main chain area)
+  - then horizontal to target column
+  - then vertical into target-node border
+- Obstacle-avoidance is mandatory:
+  - edge path must not pass through any non-source/non-target node body (allow touching only at source/target border)
+  - if crossing exists, regenerate waypoints until no body intersection remains
+- Minimum clearance is mandatory:
+  - except source/target connection segments, every segment should keep >= 20px distance from any node boundary
+  - if clearance is insufficient, expand routing offset and reroute
 
 ## Style Defaults
 - Process/Service: `rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;`
@@ -58,6 +90,9 @@ Always include:
 ## Flowchart Decision Standard (Strict)
 - Any judgment/condition semantics (`if`, `success?`, `pass?`, `exists?`, `valid?`) must be represented as a `Decision` node, not a process rectangle.
 - Decision node must use diamond style (`rhombus;...`).
+- Decision semantics are mandatory-diamond:
+  - if node label contains judgment semantics such as `是否/成功?/失败?/通过?/存在?/有效?/if/else/yes/no/true/false`, it must be diamond
+  - such nodes must not use rounded/process rectangle style
 - Each decision must have exactly two outgoing branches.
 - Branch labels must be explicit and paired, such as `Yes/No` or `Pass/Fail`.
 - If source requirement implies pass/fail but labels are missing, add labels during generation.
@@ -69,3 +104,12 @@ Always include:
 - Labels are concise and readable.
 - Direction and branching logic match user intent.
 - No conditional text should remain inside a plain process rectangle.
+- No edge should connect from/to node center.
+- First and last edge segments must be perpendicular to the connected border.
+- Every edge should include explicit anchor/perimeter fields (no implicit defaults).
+- No edge should pass through unrelated node bodies.
+- Anchor direction should be consistent with first/last segment orientation.
+- Non-terminal segments should keep >= 20px clearance from node boundaries.
+- Multi-branch fan-in to same target should converge via one shared bus, not direct parallel attachments.
+- Cross-column return edges to sink/terminal nodes should use outer return channel (avoid crossing through the main-chain middle area).
+

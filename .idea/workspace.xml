@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d47b6092-ce8b-4d29-912d-c2d167e3c6b2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ac4afb16-ef42-4dbb-99d9-d151d3ad13b8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ac4afb16-ef42-4dbb-99d9-d151d3ad13b8/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ac4afb16-ef42-4dbb-99d9-d151d3ad13b8/storage_v2/_src_/schema/mysql.osA4Bg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ac4afb16-ef42-4dbb-99d9-d151d3ad13b8/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ac4afb16-ef42-4dbb-99d9-d151d3ad13b8/storage_v2/_src_/schema/sys.zb4BAA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/setting.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="d47b6092-ce8b-4d29-912d-c2d167e3c6b2" name="Changes" comment="增加drawio skill, 会话历史由前端转到后端实现">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/log/log_error.log" beforeDir="false" afterPath="$PROJECT_DIR$/data/log/log_error.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/log/log_info.log" beforeDir="false" afterPath="$PROJECT_DIR$/data/log/log_info.log" afterDir="false" />
@@ -26,14 +12,16 @@
       <change beforePath="$PROJECT_DIR$/easy-agent-api/src/main/java/cn/caliu/agent/api/application/IAgentChatApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-api/src/main/java/cn/caliu/agent/api/application/IAgentChatApplicationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/easy-agent-app/src/main/java/cn/caliu/agent/app/service/AgentChatApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-app/src/main/java/cn/caliu/agent/app/service/AgentChatApplicationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/easy-agent-app/src/main/resources/agent/draw-io-agent.yml" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-app/src/main/resources/agent/draw-io-agent.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/agent/service/armory/matter/patch/MyMessageConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/agent/service/armory/matter/patch/MyMessageConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/agent/service/armory/matter/skills/impl/DefaultToolSkillsCreateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/agent/service/armory/matter/skills/impl/DefaultToolSkillsCreateService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/agent/service/armory/node/ChatModelNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/agent/service/armory/node/ChatModelNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/agent/service/armory/node/RunnerNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/agent/service/armory/node/RunnerNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/agent/service/chat/IChatServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/agent/service/chat/IChatServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easy-agent-app/src/main/resources/agent/skills/drawio-skill/SKILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-app/src/main/resources/agent/skills/drawio-skill/SKILL.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/repository/IAgentSessionBindRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/repository/IAgentSessionBindRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/repository/IAgentSessionHistoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/repository/IAgentSessionHistoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/ISessionHistoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/ISessionHistoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/ISessionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/ISessionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/impl/SessionHistoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/impl/SessionHistoryServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/impl/SessionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/impl/SessionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easy-agent-infrastructure/src/main/java/cn/caliu/agent/infrastructure/persistent/repository/AgentSessionBindRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-infrastructure/src/main/java/cn/caliu/agent/infrastructure/persistent/repository/AgentSessionBindRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easy-agent-infrastructure/src/main/java/cn/caliu/agent/infrastructure/persistent/repository/AgentSessionHistoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-infrastructure/src/main/java/cn/caliu/agent/infrastructure/persistent/repository/AgentSessionHistoryRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/easy-agent-trigger/src/main/java/cn/caliu/agent/trigger/http/AgentServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-trigger/src/main/java/cn/caliu/agent/trigger/http/AgentServiceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-types/src/main/java/cn/caliu/agent/types/common/AgentStreamMarker.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-types/src/main/java/cn/caliu/agent/types/common/AgentStreamMarker.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +73,10 @@
     "JUnit.MessageConverterUsageReproTest.executor": "Run",
     "JUnit.MessageConverterUsageReproTest.usageShouldBeMappedFromSpringAiChatResponseToAdkLlmResponse.executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.Application.executor": "Run",
@@ -102,6 +94,9 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RunManager" selected="Spring Boot.Application">
     <configuration name="MessageConverterUsageReproTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="easy-agent-app" />
@@ -205,11 +200,25 @@
       <option name="presentableId" value="Default" />
       <updated>1777049946119</updated>
       <workItem from="1777049947016" duration="73000" />
-      <workItem from="1777050438096" duration="1333000" />
+      <workItem from="1777050438096" duration="2285000" />
+      <workItem from="1777094361097" duration="6245000" />
     </task>
+    <task id="LOCAL-00001" summary="增加drawio skill, 会话历史由前端转到后端实现">
+      <option name="closed" value="true" />
+      <created>1777052980246</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1777052980246</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="增加drawio skill, 会话历史由前端转到后端实现" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加drawio skill, 会话历史由前端转到后端实现" />
   </component>
 </project>

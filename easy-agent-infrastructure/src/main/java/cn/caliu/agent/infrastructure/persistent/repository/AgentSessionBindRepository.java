@@ -6,6 +6,7 @@ import cn.caliu.agent.domain.session.model.entity.AgentSessionBindEntity;
 import cn.caliu.agent.domain.session.repository.IAgentSessionBindRepository;
 import cn.caliu.agent.infrastructure.persistent.dao.IAgentSessionBindDao;
 import cn.caliu.agent.infrastructure.persistent.po.AgentSessionBindPO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 
@@ -57,6 +58,16 @@ public class AgentSessionBindRepository implements IAgentSessionBindRepository {
     public void deleteByAgentId(String agentId) {
         LambdaUpdateWrapper<AgentSessionBindPO> updateWrapper = new LambdaUpdateWrapper<AgentSessionBindPO>()
                 .eq(AgentSessionBindPO::getAgentId, agentId);
+        agentSessionBindDao.delete(updateWrapper);
+    }
+
+    @Override
+    public void deleteBySessionId(String sessionId) {
+        if (StringUtils.isBlank(sessionId)) {
+            return;
+        }
+        LambdaUpdateWrapper<AgentSessionBindPO> updateWrapper = new LambdaUpdateWrapper<AgentSessionBindPO>()
+                .eq(AgentSessionBindPO::getSessionId, sessionId.trim());
         agentSessionBindDao.delete(updateWrapper);
     }
 

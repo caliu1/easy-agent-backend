@@ -70,6 +70,13 @@ public class SessionHistoryServiceImpl implements ISessionHistoryService {
         return agentSessionHistoryRepository.querySessionMessageList(sessionId.trim());
     }
 
+    @Override
+    public boolean deleteSession(String sessionId, String userId) {
+        validateSessionKey(sessionId);
+        validateUserId(userId);
+        return agentSessionHistoryRepository.deleteSession(sessionId.trim(), userId.trim());
+    }
+
     private void appendMessage(String sessionId, String agentId, String userId, String role, String content) {
         if (StringUtils.isBlank(sessionId)) {
             return;

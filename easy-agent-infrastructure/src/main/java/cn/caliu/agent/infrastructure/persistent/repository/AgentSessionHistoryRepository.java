@@ -153,6 +153,33 @@ public class AgentSessionHistoryRepository implements IAgentSessionHistoryReposi
         return poList.stream().map(this::toMessageEntity).collect(Collectors.toList());
     }
 
+    @Override
+    public boolean deleteSession(String sessionId, String userId) {
+        if (StringUtils.isAnyBlank(sessionId, userId)) {
+            return false;
+        }
+
+        AgentSessionHistoryPO ownedSession = agentSessionHistoryDao.selectOne(
+                new LambdaQueryWrapper<AgentSessionHistoryPO>()
+                        .eq(AgentSessionHistoryPO::getSessionId, sessionId.trim())
+                        .eq(AgentSessionHistoryPO::getUserId, userId.trim())
+                        .last("LIMIT 1")
+        );
+        if (ownedSession == null) {
+            return false;
+        }
+
+        LambdaUpdateWrapper<AgentSessionMessagePO> messageDeleteWrapper = new LambdaUpdateWrapper<AgentSessionMessagePO>()
+                .eq(AgentSessionMessagePO::getSessionId, sessionId.trim());
+        agentSessionMessageDao.delete(messageDeleteWrapper);
+
+        LambdaUpdateWrapper<AgentSessionHistoryPO> sessionDeleteWrapper = new LambdaUpdateWrapper<AgentSessionHistoryPO>()
+                .eq(AgentSessionHistoryPO::getSessionId, sessionId.trim())
+                .eq(AgentSessionHistoryPO::getUserId, userId.trim());
+        int affected = agentSessionHistoryDao.delete(sessionDeleteWrapper);
+        return affected > 0;
+    }
+
     private void upsertSessionOnMessage(AgentSessionMessageEntity messageEntity, LocalDateTime now) {
         AgentSessionHistoryPO existing = querySessionRecord(messageEntity.getSessionId());
 

@@ -7,6 +7,7 @@ import cn.caliu.agent.api.dto.agent.chat.request.ChatRequestDTO;
 import cn.caliu.agent.api.dto.agent.chat.response.ChatResponseDTO;
 import cn.caliu.agent.api.dto.agent.chat.event.ChatStreamEventResponseDTO;
 import cn.caliu.agent.api.dto.agent.chat.request.CreateSessionRequestDTO;
+import cn.caliu.agent.api.dto.agent.chat.request.DeleteSessionRequestDTO;
 import cn.caliu.agent.api.dto.agent.chat.response.CreateSessionResponseDTO;
 import cn.caliu.agent.api.dto.agent.chat.response.SessionHistoryMessageResponseDTO;
 import cn.caliu.agent.api.dto.agent.chat.response.SessionHistorySummaryResponseDTO;
@@ -142,6 +143,14 @@ public class AgentChatApplicationService implements IAgentChatApplicationService
                 .stream()
                 .map(this::toSessionHistoryMessageResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Boolean deleteSession(DeleteSessionRequestDTO requestDTO) {
+        if (requestDTO == null) {
+            return false;
+        }
+        return sessionService.deleteSession(requestDTO.getSessionId(), requestDTO.getUserId());
     }
 
     private ChatStreamEventResponseDTO mapToStreamEvent(Event event) {

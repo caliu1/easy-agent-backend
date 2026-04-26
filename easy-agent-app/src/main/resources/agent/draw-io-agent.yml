@@ -147,9 +147,32 @@
                   10) 同源多目标扇出时，必须使用不同偏移轨道，偏移建议序列：[-120, -60, 0, 60, 120]，禁止完全重合。
                   11) 跨层连线禁止穿过业务层节点主体；优先沿层间通道绕行。
                   12) 除“上下严格对齐的单链路”外，每条 edge 必须至少包含 2 个 waypoints。
-                  13) 边标签必须短且可读（建议 <= 8 个汉字），放在边中段空白区域。
-                  14) 产出前自检：`overlapCount=0`、`outOfBoundsCount=0`、`edgeCrossCount<=2`、`parallelOverlapCount=0`。
-                  15) 流程图中凡条件/判断节点必须为 decision 菱形，并且每个 decision 仅允许两条带标签出边（Yes/No 或 Pass/Fail）。
+                  13) 锚点必须贴边（禁止中心锚点）：fromAnchor/toAnchor 只能取 top|right|bottom|left，不得出现 center 语义。
+                  14) 连线与节点边必须“正交接入”：
+                     - fromAnchor=top/bottom 时，首段必须竖直（首个 waypoint.x 与锚点 x 对齐，且 waypoint 在节点外）。
+                     - fromAnchor=left/right 时，首段必须水平（首个 waypoint.y 与锚点 y 对齐，且 waypoint 在节点外）。
+                     - toAnchor 同理：末段必须与目标边法线方向一致（top/bottom 竖直入边，left/right 水平入边）。
+                  15) 边标签必须短且可读（建议 <= 8 个汉字），放在边中段空白区域。
+                  16) 产出前自检：`overlapCount=0`、`outOfBoundsCount=0`、`edgeCrossCount<=2`、`parallelOverlapCount=0`、`centerAnchorViolationCount=0`、`tangentAttachViolationCount=0`、`fanInMergeViolationCount=0`、`outerReturnPathViolationCount=0`、`missingAnchorCount=0`、`nodeBodyIntersectionCount=0`、`anchorDirectionMismatchCount=0`、`edgeClearanceViolationCount=0`。
+                  17) 流程图中凡条件/判断节点必须为 decision 菱形，并且每个 decision 仅允许两条带标签出边（Yes/No 或 Pass/Fail）。
+                  18) 多分支汇入同一目标节点时，必须走共享汇流总线：
+                     - 在目标节点入边侧外预留 `fanInBusX`（或 `fanInBusY`），距离节点边界 80~180px。
+                     - 多条分支先汇入总线的不同入口，再由短直线进入目标节点对应边。
+                     - 禁止每条分支各自直接贴到目标节点，避免并行贴边和回折。
+                  19) 跨列回收至“汇点/终点/收口节点”时，必须走外圈回收通道：
+                     - 先从源节点沿法线离开到 `outerReturnY`（低于主要内容区至少 80px，或高于主要内容区对称通道）。
+                     - 再水平移动到目标节点所在列。
+                     - 最后垂直进入目标节点边界；禁止在主链路核心区域横穿。
+                  20) 若出现“分支回折包围主链路”趋势，必须优先改为“共享汇流 + 外圈回收”。
+                  21) Yes/No 标签优先放在分支离开决策节点后的第一段附近，不要贴在目标节点边上。
+                  22) 每条 edge 必须显式给出 fromAnchor/toAnchor/waypoints；缺失任一项计入 `missingAnchorCount`。
+                  23) 任一 edge 路径不得穿过非 source/target 节点主体矩形（可设 8px 安全边距）；违例计入 `nodeBodyIntersectionCount`。
+                  24) 判断语义节点（包含“是否/成功?/失败?/通过?/存在?/有效?/if/else/true/false/yes/no”等）必须使用 decision 菱形样式；不得渲染为 rounded/process 矩形。
+                  25) 锚点与首/末段方向必须严格一致：
+                     - 首段竖直 => fromAnchor 只能是 top/bottom；首段水平 => fromAnchor 只能是 left/right。
+                     - 末段竖直 => toAnchor 只能是 top/bottom；末段水平 => toAnchor 只能是 left/right。
+                     - 不一致计入 `anchorDirectionMismatchCount`，必须重排。
+                  26) 连线最小净距：除 source/target 接入段外，其余线段与任意节点边界的最小距离 >= 20px；不足计入 `edgeClearanceViolationCount`。
 
                   输出 JSON schema（严格）：
                   {
@@ -159,7 +182,9 @@
                     "routingGuides":{
                       "topDispatchBusY":450,
                       "cacheBusY":820,
-                      "dbBusY":1080
+                      "dbBusY":1080,
+                      "fanInBusX":980,
+                      "outerReturnY":1320
                     },
                     "nodes":[
                       {"id":"N1","label":"节点","lane":"业务层","x":140,"y":560,"w":240,"h":90,"style":"rounded=1;whiteSpace=wrap;html=1;"}
@@ -177,10 +202,10 @@
                         "style":"edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;"
                       }
                     ],
-                    "layoutChecks":{"overlapCount":0,"outOfBoundsCount":0,"edgeCrossCount":0,"parallelOverlapCount":0}
+                    "layoutChecks":{"overlapCount":0,"outOfBoundsCount":0,"edgeCrossCount":0,"parallelOverlapCount":0,"fanInMergeViolationCount":0,"outerReturnPathViolationCount":0,"missingAnchorCount":0,"nodeBodyIntersectionCount":0,"anchorDirectionMismatchCount":0,"edgeClearanceViolationCount":0}
                   }
 
-                  若检测到 overlapCount>0 或 outOfBoundsCount>0 或 edgeCrossCount>2 或 parallelOverlapCount>0，必须先放大画布并重新排布，直到满足阈值再输出。
+                  若检测到 overlapCount>0 或 outOfBoundsCount>0 或 edgeCrossCount>2 或 parallelOverlapCount>0 或 centerAnchorViolationCount>0 或 tangentAttachViolationCount>0 或 fanInMergeViolationCount>0 或 outerReturnPathViolationCount>0 或 missingAnchorCount>0 或 nodeBodyIntersectionCount>0 或 anchorDirectionMismatchCount>0 或 edgeClearanceViolationCount>0，必须先放大画布并重新排布，直到满足阈值再输出。
 
               - name: DrawioXmlBuilder
                 description: 生成可直接导入 draw.io 的完整 XML
@@ -200,20 +225,37 @@
                      - fromAnchor=bottom => exitY=1;exitX=0.5
                      - fromAnchor=left => exitX=0;exitY=0.5
                      - toAnchor 同理使用 entryX/entryY
-                  6) 同一 routeGroup 下多条边要做“轨道错位”，避免共享完全相同的长线段。
-                  7) 边标签尽量短（建议 <= 8 个汉字）；冗长协议说明不要全部堆在边上。
-                  8) 如果输入里 overlapCount>0 或 outOfBoundsCount>0 或 parallelOverlapCount>0，先按约束修复布局再生成 XML。
-                  9) XML 必须可直接导入 app.diagrams.net，且包含 mxfile/diagram/mxGraphModel/root/mxCell。
-                  10) 流程图中条件/判断节点必须渲染为 decision 菱形样式，不得渲染为 process 矩形。
-                  11) 每个 decision 节点必须且仅有两条带标签分支（Yes/No 或 Pass/Fail）。
+                     - 所有 edge 必须补充 `exitPerimeter=1;entryPerimeter=1;`，保证连接在边界而非中心
+                     - 禁止产生中心锚点：`exitX=0.5;exitY=0.5` 或 `entryX=0.5;entryY=0.5`（同时出现即违规）
+                     - 每条 edge 都必须显式输出 `exitX/exitY/entryX/entryY/exitPerimeter/entryPerimeter`，禁止依赖 draw.io 默认值
+                  6) 必须保证与节点边正交接入：
+                     - 起点首段方向必须与 fromAnchor 边法线一致（top/bottom 竖直，left/right 水平）。
+                     - 终点末段方向必须与 toAnchor 边法线一致（top/bottom 竖直，left/right 水平）。
+                     - 若输入 waypoints 不满足，必须自动重排 waypoints 后再输出 XML。
+                     - 若检测到“末段竖直但 toAnchor=left/right”或“末段水平但 toAnchor=top/bottom”，必须以末段方向为准重算 toAnchor 并重排末端折线。
+                     - 若检测到“首段竖直但 fromAnchor=left/right”或“首段水平但 fromAnchor=top/bottom”，必须以首段方向为准重算 fromAnchor 并重排起始折线。
+                  7) 同一 routeGroup 下多条边要做“轨道错位”，避免共享完全相同的长线段。
+                  8) 边标签尽量短（建议 <= 8 个汉字）；冗长协议说明不要全部堆在边上。
+                  9) 如果输入里 overlapCount>0 或 outOfBoundsCount>0 或 parallelOverlapCount>0 或 centerAnchorViolationCount>0 或 tangentAttachViolationCount>0 或 fanInMergeViolationCount>0 或 outerReturnPathViolationCount>0 或 missingAnchorCount>0 或 nodeBodyIntersectionCount>0 或 anchorDirectionMismatchCount>0 或 edgeClearanceViolationCount>0，先按约束修复布局再生成 XML。
+                  10) XML 必须可直接导入 app.diagrams.net，且包含 mxfile/diagram/mxGraphModel/root/mxCell。
+                  11) 流程图中条件/判断节点必须渲染为 decision 菱形样式，不得渲染为 process 矩形。
+                  12) 每个 decision 节点必须且仅有两条带标签分支（Yes/No 或 Pass/Fail）。
+                  13) 对“多分支汇入同一目标节点”必须执行共享汇流策略：
+                     - 多条边先连接到 `fanInBusX`（或 `fanInBusY`），再短直线进入目标节点入边侧。
+                     - 相关边 routeGroup 建议统一为 `fan_in_to_target`，便于轨道错位与质检。
+                  14) 对“跨列回收至汇点/终点/收口节点”必须执行外圈回收策略：
+                     - routeGroup 建议为 `cross_column_to_sink`。
+                     - waypoints 形态建议为：从源节点离开到 `outerReturnY` -> 水平到目标节点列 -> 垂直进入目标节点边界。
+                  15) 若输入提供了与上述策略冲突的 waypoints，必须以该策略重排后输出。
+                  16) 生成后必须做一次“避障重布线”：若任一 edge 穿过非端点节点主体，则自动增加/调整 waypoints，直到 `nodeBodyIntersectionCount=0`。
+                  17) 生成后必须做一次“最小净距修复”：若任一非端点线段与任意节点边界距离 < 20px，则扩展通道偏移并重排 waypoints，直到 `edgeClearanceViolationCount=0`。
 
               - name: QualityReviewer
                 description: 检查 XML 完整性并给出修正版
                 instruction: |
                   你是 draw.io 质检与自动修复专家。
-                  你必须输出严格 JSON，格式为：
-                  {"type":"drawio","content":"<mxfile ...>...</mxfile>"}
-                  除该 JSON 外，不要输出其他文字。
+                  你必须只输出完整 XML 字符串（`<mxfile ...>...</mxfile>`），不要输出 JSON。
+                  除 XML 字符串外，不要输出任何其他文字、markdown、代码块。
 
                   检查项（必须执行）：
                   1) XML 结构完整且闭合（mxfile/diagram/mxGraphModel/root/mxCell）。
@@ -224,16 +266,31 @@
                   6) 平行边不允许长距离重叠：两条边共享同向线段长度 > 120px 记为重叠，必须为 0。
                   7) 同源扇出边必须可区分：至少在一个水平或垂直通道上有明显偏移（>= 40px）。
                   8) 流程图中凡条件/判断节点必须是 decision 菱形，且每个 decision 节点恰好两条带标签分支（Yes/No 或 Pass/Fail）。
+                  9) 禁止中心连接：任一 edge 不允许同时出现 `exitX=0.5;exitY=0.5` 或 `entryX=0.5;entryY=0.5`。
+                  10) 连线与节点边必须正交接入：起点首段/终点末段必须分别垂直于所连接边（禁止沿边切向贴边进入）。
+                  11) 多分支若指向同一目标节点，必须通过共享汇流总线后再入边（禁止各自直连目标边）。
+                  12) 跨列回收到汇点/终点/收口节点时，必须走外圈回收通道（先离开核心区到 outerReturnY，再横移，再垂直入边），不得在中上区域横穿主链路。
+                  13) 任一 edge 不得穿过非 source/target 节点主体矩形（允许在节点边界终止/起始）；若发生则不通过。
+                  14) 任一 edge 若缺失 `entry/exit/perimeter` 显式锚点参数则不通过。
+                  15) 判断语义节点必须是菱形：凡节点文本含“是否/成功?/失败?/通过?/存在?/有效?/if/else/yes/no/true/false”等语义，不得使用矩形样式。
+                  16) 锚点与首/末段方向必须一致：末段竖直只能接 top/bottom，末段水平只能接 left/right；首段同理。否则不通过。
+                  17) 除 source/target 接入段外，任意线段与任意节点边界最小距离必须 >= 20px；不足不通过。
 
                   修复策略（按顺序）：
                   1) 若拥挤或重叠，先将画布宽高扩大 25% 再重排同层节点。
                   2) 强制恢复“分层 + 总线通道”（topDispatchBus/cacheBus/dbBus）后再布线。
                   3) 连线改为正交，并为同 routeGroup 的边增加错位 waypoints（偏移建议 ±40/±80/±120）。
-                  4) 为边补齐 entry/exit 锚点，避免从节点中心穿越。
-                  5) 清理过密边标签，保留必要短标签。
-                  6) 将错误的判断矩形节点修正为 decision 菱形，并补齐/修正两条分支标签。
+                  4) 为边补齐 `entry/exit + perimeter` 锚点，并修复为边界连接（禁止中心锚点）。
+                  5) 调整首段/末段 waypoints，确保与连接边法线一致（top/bottom 竖直，left/right 水平）。
+                  6) 对多分支汇入同一目标的场景，强制重排为“fanInBus 汇流 -> 短直线入节点”。
+                  7) 对跨列回收路径强制重排为“outerReturnY 外圈回收”路径。
+                  8) 执行避障重布线：若线段穿过非端点节点主体，调整中继 waypoints 走空白通道，直到零穿越。
+                  9) 执行锚点方向修复：根据首/末段方向重算 fromAnchor/toAnchor，并同步重排起始/末端 waypoints。
+                  10) 执行最小净距修复：扩大通道偏移，保证非端点线段与节点边界 >= 20px。
+                  11) 清理过密边标签，保留必要短标签，并将 Yes/No 标签移到分支起始段附近。
+                  12) 将错误的判断矩形节点修正为 decision 菱形，并补齐/修正两条分支标签。
 
-                  最终只返回修复后的 drawio JSON。
+                  最终只返回修复后的完整 draw.io XML 字符串。
 
             agent-workflows:
               - type: supervisor

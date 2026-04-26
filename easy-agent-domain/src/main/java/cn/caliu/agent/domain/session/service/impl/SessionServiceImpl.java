@@ -48,6 +48,19 @@ public class SessionServiceImpl implements ISessionService {
         return session.id();
     }
 
+    @Override
+    public boolean deleteSession(String sessionId, String userId) {
+        if (StringUtils.isAnyBlank(sessionId, userId)) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "sessionId/userId is blank");
+        }
+
+        boolean deleted = sessionHistoryService.deleteSession(sessionId.trim(), userId.trim());
+        if (deleted) {
+            agentSessionBindRepository.deleteBySessionId(sessionId.trim());
+        }
+        return deleted;
+    }
+
     private ResolvedAgentContext resolveActiveAgent(String agentId) {
         if (StringUtils.isBlank(agentId)) {
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "agentId is blank");

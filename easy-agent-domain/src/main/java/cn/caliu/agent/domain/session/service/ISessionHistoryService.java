@@ -21,4 +21,6 @@ public interface ISessionHistoryService {
 
     List<AgentSessionMessageEntity> querySessionMessageList(String sessionId);
 
+    boolean deleteSession(String sessionId, String userId);
+
 }

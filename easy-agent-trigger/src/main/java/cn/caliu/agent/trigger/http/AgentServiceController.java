@@ -7,6 +7,7 @@ import cn.caliu.agent.api.dto.agent.chat.response.AiAgentConfigResponseDTO;
 import cn.caliu.agent.api.dto.agent.chat.request.ChatRequestDTO;
 import cn.caliu.agent.api.dto.agent.chat.response.ChatResponseDTO;
 import cn.caliu.agent.api.dto.agent.chat.request.CreateSessionRequestDTO;
+import cn.caliu.agent.api.dto.agent.chat.request.DeleteSessionRequestDTO;
 import cn.caliu.agent.api.dto.agent.chat.response.CreateSessionResponseDTO;
 import cn.caliu.agent.api.dto.agent.chat.response.SessionHistoryMessageResponseDTO;
 import cn.caliu.agent.api.dto.agent.chat.response.SessionHistorySummaryResponseDTO;
@@ -164,6 +165,31 @@ public class AgentServiceController implements IAgentService {
         } catch (Exception e) {
             log.error("query session message list failed", e);
             return Response.<List<SessionHistoryMessageResponseDTO>>builder()
+                    .code(ResponseCode.UN_ERROR.getCode())
+                    .info(ResponseCode.UN_ERROR.getInfo())
+                    .build();
+        }
+    }
+
+    @RequestMapping(value = "delete_session", method = RequestMethod.POST)
+    @Override
+    public Response<Boolean> deleteSession(@RequestBody DeleteSessionRequestDTO requestDTO) {
+        try {
+            Boolean deleted = agentChatApplicationService.deleteSession(requestDTO);
+            return Response.<Boolean>builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .info(ResponseCode.SUCCESS.getInfo())
+                    .data(Boolean.TRUE.equals(deleted))
+                    .build();
+        } catch (AppException e) {
+            log.error("delete session failed", e);
+            return Response.<Boolean>builder()
+                    .code(e.getCode())
+                    .info(e.getInfo())
+                    .build();
+        } catch (Exception e) {
+            log.error("delete session failed", e);
+            return Response.<Boolean>builder()
                     .code(ResponseCode.UN_ERROR.getCode())
                     .info(ResponseCode.UN_ERROR.getInfo())
                     .build();

@@ -13,4 +13,6 @@ public interface IAgentSessionBindRepository {
 
     void deleteByAgentId(String agentId);
 
+    void deleteBySessionId(String sessionId);
+
 }
