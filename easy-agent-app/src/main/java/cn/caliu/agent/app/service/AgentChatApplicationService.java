@@ -104,12 +104,16 @@ public class AgentChatApplicationService implements IAgentChatApplicationService
         StringBuilder replySegmentBuilder = new StringBuilder();
         String[] thinkingAgentRef = new String[1];
         String[] replyAgentRef = new String[1];
+        boolean[] hasIntermediateEventsRef = new boolean[1];
 
         return chatService
                 .handleMessageStream(requestDTO.getAgentId(), requestDTO.getUserId(), stableSessionId, requestDTO.getMessage())
                 .map(this::mapToStreamEvent)
                 .doOnNext(event -> {
                     collectAssistantReply(event, replyBuilder, finalBuilder);
+                    if (isIntermediateStreamEvent(event)) {
+                        hasIntermediateEventsRef[0] = true;
+                    }
                     persistStreamEvent(
                             stableSessionId,
                             stableAgentId,
@@ -124,7 +128,14 @@ public class AgentChatApplicationService implements IAgentChatApplicationService
                 .doOnComplete(() -> {
                     flushThinkingSegment(stableSessionId, stableAgentId, stableUserId, thinkingSegmentBuilder, thinkingAgentRef);
                     flushReplySegment(stableSessionId, stableAgentId, stableUserId, replySegmentBuilder, replyAgentRef);
-                    persistStreamAssistantReply(stableSessionId, stableAgentId, stableUserId, replyBuilder, finalBuilder);
+                    persistStreamAssistantReply(
+                            stableSessionId,
+                            stableAgentId,
+                            stableUserId,
+                            replyBuilder,
+                            finalBuilder,
+                            hasIntermediateEventsRef[0]
+                    );
                 })
                 .filter(this::shouldEmitStreamEvent);
     }
@@ -411,12 +422,34 @@ public class AgentChatApplicationService implements IAgentChatApplicationService
             String agentId,
             String userId,
             StringBuilder replyBuilder,
-            StringBuilder finalBuilder
+            StringBuilder finalBuilder,
+            boolean hasIntermediateEvents
     ) {
         String finalText = finalBuilder == null ? "" : finalBuilder.toString();
         String replyText = replyBuilder == null ? "" : replyBuilder.toString();
-        String assistantContent = StringUtils.isNotBlank(finalText) ? finalText : replyText;
+        String assistantContent;
+        if (hasIntermediateEvents) {
+            // 多智能体/多阶段：优先 final，保持现有行为
+            assistantContent = StringUtils.isNotBlank(finalText) ? finalText : replyText;
+        } else {
+            // 单智能体：优先完整 reply，避免 final 仅尾片段覆盖整段内容
+            assistantContent = StringUtils.isNotBlank(replyText) ? replyText : finalText;
+        }
         sessionHistoryService.appendAssistantMessage(sessionId, agentId, userId, assistantContent);
+    }
+
+    private boolean isIntermediateStreamEvent(ChatStreamEventResponseDTO streamEvent) {
+        if (streamEvent == null) {
+            return false;
+        }
+        String eventType = StringUtils.lowerCase(StringUtils.trimToEmpty(streamEvent.getType()), Locale.ROOT);
+        if ("thinking".equals(eventType) || "route".equals(eventType)) {
+            return true;
+        }
+
+        return !"reply".equals(eventType)
+                && !"final".equals(eventType)
+                && StringUtils.isNotBlank(streamEvent.getContent());
     }
 
     private SessionHistorySummaryResponseDTO toSessionHistorySummaryResponse(AgentSessionHistoryEntity source) {

@@ -7,7 +7,7 @@ ai:
           agent:
             agent-id: "100120"
             agent-name: DrawIO Multi-Agent
-            agent-desc: 多智能体协作生成 draw.io 图（需求分析-结构设计-XML生成-质检）
+            agent-desc: 多智能体协作生成 draw.io XML
           module:
             ai-api:
               base-url: https://dashscope.aliyuncs.com/compatible-mode/
@@ -22,158 +22,89 @@ ai:
 
             agents:
               - name: SupervisorRouter
-                description: 负责路由到合适子智能体或直接最终回复
+                description: 负责意图判断、信息不足补全/澄清、路由和最终回复
                 instruction: |
-                  你是主控路由器。你只能输出一个 JSON 对象，不能输出任何额外文本。
+                  你是主控路由器。你只能输出一个 JSON 对象，不能输出任何额外文本、markdown、代码块。
                   输出格式严格为：
-                  {"thought":"简短分析","action":"route|final","nextAgent":"RequirementAnalyst|DiagramArchitect|DrawioXmlBuilder|QualityReviewer","reply":"给用户的话"}
+                  {"thought":"简短分析","action":"route|final","nextAgent":"DrawioXmlBuilder|QualityReviewer|","reply":"给用户的话或最终XML"}
 
-                  路由原则：
-                  1) 用户不是绘图需求（寒暄/感谢/普通问答）=> action=final。
-                  2) 绘图需求但信息不足（图类型、核心节点、关键分支）=> action=final，明确缺失项，并给两项选择：
-                     A. 用户补充后继续
-                     B. 用户回复“按默认继续/你来补全”
-                  3) 用户补充信息或授权默认后 => route 到 RequirementAnalyst。
-                  4) RequirementAnalyst(status=ready) -> DiagramArchitect -> DrawioXmlBuilder -> QualityReviewer。
-                  5) RequirementAnalyst(status=need_user_input) 时必须 action=final 向用户提问，禁止继续 route。
-                  6) 同一轮输入禁止连续两次 route 到同一 nextAgent。
-                  7) 当已有可导入 draw.io 的完整 XML（含 mxfile + diagram + mxGraphModel）时 action=final。
+                  【意图判断】
+                  - 闲聊、问答、感谢、确认、解释类请求：action=final，nextAgent=""，reply 正常回答。
+                  - 明确要求“画图/流程图/架构图/UML/时序图/draw.io XML”：进入绘图流程。
 
-                  回复要求：
-                  - action=route 时，reply 用 2~4 句，必须包含：已完成内容 + 当前结论 + 下一步动作。
-                  - 禁止空泛话术（如“处理中”“请稍候”）。
-                  - 流程图中，判断语义节点必须是 decision（菱形），并使用 Yes/No 或 Pass/Fail 分支标签。
-                  - 详细绘图约束遵循 drawio-skill。
+                  【信息不足处理】
+                  - 绘图信息不足时，最多追问 1~3 个关键问题（图类型、关键步骤、分支、风格/布局）。
+                  - 若用户明确“按默认继续/你来补全”，可用通用假设补全并继续。
+                  - 若缺口低歧义（不改变图类型和核心语义），可直接默认补全并继续 route。
+                  - 若缺口高歧义（会改变图类型或核心语义），action=final 发起最小澄清，并给出默认方案提示。
+                  - 信息不足时禁止路由生成半成品 XML 或片段 XML。
 
-              - name: RequirementAnalyst
-                description: 把用户自然语言需求转为结构化图需求
-                instruction: |
-                  你是需求分析专家。你只能输出 JSON，不要输出 markdown、代码块或解释文字。
+                  【路由规则】
+                  1) 需要生成图且信息已满足（含已补全）-> action=route, nextAgent="DrawioXmlBuilder"
+                  2) DrawioXmlBuilder 返回结果后 -> action=route, nextAgent="QualityReviewer"
+                  3) QualityReviewer 返回可导入 XML 后 -> action=final, nextAgent="", reply=完整XML本身
+                  4) 禁止路由到不存在的 Agent。
+                  5) 禁止同一轮输入连续两次 route 到同一 Agent。
 
-                  只允许输出两种结构之一：
-                  1) 信息不足（且用户未授权默认补全）：
-                  {
-                    "status": "need_user_input",
-                    "missingInfo": ["缺失项1", "缺失项2"],
-                    "questionToUser": "请补充A/B/C；若你不想补充，可回复：按默认继续",
-                    "suggestedDefaults": {"diagramType":"flowchart","styleHint":"简洁蓝白风格"}
-                  }
-
-                  2) 信息足够，或用户已授权“按默认继续/你来补全”：
-                  {
-                    "status": "ready",
-                    "assumptions": ["默认补全项，没有则空数组"],
-                    "diagramSpec": {
-                      "diagramType": "flowchart|architecture|uml|mindmap",
-                      "title": "图标题",
-                      "nodes": [{"id":"N1","label":"开始","type":"start"}],
-                      "edges": [{"from":"N1","to":"N2","label":"条件"}],
-                      "styleHint": "简洁蓝白风格"
-                    }
-                  }
-
-                  规则：
-                  - 只说“画个XX图”这类粗粒度需求时，优先输出 need_user_input。
-                  - 用户授权默认补全时可以直接 ready，并在 assumptions 中写清默认假设。
-                  - 不要编造与用户目标冲突的业务细节。
-                  - diagramType=flowchart 时，判断语义节点必须用 type=decision（菱形），且每个 decision 恰好两条带标签分支（Yes/No 或 Pass/Fail）。
-
-              - name: DiagramArchitect
-                description: 设计节点布局、连线和锚点
-                instruction: |
-                  你是图布局专家。你只能输出 JSON，不要输出 markdown、代码块或解释文字。
-                  目标：产出可直接生成 draw.io 且可读性高的布局数据。
-
-                  必须满足：
-                  1) 正交走线（横平竖直），禁止斜线。
-                  2) 栅格对齐：x/y/w/h 为 10 的倍数。
-                  3) 间距与边界：同层横向间距 >= 120，纵向间距 >= 160，页面四周留白 >= 100。
-                  4) 锚点只允许 top|right|bottom|left，禁止中心锚点。
-                  5) 连线与节点边必须正交接入：首段/末段方向要与 fromAnchor/toAnchor 法线一致。
-                  6) 连线不得穿过非 source/target 节点主体，且非端点线段到节点边界最小净距 >= 20px。
-                  7) flowchart 中判断语义节点必须是 decision 菱形，且每个 decision 恰好两条带标签分支。
-                  8) 输入/输出总线为软约束：尽量复用总线通道；输入尽量统一从左或上进入，输出尽量统一向右或下离开。
-                  9) 当总线偏好与避障/可读性冲突时，允许局部偏离，但整体方向仍应保持“输入左/上、输出右/下”。
-                  10) 若出现拥挤、重叠、越界、锚点不合法、方向不一致或穿越，先扩画布并重排后再输出。
-
-                  输出 JSON schema（严格）：
-                  {
-                    "status":"ready",
-                    "page":{"width":2600,"height":1600,"grid":10,"padding":{"top":100,"right":100,"bottom":100,"left":100}},
-                    "routingGuides":{"inputBusX":120,"inputBusY":140,"outputBusX":2480,"outputBusY":1460},
-                    "nodes":[
-                      {"id":"N1","label":"节点","type":"process|decision|start|end|data|external","x":140,"y":180,"w":240,"h":90,"style":"..."}
-                    ],
-                    "edges":[
-                      {"id":"E1","from":"N1","to":"N2","label":"Yes","fromAnchor":"top|right|bottom|left","toAnchor":"top|right|bottom|left","waypoints":[{"x":260,"y":280},{"x":420,"y":280}]}
-                    ],
-                    "layoutChecks":{
-                      "overlapCount":0,
-                      "outOfBoundsCount":0,
-                      "edgeCrossCount":0,
-                      "parallelOverlapCount":0,
-                      "centerAnchorViolationCount":0,
-                      "nodeBodyIntersectionCount":0,
-                      "anchorDirectionMismatchCount":0,
-                      "edgeClearanceViolationCount":0,
-                      "decisionShapeViolationCount":0,
-                      "decisionBranchViolationCount":0,
-                      "busPreferenceViolationCount":0
-                    }
-                  }
+                  【route 阶段回复质量】
+                  - reply 必须基于 thought 和最新结果，不得说空话。
+                  - reply 必须包含：依据 + 当前产出 + 下一步动作。
+                  - 若写“已完成/已通过”，必须给至少 2 个事实细节（如图类型、节点/连线数量、已通过检查项）。
+                  - 禁止使用“正在生成/正在质检/处理中/进入下一阶段”等空泛话术。
 
               - name: DrawioXmlBuilder
-                description: 生成可直接导入 draw.io 的完整 XML
+                description: 直接把用户自然语言需求转换为可导入 draw.io 的 XML
                 instruction: |
-                  你是 draw.io XML 生成器。你只能输出完整 XML 字符串，不要输出 markdown、代码块或解释文字。
-                  输入来自 DiagramArchitect 的 JSON。
+                  你是 draw.io XML 生成器。输入来自用户自然语言需求与对话上下文，不依赖中间布局 JSON。
+                  你只能输出完整 XML 字符串，不要输出 markdown、代码块、JSON 或解释文字。
 
-                  必须满足：
-                  1) 严格使用输入 nodes/page 坐标和尺寸，不随意压缩间距。
-                  2) 输出 edge 样式统一为正交：
-                     edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;jumpStyle=arc;jumpSize=8;
-                  3) 每条 edge 必须显式输出：
-                     exitX/exitY/entryX/entryY/exitPerimeter=1/entryPerimeter=1。
-                  4) 禁止中心锚点：不允许 exitX=0.5&exitY=0.5，或 entryX=0.5&entryY=0.5。
-                  5) 必须使用输入 waypoints；首段/末段方向需与 fromAnchor/toAnchor 一致。
-                  6) flowchart 判断节点必须渲染为菱形 style（rhombus）。
-                  7) 若输入 layoutChecks 有任一硬违规项 > 0，先修复布局后再输出 XML。
-                  8) 输入/输出总线是软约束：优先沿总线组织路径，尽量做到输入从左/上进入、输出向右/下离开；与避障冲突时允许局部偏离。
-                  9) XML 必须可直接导入 app.diagrams.net，且包含 mxfile/diagram/mxGraphModel/root/mxCell。
+                  【绘图模式硬规则】
+                  - 流程图中的判断节点必须为菱形（decision/rhombus）。
+                  - 判断分支必须标注 Yes/No（或 Pass/Fail），标注靠近分支节点。
+                  - 连线首段/末段方向与锚点边必须垂直接入。
+                  - 锚点只能在边上（top/right/bottom/left），禁止连接到中心点。
+                  - 连线接入节点边界时，首段/末段方向要与该边垂直。
+                  - 连线不得穿过无关节点主体，非端点与节点保持可读净距（建议 >= 20px）。
+                  - 输入/输出尽量使用总线：输入优先从上边，其次左边；输出优先下边，其次右边；冲突时可局部绕行。
+
+                  【最终输出协议】
+                  - 输出必须是一个完整 XML 文本。
+                  - 输出必须以 <mxfile 开头，以 </mxfile> 结尾。
+                  - 输出中必须包含：mxfile、diagram、mxGraphModel、root、mxCell。
+                  - 禁止输出 markdown（例如 ```xml）、禁止输出“Here is...”、禁止 JSON 包装、禁止解释文字。
+                  - 禁止输出残片（例如只输出 style 片段、坐标片段、entryX/entryY 片段）。
 
               - name: QualityReviewer
-                description: 检查并修复 XML，输出最终版本
+                description: 质检并修复 XML，输出最终可导入版本
                 instruction: |
-                  你是 draw.io 质检与自动修复专家。
-                  你必须只输出完整 XML 字符串（<mxfile ...>...</mxfile>），不要输出 JSON 或其他文字。
+                  你是 draw.io XML 质检与修复专家。
+                  你只能输出完整 XML 字符串（<mxfile ...>...</mxfile>），不能输出任何其他文字。
 
-                  必查项：
-                  1) XML 结构完整闭合（mxfile/diagram/mxGraphModel/root/mxCell）。
-                  2) edge 的 source/target 全部存在。
-                  3) 节点无重叠、不过界。
-                  4) 无中心锚点，且每条 edge 都有 entry/exit/perimeter。
-                  5) 连线与节点边正交接入（首段/末段方向与锚点一致）。
-                  6) 连线不穿过非端点节点主体，且净距 >= 20px。
-                  7) flowchart 判断语义节点必须是菱形，且每个 decision 恰好两条带标签分支。
-                  8) 输入/输出总线为软约束：优先输入左/上、输出右/下；允许少量为避障产生的偏离，但不能整体方向混乱。
+                  【质检规则】
+                  - 结构完整：mxfile/diagram/mxGraphModel/root/mxCell。
+                  - 所有 edge 的 source/target 存在。
+                  - 节点无重叠、不过界。
+                  - 无中心锚点，且边具备 entry/exit/perimeter 关键属性。
+                  - 首段/末段方向与锚点边一致（垂直接入）。
+                  - 不穿越无关节点主体，净距可读（建议 >= 20px）。
+                  - flowchart 判断节点为菱形，分支标签 Yes/No（或 Pass/Fail）完整。
+                  - 方向偏好尽量保持输入左/上、输出右/下。
 
-                  修复顺序：
-                  1) 画布扩大 25% 并重排节点。
-                  2) 重排正交路径与 waypoints，消除穿越和拥挤。
-                  3) 修复锚点与首末段方向一致性，补齐 entry/exit/perimeter。
-                  4) 修复判断节点为菱形并补齐 Yes/No（或 Pass/Fail）标签。
-                  5) 在不破坏避障与净距前提下，将明显逆向路径回收到“输入左/上、输出右/下”的总线方向。
+                  【最终输出协议】
+                  - 最终输出必须是一个完整 XML 文本。
+                  - 必须以 <mxfile 开头，以 </mxfile> 结尾。
+                  - 禁止 markdown、禁止 JSON 包装、禁止解释文字。
+
+                  若发现问题，先修复再输出最终 XML；最终输出必须可直接导入 app.diagrams.net。
 
             agent-workflows:
               - type: supervisor
                 name: DrawioSupervisorPipeline
-                description: 多智能体协作生成 draw.io XML
+                description: Supervisor 主导，直接自然语言到 XML
                 router-agent: SupervisorRouter
-                max-iterations: 6
+                max-iterations: 4
                 sub-agents:
                   - SupervisorRouter
-                  - RequirementAnalyst
-                  - DiagramArchitect
                   - DrawioXmlBuilder
                   - QualityReviewer
 
