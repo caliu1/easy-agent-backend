@@ -4,24 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d47b6092-ce8b-4d29-912d-c2d167e3c6b2" name="Changes" comment="增加drawio skill, 会话历史由前端转到后端实现">
+    <list default="true" id="d47b6092-ce8b-4d29-912d-c2d167e3c6b2" name="Changes" comment="增加会话删除，优化drawio多智能体提示词">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/log/log_error.log" beforeDir="false" afterPath="$PROJECT_DIR$/data/log/log_error.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/log/log_info.log" beforeDir="false" afterPath="$PROJECT_DIR$/data/log/log_info.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-api/src/main/java/cn/caliu/agent/api/IAgentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-api/src/main/java/cn/caliu/agent/api/IAgentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-api/src/main/java/cn/caliu/agent/api/application/IAgentChatApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-api/src/main/java/cn/caliu/agent/api/application/IAgentChatApplicationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-app/src/main/java/cn/caliu/agent/app/service/AgentChatApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-app/src/main/java/cn/caliu/agent/app/service/AgentChatApplicationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/easy-agent-app/src/main/resources/agent/draw-io-agent.yml" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-app/src/main/resources/agent/draw-io-agent.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/easy-agent-app/src/main/resources/agent/skills/drawio-skill/SKILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-app/src/main/resources/agent/skills/drawio-skill/SKILL.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/repository/IAgentSessionBindRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/repository/IAgentSessionBindRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/repository/IAgentSessionHistoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/repository/IAgentSessionHistoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/ISessionHistoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/ISessionHistoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/ISessionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/ISessionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/impl/SessionHistoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/impl/SessionHistoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/impl/SessionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-domain/src/main/java/cn/caliu/agent/domain/session/service/impl/SessionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-infrastructure/src/main/java/cn/caliu/agent/infrastructure/persistent/repository/AgentSessionBindRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-infrastructure/src/main/java/cn/caliu/agent/infrastructure/persistent/repository/AgentSessionBindRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-infrastructure/src/main/java/cn/caliu/agent/infrastructure/persistent/repository/AgentSessionHistoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-infrastructure/src/main/java/cn/caliu/agent/infrastructure/persistent/repository/AgentSessionHistoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/easy-agent-trigger/src/main/java/cn/caliu/agent/trigger/http/AgentServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-trigger/src/main/java/cn/caliu/agent/trigger/http/AgentServiceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/easy-agent-app/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/easy-agent-app/src/main/resources/application-dev.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +190,7 @@
       <updated>1777049946119</updated>
       <workItem from="1777049947016" duration="73000" />
       <workItem from="1777050438096" duration="2285000" />
-      <workItem from="1777094361097" duration="6245000" />
+      <workItem from="1777094361097" duration="15686000" />
     </task>
     <task id="LOCAL-00001" summary="增加drawio skill, 会话历史由前端转到后端实现">
       <option name="closed" value="true" />
@@ -211,7 +200,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777052980246</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="增加会话删除，优化drawio多智能体提示词">
+      <option name="closed" value="true" />
+      <created>1777187536060</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1777187536060</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,6 +216,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="增加drawio skill, 会话历史由前端转到后端实现" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加drawio skill, 会话历史由前端转到后端实现" />
+    <MESSAGE value="增加会话删除，优化drawio多智能体提示词" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加会话删除，优化drawio多智能体提示词" />
   </component>
 </project>

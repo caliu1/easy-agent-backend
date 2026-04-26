@@ -22,6 +22,7 @@ spring:
       - classpath:agent/agent-config-writer-agent.yml
       - classpath:agent/test-supervisor-agent.yml
       - classpath:agent/draw-io-agent.yml
+      - classpath:agent/draw-io-single-agent.yml
   datasource:
     username: root
     password: 1234

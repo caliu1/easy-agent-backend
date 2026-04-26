@@ -80,6 +80,11 @@ Always include:
 - Minimum clearance is mandatory:
   - except source/target connection segments, every segment should keep >= 20px distance from any node boundary
   - if clearance is insufficient, expand routing offset and reroute
+- Input/output bus is a soft preference:
+  - prefer reusing shared bus channels for readability
+  - input edges should mostly enter from left or top
+  - output edges should mostly leave to right or bottom
+  - if obstacle avoidance conflicts with this preference, allow local deviation but keep overall direction consistent
 
 ## Style Defaults
 - Process/Service: `rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;`
@@ -88,10 +93,10 @@ Always include:
 - External: `rounded=1;dashed=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;`
 
 ## Flowchart Decision Standard (Strict)
-- Any judgment/condition semantics (`if`, `success?`, `pass?`, `exists?`, `valid?`) must be represented as a `Decision` node, not a process rectangle.
+- Any judgment/condition semantics (`if`, `success?`, `pass?`, `exists?`, `valid?`, `是否`) must be represented as a `Decision` node, not a process rectangle.
 - Decision node must use diamond style (`rhombus;...`).
 - Decision semantics are mandatory-diamond:
-  - if node label contains judgment semantics such as `是否/成功?/失败?/通过?/存在?/有效?/if/else/yes/no/true/false`, it must be diamond
+  - if node label contains judgment semantics such as success?/pass?/fail?/exists?/valid?/if/else/yes/no/true/false, it must be diamond
   - such nodes must not use rounded/process rectangle style
 - Each decision must have exactly two outgoing branches.
 - Branch labels must be explicit and paired, such as `Yes/No` or `Pass/Fail`.
@@ -112,4 +117,5 @@ Always include:
 - Non-terminal segments should keep >= 20px clearance from node boundaries.
 - Multi-branch fan-in to same target should converge via one shared bus, not direct parallel attachments.
 - Cross-column return edges to sink/terminal nodes should use outer return channel (avoid crossing through the main-chain middle area).
+- Prefer bus-oriented direction globally: inputs mostly from left/top, outputs mostly to right/bottom (allow small local exceptions for obstacle avoidance).
 
