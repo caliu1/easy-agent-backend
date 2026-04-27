@@ -3,7 +3,7 @@ export REGISTRY="crpi-ba7wjcrt7x2afxv7.cn-hangzhou.personal.cr.aliyuncs.com"   #
 export NAMESPACE="aliyun_caliu"
 export BACKEND_REPO="easy-agent-backend"
 #export FRONTEND_REPO="easy-agent-frontend"
-export TAG="1.4"
+export TAG="1.4.1"
 
 
 

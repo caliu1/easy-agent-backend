@@ -10,14 +10,13 @@
 
 ---
 
-## v1.4 重点更新
+## v1.5 重点更新
 
-- 完成 API / APP / DOMAIN / INFRA / TRIGGER / TYPES 六层职责收敛
-- 领域按业务上下文拆分为 `agent`、`user`、`session`
-- 配置查询入口统一：保留分页查询，移除冗余列表查询接口
-- 引入 `UserId` 值对象，统一用户 ID 规范化与校验
-- 清理遗留 VO（弃用模型移除），降低领域噪声
-- API DTO 按业务域重组到 `agent/*`、`user/*`
+- 多智能体流程精简为 `SupervisorRouter -> DrawioXmlBuilder -> QualityReviewer`
+- 移除 `RequirementAnalyst`、`DiagramArchitect`，改为自然语言直接生成 XML
+- `SupervisorRouter` 增强信息不足处理：支持缺口识别、默认补全、最小澄清提问
+- 强化阶段回复质量：必须给出“依据 + 当前产出 + 下一步”，禁止空话式状态播报
+- 绘图输出协议统一：仅输出可导入的完整 `mxfile` XML，禁止片段输出
 
 ---
 
@@ -149,10 +148,6 @@ npm run dev
 - [v1.2](./docs/changelog/v1.2.md)
 - [v1.3](./docs/changelog/v1.3.md)
 - [v1.4](./docs/changelog/v1.4.md)
+- [v1.5](./docs/changelog/v1.5.md)
 
 ---
-
-## 9. License
-
-请以仓库中的 `LICENSE` 文件为准。
-
