@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
+/**
+ * 用户认证 HTTP 控制器。
+ *
+ * 提供用户注册与登录接口，返回统一认证响应。
+ */
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/")
@@ -70,4 +75,3 @@ public class UserAuthController implements IUserAuthService {
     }
 
 }
-

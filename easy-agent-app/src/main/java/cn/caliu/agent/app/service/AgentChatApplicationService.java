@@ -31,6 +31,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * 聊天应用服务实现。
+ *
+ * 主要职责：
+ * 1. 编排会话创建与消息收发。
+ * 2. 将 ADK 原始 Event 映射为前端可识别的流式事件类型。
+ * 3. 按事件粒度落库存储（thinking/route/reply/final），支撑历史还原。
+ */
 @Service
 public class AgentChatApplicationService implements IAgentChatApplicationService {
 

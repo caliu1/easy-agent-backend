@@ -1,6 +1,9 @@
 package cn.caliu.agent.domain.user.repository;
 
 import cn.caliu.agent.domain.user.model.entity.UserAccountEntity;
+/**
+ * IUserAccountRepository 领域仓储接口。
+ */
 
 public interface IUserAccountRepository {
 

@@ -7,6 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+/**
+ * AgentSessionMessagePO 持久化对象，对应数据库表结构。
+ */
 
 @Data
 @TableName("ai_agent_session_message")

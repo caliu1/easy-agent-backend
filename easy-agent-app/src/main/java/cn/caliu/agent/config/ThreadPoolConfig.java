@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.concurrent.*;
+/**
+ * ThreadPoolConfig 配置类。
+ */
 
 @Slf4j
 @EnableAsync

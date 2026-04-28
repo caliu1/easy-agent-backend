@@ -18,6 +18,9 @@ import org.springframework.ai.chat.prompt.Prompt;
 import reactor.core.publisher.Flux;
 
 import java.util.Objects;
+/**
+ * MySpringAI 类。
+ */
 
 
 public class MySpringAI extends BaseLlm {

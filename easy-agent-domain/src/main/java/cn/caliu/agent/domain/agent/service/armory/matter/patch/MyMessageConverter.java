@@ -17,6 +17,9 @@ import org.springframework.util.MimeType;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * MyMessageConverter 类。
+ */
 
 public class MyMessageConverter extends MessageConverter {
 

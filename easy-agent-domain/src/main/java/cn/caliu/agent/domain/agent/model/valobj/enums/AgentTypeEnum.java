@@ -3,6 +3,9 @@ package cn.caliu.agent.domain.agent.model.valobj.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+/**
+ * AgentTypeEnum 枚举定义。
+ */
 
 @Getter
 @AllArgsConstructor

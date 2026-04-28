@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 会话历史领域服务实现。
+ *
+ * 负责消息与会话摘要的写入、查询、删除，以及 token 统计累积。
+ */
 @Service
 public class SessionHistoryServiceImpl implements ISessionHistoryService {
 

@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+/**
+ * Spring Boot 启动类。
+ */
 
 @SpringBootApplication
 @Configurable

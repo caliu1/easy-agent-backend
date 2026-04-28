@@ -29,14 +29,14 @@ ai:
                      {
                        "appName": "...",
                        "agent": {
-                         "agentId": "...",
+                         "agentId": "",
                          "agentName": "...",
                          "agentDesc": "..."
                        },
                        "module": {
                          "aiApi": {
                            "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/",
-                           "apiKey": "${DASHSCOPE_API_KEY}",
+                           "apiKey": "",
                            "completionsPath": "v1/chat/completions",
                            "embeddingsPath": "v1/embeddings"
                          },
@@ -69,9 +69,21 @@ ai:
                      }
                   3) Ensure the JSON can be used directly as configJson value.
                   4) Keep fields practical and executable. Do not output placeholders like TODO.
-                  5) If requirement is simple, still return valid arrays and runner settings.
-                  6) If workflow type is not supervisor, omit routerAgent.
-                  7) Use concise Chinese text for description/instruction content.
+                  5) Never output a real API key. Always set aiApi.apiKey to empty string "".
+                  6) Prefer SINGLE-AGENT config by default:
+                     - module.agents should contain exactly one agent unless user explicitly asks multi-agent.
+                     - use one simple sequential workflow referencing that one agent.
+                     - runner.agentName should point to that workflow.
+                  7) Generate MULTI-AGENT only if user clearly asks for supervisor/parallel/loop/multi-role collaboration.
+                  8) If workflow type is not supervisor, omit routerAgent.
+                  9) Runtime identifiers must be ASCII-safe and match:
+                     ^_?[a-zA-Z0-9]*([. _-][a-zA-Z0-9]+)*$
+                     - applies to agents[].name, agentWorkflows[].name, subAgents[], routerAgent, runner.agentName
+                     - do not use Chinese in these identifier fields
+                     - use Chinese only in description/instruction/agent.agentName/agent.agentDesc
+                  10) Ensure subAgents and routerAgent exactly reference existing names.
+                  11) Use concise Chinese text for description/instruction content.
+                  12) agent.agentId must be empty string "", because the backend will auto-generate agentId on create.
 
             runner:
               agent-name: AgentConfigWriter

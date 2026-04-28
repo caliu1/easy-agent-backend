@@ -19,6 +19,14 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Agent 运行时自动装配入口。
+ *
+ * 启动时执行：
+ * 1. 先从数据库加载已发布配置并装配到运行时。
+ * 2. 再加载 yml 系统内置 Agent，作为官方运行时补充。
+ * 3. 避免覆盖已激活版本，保证 DB 与内置配置可共存。
+ */
 @Slf4j
 @Configuration
 @EnableConfigurationProperties(AiAgentAutoConfigProperties.class)
@@ -81,4 +89,3 @@ public class AiAgentAutoConfig implements ApplicationListener<ApplicationReadyEv
     }
 
 }
-

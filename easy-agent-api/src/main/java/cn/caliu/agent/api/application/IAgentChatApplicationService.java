@@ -13,6 +13,12 @@ import io.reactivex.rxjava3.core.Flowable;
 
 import java.util.List;
 
+/**
+ * 聊天应用服务接口。
+ *
+ * 负责在应用层编排会话、流式事件、历史持久化等流程，
+ * 向 Trigger 暴露稳定的用例入口。
+ */
 public interface IAgentChatApplicationService {
 
     List<AiAgentConfigResponseDTO> queryAiAgentConfigList();

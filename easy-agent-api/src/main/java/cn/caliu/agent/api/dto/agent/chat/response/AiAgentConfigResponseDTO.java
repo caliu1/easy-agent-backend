@@ -1,6 +1,9 @@
 package cn.caliu.agent.api.dto.agent.chat.response;
 
 import lombok.Data;
+/**
+ * AiAgentConfigResponseDTO DTO，用于接口层数据传输。
+ */
 
 @Data
 public class AiAgentConfigResponseDTO {

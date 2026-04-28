@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 @Builder
 //@AllArgsConstructor
 //@NoArgsConstructor
+/**
+ * AiAgentRegisterVO 类。
+ */
 public class AiAgentRegisterVO {
     private String appName;
     private String agentId;

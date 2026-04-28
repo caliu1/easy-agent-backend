@@ -10,6 +10,11 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 用户订阅领域服务实现。
+ *
+ * 负责用户与 Agent 订阅关系的查询、订阅、取消订阅。
+ */
 @Service
 public class UserSubscriptionServiceImpl implements IUserSubscriptionService {
 
@@ -48,4 +53,3 @@ public class UserSubscriptionServiceImpl implements IUserSubscriptionService {
     }
 
 }
-

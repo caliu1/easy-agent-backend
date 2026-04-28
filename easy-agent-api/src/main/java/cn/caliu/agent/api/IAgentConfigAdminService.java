@@ -14,6 +14,14 @@ import cn.caliu.agent.api.response.Response;
 
 import java.util.List;
 
+/**
+ * Agent 配置管理对外接口（管理台能力）。
+ *
+ * 覆盖能力：
+ * 1. 配置 CRUD
+ * 2. 发布/下线/回滚
+ * 3. 广场发布与订阅管理
+ */
 public interface IAgentConfigAdminService {
 
     Response<AgentConfigDetailResponseDTO> createAgentConfig(AgentConfigUpsertRequestDTO requestDTO);

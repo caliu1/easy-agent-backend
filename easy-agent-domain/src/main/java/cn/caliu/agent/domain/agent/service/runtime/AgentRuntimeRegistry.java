@@ -15,14 +15,27 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * 运行时 Agent 注册表。
- * 1. versionSlotMap：保存每个 Agent 的多版本 Runner。
- * 2. activeSlotMap：保存当前对外生效的版本指针。
+ * Agent 运行时注册表。
+ *
+ * 数据结构说明：
+ * 1. versionSlotMap：维护每个 Agent 的多版本运行时对象。
+ * 2. activeSlotMap：维护当前对外生效的版本指针。
+ *
+ * 使用场景：
+ * - 发布或回滚时注册新版本并切换 active。
+ * - 聊天请求根据 session 绑定版本或 active 版本解析 runner。
  */
 @Component
 public class AgentRuntimeRegistry {
 
+    /**
+     * 当前激活版本索引：agentId -> activeSlot
+     */
     private final ConcurrentMap<String, ActiveAgentSlot> activeSlotMap = new ConcurrentHashMap<>();
+
+    /**
+     * 版本运行时索引：agentId -> (version -> registerVO)
+     */
     private final ConcurrentMap<String, ConcurrentMap<Long, AiAgentRegisterVO>> versionSlotMap = new ConcurrentHashMap<>();
 
     public Optional<ActiveAgentSlot> getActiveSlot(String agentId) {
@@ -49,6 +62,9 @@ public class AgentRuntimeRegistry {
         return Optional.ofNullable(agentVersionMap.get(configVersion));
     }
 
+    /**
+     * 注册指定版本的运行时对象。
+     */
     public void registerVersion(String agentId, Long configVersion, AiAgentRegisterVO registerVO) {
         if (agentId == null || configVersion == null || configVersion <= 0 || registerVO == null) {
             return;
@@ -59,6 +75,10 @@ public class AgentRuntimeRegistry {
                 .put(configVersion, registerVO);
     }
 
+    /**
+     * 激活指定版本。
+     * 若传入 registerVO 为空，则尝试从 versionSlotMap 回查。
+     */
     public void activate(String agentId, Long configVersion, AiAgentRegisterVO registerVO) {
         if (registerVO != null) {
             registerVersion(agentId, configVersion, registerVO);
@@ -82,10 +102,16 @@ public class AgentRuntimeRegistry {
         activate(agentId, configVersion, null);
     }
 
+    /**
+     * 仅下线 active 指针，保留版本历史。
+     */
     public void deactivate(String agentId) {
         activeSlotMap.remove(agentId);
     }
 
+    /**
+     * 删除 Agent 的全部运行时信息（active + versions）。
+     */
     public void remove(String agentId) {
         activeSlotMap.remove(agentId);
         versionSlotMap.remove(agentId);
@@ -96,10 +122,16 @@ public class AgentRuntimeRegistry {
         versionSlotMap.clear();
     }
 
+    /**
+     * 返回 active 快照只读视图，供查询场景使用。
+     */
     public Map<String, ActiveAgentSlot> snapshot() {
         return Collections.unmodifiableMap(new HashMap<>(activeSlotMap));
     }
 
+    /**
+     * 激活槽位信息。
+     */
     @Data
     @Builder
     @NoArgsConstructor
@@ -112,3 +144,4 @@ public class AgentRuntimeRegistry {
     }
 
 }
+

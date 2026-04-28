@@ -5,6 +5,9 @@ import cn.caliu.agent.types.exception.AppException;
 import lombok.Builder;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
+/**
+ * AgentConfigEntity 类。
+ */
 
 @Data
 @Builder

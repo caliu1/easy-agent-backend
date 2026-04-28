@@ -18,6 +18,9 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+/**
+ * MyTokenUsagePlugin 类。
+ */
 
 @Slf4j
 @Service("myTokenUsagePlugin")

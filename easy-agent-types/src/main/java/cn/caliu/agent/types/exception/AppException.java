@@ -3,16 +3,23 @@ package cn.caliu.agent.types.exception;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * 业务异常基类。
+ *
+ * 特点：
+ * 1. 统一携带 code + info，便于跨层透传。
+ * 2. 继承 RuntimeException，支持事务回滚与简化调用栈处理。
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class AppException extends RuntimeException {
 
     private static final long serialVersionUID = 5317680961212299217L;
 
-    /** 异常码 */
+    /** 业务错误码。 */
     private String code;
 
-    /** 异常信息 */
+    /** 面向调用方的错误信息。 */
     private String info;
 
     public AppException(String code) {
@@ -41,10 +48,10 @@ public class AppException extends RuntimeException {
 
     @Override
     public String toString() {
-        return "cn.caliu.agent.x.api.types.exception.XApiException{" +
+        return "cn.caliu.agent.types.exception.AppException{" +
                 "code='" + code + '\'' +
                 ", info='" + info + '\'' +
                 '}';
     }
-
 }
+

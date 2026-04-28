@@ -1,4 +1,9 @@
 /**
- * 外部接口适配器层；当需要调用外部接口时，则创建出这一层，并定义接口，之后由基础设施层的 adapter 层具体实现
+ * Domain 适配器抽象包。
+ *
+ * 职责：
+ * 1. 定义领域访问外部系统时所需的端口（Port）抽象。
+ * 2. 避免 Domain 直接依赖具体实现细节。
+ * 3. 具体实现由 Infrastructure 层提供。
  */
 package cn.caliu.agent.domain.agent.adapter;

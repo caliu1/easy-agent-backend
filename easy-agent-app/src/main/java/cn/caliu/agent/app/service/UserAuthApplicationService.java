@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+/**
+ * 用户认证应用服务实现。
+ *
+ * 负责注册/登录用例编排，并统一组装登录态响应。
+ */
 @Service
 public class UserAuthApplicationService implements IUserAuthApplicationService {
 

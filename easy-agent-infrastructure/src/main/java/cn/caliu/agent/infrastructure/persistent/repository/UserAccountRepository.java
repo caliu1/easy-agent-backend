@@ -13,6 +13,9 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+/**
+ * UserAccountRepository 仓储实现，负责领域对象与持久化对象转换。
+ */
 
 @Repository
 public class UserAccountRepository implements IUserAccountRepository {

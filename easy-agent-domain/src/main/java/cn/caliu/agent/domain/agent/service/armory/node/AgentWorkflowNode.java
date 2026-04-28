@@ -17,6 +17,15 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 工作流分发节点。
+ *
+ * 作用：
+ * 1) 逐个读取 module.agentWorkflows 配置；
+ * 2) 将当前 workflow 放入 dynamicContext；
+ * 3) 根据 type 分派到对应节点（loop/parallel/sequential/supervisor）；
+ * 4) 当 workflow 全部处理完成后，进入 RunnerNode 创建最终运行器。
+ */
 @Slf4j
 @Service
 public class AgentWorkflowNode extends AbstractArmorySupport {
@@ -33,43 +42,43 @@ public class AgentWorkflowNode extends AbstractArmorySupport {
 
     @Override
     protected AiAgentRegisterVO doApply(ArmoryCommandEntity requestParameter, DefaultArmoryFactory.DynamicContext dynamicContext) throws Exception {
-        log.info("Agent装配操作-AgentWorkflowNode");
+        log.info("Agent 装配操作 - AgentWorkflowNode");
 
         AiAgentConfigTableVO aiAgentConfigTableVO = requestParameter.getAiAgentConfigTableVO();
         List<AiAgentConfigTableVO.Module.AgentWorkflow> agentWorkflows = aiAgentConfigTableVO.getModule().getAgentWorkflows();
 
-        if (agentWorkflows == null || agentWorkflows.isEmpty() || dynamicContext.getCurrentStepIndex()>=agentWorkflows.size()) {
-            // 清空
+        // 没有工作流，或已经处理完全部工作流，则清空 currentAgentWorkflow 并进入下一节点（RunnerNode）。
+        if (agentWorkflows == null
+                || agentWorkflows.isEmpty()
+                || dynamicContext.getCurrentStepIndex() >= agentWorkflows.size()) {
             dynamicContext.setCurrentAgentWorkflow(null);
-
             return router(requestParameter, dynamicContext);
         }
 
+        // 取当前索引的工作流并推进索引，供 get(...) 分发到具体节点执行。
         dynamicContext.setCurrentAgentWorkflow(agentWorkflows.get(dynamicContext.getCurrentStepIndex()));
         dynamicContext.addCurrentStepIndex();
 
         return router(requestParameter, dynamicContext);
-
     }
 
     @Override
     public StrategyHandler<ArmoryCommandEntity, DefaultArmoryFactory.DynamicContext, AiAgentRegisterVO> get(ArmoryCommandEntity requestParameter, DefaultArmoryFactory.DynamicContext dynamicContext) throws Exception {
         AiAgentConfigTableVO.Module.AgentWorkflow agentWorkflow = dynamicContext.getCurrentAgentWorkflow();
 
-        if (null == agentWorkflow){
+        // currentAgentWorkflow 为空表示工作流已处理完，直接进入 Runner 构建运行时。
+        if (agentWorkflow == null) {
             return runnerNode;
         }
 
         String type = agentWorkflow.getType();
         AgentTypeEnum agentTypeEnum = AgentTypeEnum.formType(type);
-
         if (agentTypeEnum == null) {
-            throw new RuntimeException("agentWorkflows is null");
+            throw new RuntimeException("agentWorkflows.type is invalid: " + type);
         }
 
         String node = agentTypeEnum.getNode();
-
-        return switch (node){
+        return switch (node) {
             case "loopAgentNode" -> loopAgentNode;
             case "parallelAgentNode" -> parallelAgentNode;
             case "sequentialAgentNode" -> sequentialAgentNode;
@@ -78,3 +87,4 @@ public class AgentWorkflowNode extends AbstractArmorySupport {
         };
     }
 }
+

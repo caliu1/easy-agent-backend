@@ -14,6 +14,14 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * Agent 运行时装配器。
+ *
+ * 职责：
+ * 1. 解析 configJson 并合并数据库元信息。
+ * 2. 调用 Armory 完成运行时对象装配。
+ * 3. 返回可用于激活的 AiAgentRegisterVO。
+ */
 @Service
 public class AgentRuntimeAssembler {
 

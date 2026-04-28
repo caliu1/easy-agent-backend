@@ -29,6 +29,14 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 聊天会话 HTTP 控制器。
+ *
+ * 职责：
+ * 1. 暴露会话与聊天相关接口（含 SSE 流式聊天）。
+ * 2. 统一异常捕获并转换为标准 Response。
+ * 3. 不承载业务规则，仅做协议层适配。
+ */
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/")

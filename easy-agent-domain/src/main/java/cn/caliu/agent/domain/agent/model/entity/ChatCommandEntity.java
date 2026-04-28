@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * ChatCommandEntity 类。
+ */
 
 @Data
 @Builder

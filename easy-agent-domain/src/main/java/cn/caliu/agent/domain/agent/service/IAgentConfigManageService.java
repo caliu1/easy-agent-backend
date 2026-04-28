@@ -1,11 +1,20 @@
 package cn.caliu.agent.domain.agent.service;
 
 import cn.caliu.agent.domain.agent.model.entity.AgentConfigEntity;
-import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryVO;
 import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryResult;
+import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryVO;
 
 import java.util.List;
 
+/**
+ * Agent 配置领域服务接口。
+ *
+ * 覆盖能力：
+ * 1. 配置生命周期：创建、更新、删除、详情。
+ * 2. 版本与状态：发布、下线、回滚。
+ * 3. 广场运营：发布到广场、取消发布、广场列表。
+ * 4. 运行时：从已发布配置重建内存运行时注册表。
+ */
 public interface IAgentConfigManageService {
 
     AgentConfigEntity createAgentConfig(AgentConfigEntity request);
@@ -31,8 +40,9 @@ public interface IAgentConfigManageService {
     AgentConfigEntity unpublishAgentFromPlaza(String agentId, String operator);
 
     /**
-     * 鍚姩鎴栨墜鍔ㄨЕ鍙戯細浠庢暟鎹簱宸插彂甯冮厤缃噸寤鸿繍琛屾椂娉ㄥ唽琛ㄣ€?     *
-     * @return 鎴愬姛瑁呴厤骞舵縺娲荤殑 Agent 鏁伴噺
+     * 从已发布配置批量重建运行时注册表。
+     *
+     * @return 成功重载并激活的 Agent 数量
      */
     int reloadPublishedAgentRuntime();
 

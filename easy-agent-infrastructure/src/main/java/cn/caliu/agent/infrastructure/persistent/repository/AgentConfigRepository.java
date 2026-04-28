@@ -20,6 +20,9 @@ import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+/**
+ * AgentConfigRepository 仓储实现，负责领域对象与持久化对象转换。
+ */
 
 @Repository
 public class AgentConfigRepository implements IAgentConfigRepository {

@@ -12,22 +12,31 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * Armory 装配服务实现。
+ *
+ * 将配置表逐条投递到装配策略链（RootNode 开始），
+ * 最终产出可运行 Agent 并注册到 Spring 运行时。
+ */
 @Slf4j
 @Service
 public class IArmoryServiceImpl implements IArmoryService {
 
     @Resource
     private DefaultArmoryFactory defaultArmoryFactory;
+
     @Override
     public void acceptArmoryAgents(List<AiAgentConfigTableVO> tables) throws Exception {
         for (AiAgentConfigTableVO table : tables) {
-            StrategyHandler<ArmoryCommandEntity, DefaultArmoryFactory.DynamicContext, AiAgentRegisterVO> handler = defaultArmoryFactory.armoryStrategyHandler();
+            StrategyHandler<ArmoryCommandEntity, DefaultArmoryFactory.DynamicContext, AiAgentRegisterVO> handler =
+                    defaultArmoryFactory.armoryStrategyHandler();
             handler.apply(
                     ArmoryCommandEntity.builder()
                             .aiAgentConfigTableVO(table)
                             .build(),
-                    new DefaultArmoryFactory.DynamicContext());
+                    new DefaultArmoryFactory.DynamicContext()
+            );
         }
-
     }
 }
+

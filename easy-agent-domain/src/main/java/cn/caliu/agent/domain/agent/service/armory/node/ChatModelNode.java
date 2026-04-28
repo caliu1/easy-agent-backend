@@ -20,6 +20,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * ChatModelNode 编排节点实现。
+ */
 
 @Slf4j
 @Service

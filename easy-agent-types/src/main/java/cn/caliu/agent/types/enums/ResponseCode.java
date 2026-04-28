@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * 统一响应码枚举。
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -15,10 +18,10 @@ public enum ResponseCode {
     NOT_FOUND_METHOD("00023", "不存在的方法"),
 
     E0001("E0001", "智能体不存在"),
-    E0002("E0002", "智能体MCP配置不在可加载范围"),
+    E0002("E0002", "智能体 MCP 配置不在可加载范围"),
     ;
 
     private String code;
     private String info;
-
 }
+

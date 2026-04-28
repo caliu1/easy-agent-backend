@@ -4,6 +4,9 @@ import cn.caliu.agent.domain.session.model.entity.AgentSessionHistoryEntity;
 import cn.caliu.agent.domain.session.model.entity.AgentSessionMessageEntity;
 
 import java.util.List;
+/**
+ * IAgentSessionHistoryRepository 领域仓储接口。
+ */
 
 public interface IAgentSessionHistoryRepository {
 

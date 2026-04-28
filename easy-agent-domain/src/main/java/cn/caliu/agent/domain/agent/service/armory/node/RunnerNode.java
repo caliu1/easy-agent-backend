@@ -78,7 +78,7 @@ public class RunnerNode extends AbstractArmorySupport {
             }
         }
 
-        // Token statistics is a cross-cutting concern and should always be enabled.
+        // Token 统计属于横切能力，默认始终启用。
         tryAddPluginByBeanName(plugins, "myTokenUsagePlugin");
 
         return new InMemoryRunner(baseAgent, appName, plugins);

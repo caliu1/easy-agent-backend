@@ -13,6 +13,9 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+/**
+ * AgentSubscribeRepository 仓储实现，负责领域对象与持久化对象转换。
+ */
 
 @Repository
 public class AgentSubscribeRepository implements IAgentSubscribeRepository {

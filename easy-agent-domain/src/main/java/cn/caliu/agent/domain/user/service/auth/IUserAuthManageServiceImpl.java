@@ -15,6 +15,14 @@ import java.time.Instant;
 import java.util.Base64;
 import java.util.UUID;
 
+/**
+ * 用户认证领域服务实现。
+ *
+ * 职责：
+ * 1. 用户注册与密码规则校验。
+ * 2. 登录鉴权与最后登录时间更新。
+ * 3. 登录 token 签发。
+ */
 @Service
 public class IUserAuthManageServiceImpl implements IUserAuthManageService {
 

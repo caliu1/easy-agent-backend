@@ -29,6 +29,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Agent 配置应用服务实现。
+ *
+ * 主要职责：
+ * 1. DTO 与 Domain 对象转换。
+ * 2. 管理台用例编排（发布、下线、回滚、广场、订阅）。
+ * 3. 对查询结果做聚合与分页结果映射。
+ */
 @Service
 public class AgentConfigApplicationService implements IAgentConfigApplicationService {
 

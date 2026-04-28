@@ -34,6 +34,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * 聊天领域服务实现。
+ *
+ * 主要职责：
+ * 1. 解析会话绑定，定位当前应使用的 Agent 运行时版本。
+ * 2. 处理同步/流式消息调用。
+ * 3. 在 runner 会话丢失时，基于数据库历史进行上下文回放恢复。
+ */
 @Slf4j
 @Service
 public class IChatServiceImpl implements IChatService {
@@ -51,7 +59,7 @@ public class IChatServiceImpl implements IChatService {
 
     @Override
     public List<AiAgentConfigTableVO.Agent> queryAiAgentConfigList() {
-        /* 杩愯鏃朵紭鍏? yml 鍏滃簳 */
+        /* 优先返回运行时已激活的 Agent 列表。 */
         Map<String, AiAgentConfigTableVO.Agent> activeAgentMap = new LinkedHashMap<>();
         agentRuntimeRegistry.snapshot().values().forEach(slot -> {
             AiAgentRegisterVO registerVO = slot.getRegisterVO();
@@ -70,7 +78,7 @@ public class IChatServiceImpl implements IChatService {
             return new ArrayList<>(activeAgentMap.values());
         }
 
-        // 鍏煎鍥為€€鍒?yml
+        // 兼容场景：运行时注册表为空时，回退到 yml 系统配置列表。
         Map<String, AiAgentConfigTableVO> tables = aiAgentAutoConfigProperties.getTables();
         List<AiAgentConfigTableVO.Agent> agentList = new ArrayList<>();
         if (tables != null) {
@@ -295,7 +303,7 @@ public class IChatServiceImpl implements IChatService {
             }
         }
 
-        /* 缁戝畾澶辨晥鏃跺洖閫€骞堕噸缁?*/
+        /* 会话绑定缺失或失效时，回退到当前激活版本并重新绑定。 */
         ResolvedAgentContext activeContext = resolveActiveAgent(agentId);
         agentSessionBindRepository.bindSession(
                 AgentSessionBindEntity.create(

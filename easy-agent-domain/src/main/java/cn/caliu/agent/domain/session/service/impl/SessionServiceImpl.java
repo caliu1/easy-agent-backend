@@ -16,6 +16,13 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+/**
+ * 会话绑定领域服务实现。
+ *
+ * 负责：
+ * 1. 创建 ADK 会话并建立 session -> agent/version 绑定。
+ * 2. 删除会话时清理绑定与历史数据。
+ */
 @Service
 public class SessionServiceImpl implements ISessionService {
 

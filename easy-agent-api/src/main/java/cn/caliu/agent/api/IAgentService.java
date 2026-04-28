@@ -12,6 +12,14 @@ import cn.caliu.agent.api.response.Response;
 
 import java.util.List;
 
+/**
+ * 聊天与会话能力对外接口。
+ *
+ * 面向 Trigger 层提供：
+ * 1. Agent 列表查询
+ * 2. 会话创建/删除
+ * 3. 同步聊天与历史查询
+ */
 public interface IAgentService {
 
     Response<List<AiAgentConfigResponseDTO>> queryAiAgentConfigList();

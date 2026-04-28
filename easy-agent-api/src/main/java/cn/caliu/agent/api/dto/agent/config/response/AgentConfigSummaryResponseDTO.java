@@ -1,6 +1,9 @@
 package cn.caliu.agent.api.dto.agent.config.response;
 
 import lombok.Data;
+/**
+ * AgentConfigSummaryResponseDTO DTO，用于接口层数据传输。
+ */
 
 @Data
 public class AgentConfigSummaryResponseDTO {

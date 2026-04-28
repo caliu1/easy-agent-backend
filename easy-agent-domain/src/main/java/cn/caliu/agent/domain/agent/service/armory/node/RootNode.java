@@ -11,6 +11,9 @@ import cn.caliu.agent.domain.agent.model.valobj.AiAgentRegisterVO;
 import cn.caliu.agent.domain.agent.service.armory.AbstractArmorySupport;
 import cn.caliu.agent.domain.agent.service.armory.factory.DefaultArmoryFactory;
 import lombok.extern.slf4j.Slf4j;
+/**
+ * RootNode 编排节点实现。
+ */
 
 
 @Slf4j

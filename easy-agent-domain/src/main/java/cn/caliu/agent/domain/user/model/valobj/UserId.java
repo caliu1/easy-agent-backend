@@ -6,6 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Locale;
 import java.util.regex.Pattern;
+/**
+ * UserId 类。
+ */
 
 public final class UserId {
 

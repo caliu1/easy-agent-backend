@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+/**
+ * Response 类。
+ */
 
 @Data
 @Builder

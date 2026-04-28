@@ -2,6 +2,9 @@ package cn.caliu.agent.domain.agent.service.armory.matter.skills;
 
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentConfigTableVO;
 import org.springframework.ai.tool.ToolCallback;
+/**
+ * IToolSkillsCreateService 接口定义。
+ */
 
 public interface IToolSkillsCreateService {
 

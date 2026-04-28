@@ -12,6 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+/**
+ * MyTestPlugin 类。
+ */
 
 @Slf4j
 @Service("myTestPlugin")

@@ -5,6 +5,9 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.Map;
+/**
+ * AiAgentAutoConfigProperties 类。
+ */
 
 @Data
 @ConfigurationProperties(prefix = "ai.agent.config", ignoreInvalidFields = true)

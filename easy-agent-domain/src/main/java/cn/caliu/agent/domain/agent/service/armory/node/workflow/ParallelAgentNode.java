@@ -16,6 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+/**
+ * ParallelAgentNode 编排节点实现。
+ */
 
 @Slf4j
 @Service("parallelAgentNode")

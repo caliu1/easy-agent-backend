@@ -26,6 +26,14 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * Agent 配置管理 HTTP 控制器。
+ *
+ * 覆盖管理台能力：
+ * 1. 配置 CRUD、发布、下线、回滚。
+ * 2. 广场发布状态管理与订阅操作。
+ * 3. 统一响应结构与错误处理。
+ */
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/")

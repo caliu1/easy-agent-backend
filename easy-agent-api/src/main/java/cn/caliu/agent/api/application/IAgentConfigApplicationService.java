@@ -13,6 +13,12 @@ import cn.caliu.agent.api.dto.agent.config.request.AgentConfigUpsertRequestDTO;
 
 import java.util.List;
 
+/**
+ * Agent 配置应用服务接口。
+ *
+ * 面向 Trigger 提供配置用例编排入口，
+ * 内部调用 Domain 服务完成业务校验与状态流转。
+ */
 public interface IAgentConfigApplicationService {
 
     AgentConfigDetailResponseDTO createAgentConfig(AgentConfigUpsertRequestDTO requestDTO);

@@ -14,15 +14,29 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.ArrayList;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+/**
+ * Supervisor 动态路由执行器。
+ *
+ * 核心职责：
+ * 1) 调用 routerAgent 产出结构化路由决策（thought/action/nextAgent/reply）。
+ * 2) 当 action=route 时分派到指定 worker，继续下一轮。
+ * 3) 当 action=final 时输出最终回复并结束。
+ * 4) 把内部过程转换为标准流式事件（thinking/route/reply/final）供前端渲染。
+ *
+ * 容错策略：
+ * - 通过 maxIterations 限制轮次，避免无限路由。
+ * - 决策解析失败、动作非法、nextAgent 不存在时，转为可读 final 信息。
+ * - reply 为空时，回退到最近 worker 输出，提高收敛能力。
+ */
 @Slf4j
 public class SupervisorRoutingAgent extends BaseAgent {
 
@@ -30,13 +44,34 @@ public class SupervisorRoutingAgent extends BaseAgent {
     private static final String ACTION_ROUTE = "route";
     private static final String ACTION_FINAL = "final";
     private static final int MAX_STAGE_REPLY_LENGTH = 800;
-    // Stream main-agent replies in small chunks for smooth UI updates.
+    // 主 Agent 文本按小块流式输出，提升前端增量展示体验。
     private static final int MAIN_REPLY_CHUNK_SIZE = 8;
 
+    /**
+     * 负责“决策”的路由 Agent。
+     */
     private final BaseAgent routerAgent;
+
+    /**
+     * 可被路由执行的 worker 集合（不包含 router 本身）。
+     * key=agentName, value=agentInstance
+     */
     private final Map<String, BaseAgent> workerAgentGroup;
+
+    /**
+     * 最大路由轮次，超过后触发兜底 final。
+     */
     private final int maxIterations;
 
+    /**
+     * 构造 Supervisor 路由 Agent。
+     *
+     * @param name            工作流 Agent 名称
+     * @param description     工作流描述
+     * @param subAgents       子 Agent 列表（router + workers）
+     * @param routerAgentName 路由器 Agent 名称，必须在 subAgents 中存在
+     * @param maxIterations   最大路由轮次，<=0 时默认 3
+     */
     public SupervisorRoutingAgent(
             String name,
             String description,
@@ -50,14 +85,14 @@ public class SupervisorRoutingAgent extends BaseAgent {
         this.routerAgent = allSubAgents.stream()
                 .filter(agent -> agent.name().equals(routerAgentName))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("router agent not found: " + routerAgentName));
+                .orElseThrow(() -> new IllegalArgumentException("未找到路由Agent：" + routerAgentName));
 
         this.workerAgentGroup = allSubAgents.stream()
                 .filter(agent -> !Objects.equals(agent.name(), routerAgentName))
                 .collect(Collectors.toMap(BaseAgent::name, agent -> agent, (left, right) -> left, LinkedHashMap::new));
 
         if (workerAgentGroup.isEmpty()) {
-            throw new IllegalArgumentException("supervisor workflow requires at least one worker agent");
+            throw new IllegalArgumentException("Supervisor 工作流至少需要一个 Worker Agent");
         }
 
         this.maxIterations = (maxIterations == null || maxIterations <= 0) ? 3 : maxIterations;
@@ -65,14 +100,24 @@ public class SupervisorRoutingAgent extends BaseAgent {
 
     @Override
     protected Flowable<Event> runAsyncImpl(InvocationContext invocationContext) {
+        // 使用 BUFFER 背压策略，尽可能保留中间事件，避免丢帧。
         return Flowable.create(emitter -> runSupervisor(invocationContext, emitter), BackpressureStrategy.BUFFER);
     }
 
     @Override
     protected Flowable<Event> runLiveImpl(InvocationContext invocationContext) {
+        // 当前 live/async 共用同一套执行路径。
         return runAsyncImpl(invocationContext);
     }
 
+    /**
+     * Supervisor 主循环。
+     *
+     * 每轮流程：
+     * 1) route() 调用 routerAgent 得到决策。
+     * 2) action=final: 输出最终回复并结束。
+     * 3) action=route: 发 route 事件 -> 执行 worker -> 进入下一轮。
+     */
     private void runSupervisor(InvocationContext invocationContext, FlowableEmitter<Event> emitter) {
         String latestWorkerOutput = "";
 
@@ -82,20 +127,22 @@ public class SupervisorRoutingAgent extends BaseAgent {
                 if (emitter.isCancelled()) {
                     return;
                 }
+
                 RouteDecision routeDecision = routeResult.routeDecision;
                 if (routeDecision == null) {
-                    emitFinal(emitter, invocationContext, "Route decision parse failed.");
+                    emitFinal(emitter, invocationContext, "路由决策解析失败。");
                     emitter.onComplete();
                     return;
                 }
 
+                // route() 内未流式输出 thought 时，这里补发一次，避免前端无思考信息。
                 if (!routeResult.thoughtStreamed && StringUtils.isNotBlank(routeDecision.getThought())) {
                     emitThinking(emitter, invocationContext, name(), routeDecision.getThought());
                 }
 
                 String action = StringUtils.trimToEmpty(routeDecision.getAction()).toLowerCase();
                 if (ACTION_FINAL.equals(action)) {
-                    // 主 Agent 最终回复：优先用路由器 reply；为空时回退到上一阶段子 Agent 输出。
+                    // 最终回复优先用 router reply；为空时回退到最近 worker 输出。
                     String finalReply = buildFinalReply(routeDecision.getReply(), latestWorkerOutput);
                     if (StringUtils.isBlank(finalReply)) {
                         finalReply = "任务已完成。";
@@ -108,7 +155,7 @@ public class SupervisorRoutingAgent extends BaseAgent {
                 }
 
                 if (!ACTION_ROUTE.equals(action)) {
-                    emitFinal(emitter, invocationContext, "Unsupported route action: " + action);
+                    emitFinal(emitter, invocationContext, "不支持的路由动作：" + action);
                     emitter.onComplete();
                     return;
                 }
@@ -116,11 +163,12 @@ public class SupervisorRoutingAgent extends BaseAgent {
                 String nextAgent = StringUtils.trimToEmpty(routeDecision.getNextAgent());
                 BaseAgent workerAgent = workerAgentGroup.get(nextAgent);
                 if (workerAgent == null) {
-                    emitFinal(emitter, invocationContext, "Unknown nextAgent: " + nextAgent);
+                    emitFinal(emitter, invocationContext, "未知的 nextAgent：" + nextAgent);
                     emitter.onComplete();
                     return;
                 }
-                // 阶段回复：优先用路由器 reply；为空时回退到上一阶段子 Agent 输出。
+
+                // 阶段回复优先用 router reply；为空时回退到最近 worker 输出。
                 String routeReply = buildStageReply(routeDecision.getReply(), latestWorkerOutput);
                 if (!routeResult.replyStreamed && StringUtils.isNotBlank(routeReply)) {
                     emitReply(emitter, invocationContext, routeReply);
@@ -139,6 +187,8 @@ public class SupervisorRoutingAgent extends BaseAgent {
             if (emitter.isCancelled()) {
                 return;
             }
+
+            // 超过最大轮次仍未收敛，使用兜底 final。
             String fallbackFinalReply = buildFinalReply("", latestWorkerOutput);
             if (StringUtils.isBlank(fallbackFinalReply)) {
                 fallbackFinalReply = "已达到最大路由轮次，当前结果不足以继续细化。";
@@ -146,21 +196,29 @@ public class SupervisorRoutingAgent extends BaseAgent {
             emitFinal(emitter, invocationContext, fallbackFinalReply);
             emitter.onComplete();
         } catch (Exception e) {
+            // 取消/中断属于可预期退出，不按错误处理。
             if (isCancellationOrInterruption(e, emitter)) {
                 if (hasInterruptedCause(e)) {
                     Thread.currentThread().interrupt();
                 }
-                log.info("supervisor workflow cancelled/interrupted: {}", e.toString());
+                log.info("Supervisor 工作流已取消或中断：{}", e.toString());
                 return;
             }
-            log.error("supervisor workflow run failed", e);
+
+            log.error("Supervisor 工作流运行失败", e);
             if (!emitter.isCancelled()) {
-                emitFinal(emitter, invocationContext, "Supervisor run failed: " + e.getMessage());
+                emitFinal(emitter, invocationContext, "Supervisor 运行失败：" + e.getMessage());
                 emitter.onComplete();
             }
         }
     }
 
+    /**
+     * 路由阶段执行：
+     * - 调用 routerAgent 并收集原始流输出；
+     * - 在 JSON 尚未闭合时，尽力提取 thought/reply 增量输出；
+     * - 收尾后解析完整 RouteDecision。
+     */
     private RouteResult route(InvocationContext invocationContext, FlowableEmitter<Event> emitter) {
         StringBuilder allRouterOutput = new StringBuilder();
         AtomicInteger thoughtEmittedLength = new AtomicInteger(0);
@@ -169,14 +227,14 @@ public class SupervisorRoutingAgent extends BaseAgent {
 
         routerAgent.runAsync(invocationContext).blockingForEach(event -> {
             if (emitter.isCancelled()) {
-                throw new CancellationException("emitter cancelled during route");
+                throw new CancellationException("路由阶段检测到 emitter 已取消");
             }
             String content = event.stringifyContent();
             if (StringUtils.isBlank(content)) {
                 return;
             }
 
-            // Do not inject extra separators between stream chunks, otherwise JSON can be broken.
+            // 不能插入额外分隔符，否则可能破坏 JSON 结构。
             allRouterOutput.append(content);
 
             String partialThought = extractPartialJsonStringField(allRouterOutput.toString(), "thought");
@@ -188,6 +246,7 @@ public class SupervisorRoutingAgent extends BaseAgent {
 
             String action = StringUtils.trimToEmpty(extractPartialJsonStringField(allRouterOutput.toString(), "action")).toLowerCase();
             if (!ACTION_FINAL.equals(action) && !ACTION_ROUTE.equals(action)) {
+                // action 还不稳定时，先不推 reply，防止误输出。
                 return;
             }
 
@@ -215,7 +274,7 @@ public class SupervisorRoutingAgent extends BaseAgent {
                     String tail = finalReply.substring(replyEmittedLength.get());
                     emitMarkedEvent(emitter, invocationContext, name(), marker, tail, false);
                 } else {
-                    // Completion marker for streamed main-agent reply/final.
+                    // 主 Agent 回复流结束标记（空片段 + partial=false）。
                     emitMarkedEvent(emitter, invocationContext, name(), marker, "", false);
                 }
             }
@@ -228,12 +287,19 @@ public class SupervisorRoutingAgent extends BaseAgent {
         );
     }
 
+    /**
+     * 执行指定 worker。
+     *
+     * 行为说明：
+     * - worker 输出会透传为 thinking 事件，供前端展示“子 Agent 思考”。
+     * - 返回完整 worker 文本，供主循环在 reply/final 为空时兜底。
+     */
     private String runWorker(BaseAgent workerAgent, InvocationContext invocationContext, FlowableEmitter<Event> emitter) {
         StringBuilder allWorkerOutput = new StringBuilder();
 
         workerAgent.runAsync(invocationContext).blockingForEach(event -> {
             if (emitter.isCancelled()) {
-                throw new CancellationException("emitter cancelled during worker execution");
+                throw new CancellationException("Worker 执行阶段检测到 emitter 已取消");
             }
             String content = event.stringifyContent();
             if (StringUtils.isBlank(content)) {
@@ -247,6 +313,10 @@ public class SupervisorRoutingAgent extends BaseAgent {
         return allWorkerOutput.toString().trim();
     }
 
+    /**
+     * 解析路由决策 JSON。
+     * 支持纯 JSON 或“包裹文本 + JSON”的输出形态。
+     */
     private RouteDecision parseRouteDecision(String rawOutput) {
         if (StringUtils.isBlank(rawOutput)) {
             return null;
@@ -264,11 +334,15 @@ public class SupervisorRoutingAgent extends BaseAgent {
             }
             return routeDecision;
         } catch (Exception e) {
-            log.warn("failed to parse route decision. rawOutput: {}", rawOutput, e);
+            log.warn("路由决策解析失败，原始输出：{}", rawOutput, e);
             return null;
         }
     }
 
+    /**
+     * 提取最外层 JSON 对象。
+     * 若无法定位完整花括号，回退返回 trim 后原文。
+     */
     private String extractJson(String rawOutput) {
         String normalized = rawOutput.trim();
 
@@ -282,7 +356,8 @@ public class SupervisorRoutingAgent extends BaseAgent {
     }
 
     /**
-     * Best-effort extraction for a JSON string field from possibly incomplete JSON text.
+     * 从“可能尚未完整”的 JSON 文本中，尽力提取指定字符串字段。
+     * 用于 route 阶段的增量流式展示，不保证严格 JSON 语义完整。
      */
     private String extractPartialJsonStringField(String rawOutput, String fieldName) {
         if (StringUtils.isBlank(rawOutput) || StringUtils.isBlank(fieldName)) {
@@ -337,6 +412,9 @@ public class SupervisorRoutingAgent extends BaseAgent {
         return value.toString();
     }
 
+    /**
+     * 发 thinking 事件。
+     */
     private void emitThinking(
             FlowableEmitter<Event> emitter,
             InvocationContext invocationContext,
@@ -346,14 +424,23 @@ public class SupervisorRoutingAgent extends BaseAgent {
         emitMarkedEvent(emitter, invocationContext, author, AgentStreamMarker.THINKING, content);
     }
 
+    /**
+     * 发 route 事件，content 为 nextAgent 名称。
+     */
     private void emitRoute(FlowableEmitter<Event> emitter, InvocationContext invocationContext, String nextAgent) {
         emitMarkedEvent(emitter, invocationContext, name(), AgentStreamMarker.ROUTE, nextAgent);
     }
 
+    /**
+     * 发阶段回复（reply）事件，按 chunk 分片。
+     */
     private void emitReply(FlowableEmitter<Event> emitter, InvocationContext invocationContext, String reply) {
         emitStreamedMarkedEvents(emitter, invocationContext, name(), AgentStreamMarker.REPLY, reply, MAIN_REPLY_CHUNK_SIZE);
     }
 
+    /**
+     * 发最终回复（final）事件，按 chunk 分片。
+     */
     private void emitFinal(FlowableEmitter<Event> emitter, InvocationContext invocationContext, String finalReply) {
         emitStreamedMarkedEvents(emitter, invocationContext, name(), AgentStreamMarker.FINAL, finalReply, MAIN_REPLY_CHUNK_SIZE);
     }
@@ -368,6 +455,9 @@ public class SupervisorRoutingAgent extends BaseAgent {
         emitMarkedEvent(emitter, invocationContext, author, marker, content, false);
     }
 
+    /**
+     * 统一事件发射器：在 content 前拼接 marker，由应用层解码为标准事件类型。
+     */
     private void emitMarkedEvent(
             FlowableEmitter<Event> emitter,
             InvocationContext invocationContext,
@@ -392,6 +482,11 @@ public class SupervisorRoutingAgent extends BaseAgent {
         emitter.onNext(markedEvent);
     }
 
+    /**
+     * 将文本分片后输出：
+     * - 中间片段：partial=true
+     * - 最后片段：partial=false
+     */
     private void emitStreamedMarkedEvents(
             FlowableEmitter<Event> emitter,
             InvocationContext invocationContext,
@@ -412,6 +507,9 @@ public class SupervisorRoutingAgent extends BaseAgent {
         }
     }
 
+    /**
+     * 按固定大小切分字符串，同时避免拆分 Unicode 代理对。
+     */
     private List<String> splitForStreaming(String content, int chunkSize) {
         String text = StringUtils.defaultString(content);
         if (StringUtils.isBlank(text)) {
@@ -424,7 +522,7 @@ public class SupervisorRoutingAgent extends BaseAgent {
         while (start < text.length()) {
             int end = Math.min(start + safeChunkSize, text.length());
 
-            // Avoid splitting surrogate pairs.
+            // 避免拆分 Unicode 代理对字符。
             if (end < text.length()
                     && end > start
                     && Character.isHighSurrogate(text.charAt(end - 1))
@@ -442,6 +540,12 @@ public class SupervisorRoutingAgent extends BaseAgent {
         return chunks;
     }
 
+    /**
+     * 生成阶段回复文本：
+     * - 优先 routeReply
+     * - 否则回退 latestWorkerOutput
+     * - 超长则截断，避免中间态过长
+     */
     private String buildStageReply(String routeReply, String latestWorkerOutput) {
         String candidate = StringUtils.trimToEmpty(routeReply);
         if (StringUtils.isBlank(candidate)) {
@@ -456,10 +560,19 @@ public class SupervisorRoutingAgent extends BaseAgent {
         return candidate.substring(0, MAX_STAGE_REPLY_LENGTH) + "...";
     }
 
+    /**
+     * 生成最终回复文本，优先 routeReply，次选 latestWorkerOutput。
+     */
     private String buildFinalReply(String routeReply, String latestWorkerOutput) {
         return StringUtils.trimToEmpty(StringUtils.defaultIfBlank(routeReply, latestWorkerOutput));
     }
 
+    /**
+     * 判断是否属于“可预期中断”：
+     * - emitter 已取消
+     * - 异常链包含 InterruptedException/CancellationException
+     * - 当前线程已中断
+     */
     private boolean isCancellationOrInterruption(Throwable throwable, FlowableEmitter<Event> emitter) {
         if (emitter != null && emitter.isCancelled()) {
             return true;
@@ -476,6 +589,10 @@ public class SupervisorRoutingAgent extends BaseAgent {
         return Thread.currentThread().isInterrupted();
     }
 
+    /**
+     * 判断异常链中是否存在 InterruptedException。
+     * 若存在，调用方应恢复线程中断标记。
+     */
     private boolean hasInterruptedCause(Throwable throwable) {
         Throwable cursor = throwable;
         while (cursor != null) {
@@ -487,14 +604,26 @@ public class SupervisorRoutingAgent extends BaseAgent {
         return false;
     }
 
+    /**
+     * Router 的结构化决策对象。
+     */
     @Data
     public static class RouteDecision {
+        /** 路由器思考摘要（用于 thinking 展示）。 */
         private String thought;
+        /** 路由动作：route / final。 */
         private String action;
+        /** 下一跳 worker 名称（仅 route 时有效）。 */
         private String nextAgent;
+        /** 面向用户的回复文本（阶段或最终）。 */
         private String reply;
     }
 
+    /**
+     * route() 阶段执行结果：
+     * - routeDecision：最终决策
+     * - thoughtStreamed/replyStreamed：是否已做过增量输出，用于主循环兜底
+     */
     private static class RouteResult {
         private final RouteDecision routeDecision;
         private final boolean thoughtStreamed;
@@ -508,3 +637,4 @@ public class SupervisorRoutingAgent extends BaseAgent {
     }
 
 }
+
