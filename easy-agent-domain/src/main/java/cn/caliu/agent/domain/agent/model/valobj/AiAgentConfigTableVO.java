@@ -42,12 +42,14 @@ public class AiAgentConfigTableVO {
         @Data
         public static class ChatModel {
             private String model;
+            private Boolean streamUsage = Boolean.TRUE;
             private List<ToolMcp> toolMcpList;
             private List<ToolSkills> toolSkillsList;
 
             @Data
             public static class ToolMcp {
                 private SSEServerParameters sse;
+                private StreamableHttpServerParameters streamableHttp;
                 private StdioServerParameters stdio;
                 private LocalParameters local;
 
@@ -56,7 +58,28 @@ public class AiAgentConfigTableVO {
                     private String name;
                     private String baseUri;
                     private String sseEndpoint;
-                    private Integer requestTimeout = 3000;
+                    private Integer requestTimeout = 10000;
+                    private AuthParameters auth;
+                    private Map<String, String> headers;
+                    private Map<String, String> query;
+                }
+
+                @Data
+                public static class StreamableHttpServerParameters {
+                    private String name;
+                    private String baseUri;
+                    private String endpoint;
+                    private Integer requestTimeout = 10000;
+                    private AuthParameters auth;
+                    private Map<String, String> headers;
+                    private Map<String, String> query;
+                }
+
+                @Data
+                public static class AuthParameters {
+                    private String type;
+                    private String token;
+                    private String keyName;
                 }
 
                 @Data

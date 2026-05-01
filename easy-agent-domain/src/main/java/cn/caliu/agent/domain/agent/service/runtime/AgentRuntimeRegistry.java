@@ -43,11 +43,7 @@ public class AgentRuntimeRegistry {
     }
 
     public Optional<AiAgentRegisterVO> getActiveRegisterVO(String agentId) {
-        ActiveAgentSlot slot = activeSlotMap.get(agentId);
-        if (slot == null) {
-            return Optional.empty();
-        }
-        return Optional.ofNullable(slot.getRegisterVO());
+        return getActiveSlot(agentId).map(ActiveAgentSlot::getRegisterVO);
     }
 
     public Optional<AiAgentRegisterVO> getRegisterVO(String agentId, Long configVersion) {
@@ -144,4 +140,3 @@ public class AgentRuntimeRegistry {
     }
 
 }
-

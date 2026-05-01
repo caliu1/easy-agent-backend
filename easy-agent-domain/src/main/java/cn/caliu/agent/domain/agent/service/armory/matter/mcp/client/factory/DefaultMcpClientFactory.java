@@ -5,6 +5,7 @@ import cn.caliu.agent.domain.agent.service.armory.matter.mcp.client.IToolMcpCrea
 import cn.caliu.agent.domain.agent.service.armory.matter.mcp.client.impl.LocalToolMcpCreateService;
 import cn.caliu.agent.domain.agent.service.armory.matter.mcp.client.impl.SSEToolMcpCreateService;
 import cn.caliu.agent.domain.agent.service.armory.matter.mcp.client.impl.StdioToolMcpCreateService;
+import cn.caliu.agent.domain.agent.service.armory.matter.mcp.client.impl.StreamableHttpToolMcpCreateService;
 import cn.caliu.agent.types.enums.ResponseCode;
 import cn.caliu.agent.types.exception.AppException;
 import jakarta.annotation.Resource;
@@ -25,11 +26,15 @@ public class DefaultMcpClientFactory {
     private SSEToolMcpCreateService sseToolMcpCreateService;
 
     @Resource
+    private StreamableHttpToolMcpCreateService streamableHttpToolMcpCreateService;
+
+    @Resource
     private StdioToolMcpCreateService stdioToolMcpCreateService;
 
     public IToolMcpCreateService getToolMcpCreateService(AiAgentConfigTableVO.Module.ChatModel.ToolMcp toolMcp) {
         if (null != toolMcp.getLocal()) return localToolMcpCreateService;
         if (null != toolMcp.getSse()) return sseToolMcpCreateService;
+        if (null != toolMcp.getStreamableHttp()) return streamableHttpToolMcpCreateService;
         if (null != toolMcp.getStdio()) return stdioToolMcpCreateService;
         throw new AppException(ResponseCode.NOT_FOUND_METHOD.getCode(), ResponseCode.NOT_FOUND_METHOD.getInfo());
     }

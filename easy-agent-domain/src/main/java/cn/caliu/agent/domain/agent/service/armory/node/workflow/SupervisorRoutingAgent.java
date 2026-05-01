@@ -45,7 +45,7 @@ public class SupervisorRoutingAgent extends BaseAgent {
     private static final String ACTION_FINAL = "final";
     private static final int MAX_STAGE_REPLY_LENGTH = 800;
     // 主 Agent 文本按小块流式输出，提升前端增量展示体验。
-    private static final int MAIN_REPLY_CHUNK_SIZE = 8;
+    private static final int MAIN_REPLY_CHUNK_SIZE = 256;
 
     /**
      * 负责“决策”的路由 Agent。
@@ -306,7 +306,8 @@ public class SupervisorRoutingAgent extends BaseAgent {
                 return;
             }
 
-            allWorkerOutput.append(content).append('\n');
+            // 不能在分片之间强行插入换行，否则会把 XML/JSON 结构打碎，前端无法识别为 draw.io 内容。
+            allWorkerOutput.append(content);
             emitThinking(emitter, invocationContext, event.author(), content);
         });
 
@@ -549,10 +550,11 @@ public class SupervisorRoutingAgent extends BaseAgent {
     private String buildStageReply(String routeReply, String latestWorkerOutput) {
         String candidate = StringUtils.trimToEmpty(routeReply);
         if (StringUtils.isBlank(candidate)) {
-            candidate = StringUtils.trimToEmpty(latestWorkerOutput);
-        }
-        if (StringUtils.isBlank(candidate)) {
             return "";
+        }
+        if (looksLikeXml(candidate)) {
+            // 阶段性 reply 只给自然语言摘要，不直接透传 XML。
+            return "已完成本阶段处理，正在进入下一阶段。";
         }
         if (candidate.length() <= MAX_STAGE_REPLY_LENGTH) {
             return candidate;
@@ -565,6 +567,17 @@ public class SupervisorRoutingAgent extends BaseAgent {
      */
     private String buildFinalReply(String routeReply, String latestWorkerOutput) {
         return StringUtils.trimToEmpty(StringUtils.defaultIfBlank(routeReply, latestWorkerOutput));
+    }
+
+    private boolean looksLikeXml(String text) {
+        if (StringUtils.isBlank(text)) {
+            return false;
+        }
+        String normalized = text.toLowerCase();
+        return normalized.contains("<mxfile")
+                || normalized.contains("</mxfile>")
+                || normalized.contains("<mxgraphmodel")
+                || normalized.contains("<mxcell");
     }
 
     /**
@@ -637,4 +650,3 @@ public class SupervisorRoutingAgent extends BaseAgent {
     }
 
 }
-

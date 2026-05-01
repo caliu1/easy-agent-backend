@@ -61,12 +61,6 @@ Always include:
   - connect top/bottom border => first/last segment vertical
   - connect left/right border => first/last segment horizontal
 - If waypoints violate the perpendicular rule, regenerate waypoints before output.
-- Anchor-direction consistency is mandatory:
-  - first segment vertical => `fromAnchor` must be `top|bottom`
-  - first segment horizontal => `fromAnchor` must be `left|right`
-  - last segment vertical => `toAnchor` must be `top|bottom`
-  - last segment horizontal => `toAnchor` must be `left|right`
-  - mismatch requires anchor + waypoint repair
 - For fan-in routing, use shared merge bus:
   - if multiple branches point to one target node, merge first on a shared bus (`fanInBusX` or `fanInBusY`)
   - then use short straight segment to enter target node from the intended border
@@ -82,8 +76,6 @@ Always include:
   - if clearance is insufficient, expand routing offset and reroute
 - Input/output bus is a soft preference:
   - prefer reusing shared bus channels for readability
-  - input edges should mostly enter from left or top
-  - output edges should mostly leave to right or bottom
   - if obstacle avoidance conflicts with this preference, allow local deviation but keep overall direction consistent
 
 ## Style Defaults

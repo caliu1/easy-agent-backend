@@ -16,6 +16,13 @@ ai:
               embeddings-path: v1/embeddings
             chat-model:
               model: qwen-plus
+              tool-mcp-list:
+                - streamable-http:
+                    name: web-search-mcp-server
+                    base-uri: https://qianfan.baidubce.com/v2/tools/web-search/mcp
+                    headers:
+                      Authorization: Bearer ${BAIDU_API_KEY}
+                    request-timeout: 10000
             agents:
               - name: AgentConfigWriter
                 description: Converts a single natural-language requirement into valid agent config JSON.
@@ -41,8 +48,24 @@ ai:
                            "embeddingsPath": "v1/embeddings"
                          },
                          "chatModel": {
-                           "model": "qwen-plus"
-                         },
+                           "model": "qwen-plus",
+                           "toolMcpList": [
+                             {
+                               "sse": {
+                                  "name": "...",
+                                  "baseUri": "...",
+                                  "sseEndpoint": "...",
+                                  "requestTimeout": 3000
+                                }
+                              }
+                            ],
+                            "toolSkillsList": [
+                              {
+                                "type": "resource|directory|oss",
+                                "path": "..."
+                              }
+                            ]
+                          },
                          "agents": [
                            {
                              "name": "...",
@@ -84,6 +107,14 @@ ai:
                   10) Ensure subAgents and routerAgent exactly reference existing names.
                   11) Use concise Chinese text for description/instruction content.
                   12) agent.agentId must be empty string "", because the backend will auto-generate agentId on create.
+                  13) toolMcpList/toolSkillsList must be user-driven:
+                      - do NOT hardcode fixed MCP/Skill defaults.
+                      - generate items only when user clearly asks for MCP/Skill.
+                      - when user did not mention MCP/Skill, set both arrays to [].
+                  14) toolSkillsList type guidance:
+                      - local or classpath skills: use "resource" or "directory"
+                      - OSS skills: use "oss", path format "oss://bucket/prefix" (or plain prefix if default bucket is configured in backend)
+                  15) Use camelCase keys in JSON (toolMcpList/toolSkillsList, baseUri/sseEndpoint/requestTimeout).
 
             runner:
               agent-name: AgentConfigWriter

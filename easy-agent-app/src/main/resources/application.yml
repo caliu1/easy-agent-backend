@@ -3,3 +3,14 @@ spring:
     name: agent-scaffold-lite-app
   profiles:
     active: dev
+
+ai:
+  agent:
+    skill-oss:
+      enabled: ${OSS_SKILL_ENABLED:true}
+      endpoint: ${OSS_ENDPOINT:https://oss-cn-beijing.aliyuncs.com}
+      access-key-id: ${OSS_ACCESS_KEY_ID:}
+      access-key-secret: ${OSS_ACCESS_KEY_SECRET:}
+      security-token: ${OSS_SECURITY_TOKEN:}
+      default-bucket: ${OSS_SKILL_BUCKET:caliu}
+      list-max-keys: ${OSS_SKILL_LIST_MAX_KEYS:1000}

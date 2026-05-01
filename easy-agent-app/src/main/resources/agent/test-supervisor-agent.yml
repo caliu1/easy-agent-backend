@@ -16,6 +16,13 @@
               embeddings-path: v1/embeddings
             chat-model:
               model: qwen-plus
+              tool-mcp-list:
+                - streamable-http:
+                    name: web-search-mcp-server
+                    base-uri: https://qianfan.baidubce.com/v2/tools/web-search/mcp
+                    headers:
+                      Authorization: Bearer ${BAIDU_API_KEY}
+                    request-timeout: 10000
             agents:
               - name: SupervisorRouter
                 description: 负责在专家之间路由，并在条件满足时输出最终答案。

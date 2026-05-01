@@ -154,6 +154,32 @@ public class AgentConfigEntity {
                 .build();
     }
 
+    public AgentConfigEntity toPublishedUpdate(
+            String appName,
+            String agentName,
+            String agentDesc,
+            String configJson,
+            long nextVersion,
+            String operatorCandidate,
+            long updateTime
+    ) {
+        return copyBuilder()
+                .appName(appName)
+                .agentName(agentName)
+                .agentDesc(agentDesc)
+                .configJson(configJson)
+                .status(STATUS_PUBLISHED)
+                .currentVersion(nextVersion)
+                .publishedVersion(nextVersion)
+                .operator(resolveOperatorWithFallback(operatorCandidate))
+                .ownerUserId(resolveOwnerUserId())
+                .sourceType(normalizeSourceType())
+                .plazaStatus(normalizePlazaStatus())
+                .plazaPublishTime(plazaPublishTime)
+                .updateTime(updateTime)
+                .build();
+    }
+
     public AgentConfigEntity toOffline(String operatorCandidate, long updateTime) {
         return copyBuilder()
                 .status(STATUS_OFFLINE)

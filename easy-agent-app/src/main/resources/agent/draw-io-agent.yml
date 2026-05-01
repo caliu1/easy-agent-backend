@@ -9,13 +9,32 @@ ai:
             agent-name: DrawIO Multi-Agent
             agent-desc: 多智能体协作生成 draw.io XML
           module:
+#            ai-api:
+#              base-url: https://dashscope.aliyuncs.com/compatible-mode/
+#              api-key: ${DASHSCOPE_API_KEY}
+#              completions-path: v1/chat/completions
+#              embeddings-path: v1/embeddings
+#            chat-model:
+#              model: qwen-plus
             ai-api:
-              base-url: https://dashscope.aliyuncs.com/compatible-mode/
-              api-key: ${DASHSCOPE_API_KEY}
+              base-url: https://api.deepseek.com
+              api-key: ${DEEPSEEK_API_KEY}
               completions-path: v1/chat/completions
               embeddings-path: v1/embeddings
             chat-model:
-              model: qwen-plus
+              model: deepseek-chat
+              tool-mcp-list:
+                - streamable-http:
+                    name: web-search-mcp-server
+                    base-uri: https://qianfan.baidubce.com/v2/tools/web-search/mcp
+                    headers:
+                      Authorization: Bearer ${BAIDU_API_KEY}
+                    request-timeout: 10000
+#                - sse:
+#                    name: baidu-search
+#                    base-uri: http://appbuilder.baidu.com/v2/ai_search/mcp/
+#                    sse-endpoint: sse?api_key=${BAIDU_API_KEY}
+#                    request-timeout: 500000
               tool-skills-list:
                 - type: resource
                   path: agent/skills/drawio-skill
@@ -65,7 +84,7 @@ ai:
                   - 锚点只能在边上（top/right/bottom/left），禁止连接到中心点。
                   - 连线接入节点边界时，首段/末段方向要与该边垂直。
                   - 连线不得穿过无关节点主体，非端点与节点保持可读净距（建议 >= 20px）。
-                  - 输入/输出尽量使用总线：输入优先从上边，其次左边；输出优先下边，其次右边；冲突时可局部绕行。
+                  - 输入/输出尽量使用总线：冲突时可局部绕行。
 
                   【最终输出协议】
                   - 输出必须是一个完整 XML 文本。

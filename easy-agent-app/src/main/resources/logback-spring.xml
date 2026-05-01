@@ -101,6 +101,10 @@
     <springProfile name="dev">
         <logger name="com.nmys.view" level="debug"/>
     </springProfile>
+    <!-- Third-party MCP services may return non-SSE text on optional stream channels.
+         Keep only real errors to avoid noisy warning stack traces. -->
+    <logger name="io.modelcontextprotocol.client.transport.LifecycleInitializer" level="ERROR"/>
+    <logger name="io.modelcontextprotocol.client.transport.ResponseSubscribers" level="ERROR"/>
 
     <root level="info">
         <appender-ref ref="CONSOLE"/>

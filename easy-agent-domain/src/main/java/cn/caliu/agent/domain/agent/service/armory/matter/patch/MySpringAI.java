@@ -15,11 +15,13 @@ import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.model.StreamingChatModel;
 import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Flux;
 
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 /**
- * MySpringAI 类。
+ * MySpringAI 绫汇€?
  */
 
 
@@ -172,9 +174,7 @@ public class MySpringAI extends BaseLlm {
             return Flowable.just(llmResponse);
         } catch (Exception e) {
             observabilityHandler.recordError(context, e);
-            SpringAIErrorMapper.MappedError mappedError = SpringAIErrorMapper.mapError(e);
-
-            return Flowable.error(new RuntimeException(mappedError.getNormalizedMessage(), e));
+            return Flowable.error(toProviderAwareRuntimeException(e));
         }
     }
 
@@ -184,55 +184,68 @@ public class MySpringAI extends BaseLlm {
 
         return Flowable.create(
                 emitter -> {
+                    AtomicBoolean terminated = new AtomicBoolean(false);
                     try {
                         Prompt prompt = messageConverter.toLlmPrompt(llmRequest);
                         observabilityHandler.logRequest(prompt.toString(), model());
 
                         Flux<ChatResponse> responseFlux = streamingChatModel.stream(prompt);
 
-                        responseFlux
-                                .doOnError(
-                                        error -> {
-                                            observabilityHandler.recordError(context, error);
-                                            SpringAIErrorMapper.MappedError mappedError =
-                                                    SpringAIErrorMapper.mapError(error);
-                                            emitter.onError(
-                                                    new RuntimeException(mappedError.getNormalizedMessage(), error));
-                                        })
-                                .subscribe(
-                                        chatResponse -> {
-                                            try {
-                                                // Use enhanced streaming-aware conversion
-                                                LlmResponse llmResponse =
-                                                        messageConverter.toLlmResponse(chatResponse, true);
-                                                emitter.onNext(llmResponse);
-                                            } catch (Exception e) {
-                                                observabilityHandler.recordError(context, e);
-                                                SpringAIErrorMapper.MappedError mappedError =
-                                                        SpringAIErrorMapper.mapError(e);
-                                                emitter.onError(
-                                                        new RuntimeException(mappedError.getNormalizedMessage(), e));
-                                            }
-                                        },
-                                        error -> {
-                                            observabilityHandler.recordError(context, error);
-                                            SpringAIErrorMapper.MappedError mappedError =
-                                                    SpringAIErrorMapper.mapError(error);
-                                            emitter.onError(
-                                                    new RuntimeException(mappedError.getNormalizedMessage(), error));
-                                        },
-                                        () -> {
-                                            // Record success for streaming completion
-                                            observabilityHandler.recordSuccess(context, 0, 0, 0);
-                                            emitter.onComplete();
-                                        });
+                        reactor.core.Disposable subscription = responseFlux.subscribe(
+                                chatResponse -> {
+                                    if (terminated.get() || emitter.isCancelled()) {
+                                        return;
+                                    }
+                                    try {
+                                        LlmResponse llmResponse =
+                                                messageConverter.toLlmResponse(chatResponse, true);
+                                        emitter.onNext(llmResponse);
+                                    } catch (Exception e) {
+                                        terminateStreamingWithError(emitter, terminated, context, e);
+                                    }
+                                },
+                                error -> terminateStreamingWithError(emitter, terminated, context, error),
+                                () -> {
+                                    if (terminated.compareAndSet(false, true) && !emitter.isCancelled()) {
+                                        observabilityHandler.recordSuccess(context, 0, 0, 0);
+                                        emitter.onComplete();
+                                    }
+                                });
+
+                        emitter.setCancellable(subscription::dispose);
                     } catch (Exception e) {
-                        observabilityHandler.recordError(context, e);
-                        SpringAIErrorMapper.MappedError mappedError = SpringAIErrorMapper.mapError(e);
-                        emitter.onError(new RuntimeException(mappedError.getNormalizedMessage(), e));
+                        terminateStreamingWithError(emitter, terminated, context, e);
                     }
                 },
                 BackpressureStrategy.BUFFER);
+    }
+
+    private void terminateStreamingWithError(
+            io.reactivex.rxjava3.core.FlowableEmitter<LlmResponse> emitter,
+            AtomicBoolean terminated,
+            SpringAIObservabilityHandler.RequestContext context,
+            Throwable error) {
+        observabilityHandler.recordError(context, error);
+        if (terminated.compareAndSet(false, true) && !emitter.isCancelled()) {
+            emitter.onError(toProviderAwareRuntimeException(error));
+        }
+    }
+    private RuntimeException toProviderAwareRuntimeException(Throwable error) {
+        SpringAIErrorMapper.MappedError mappedError = SpringAIErrorMapper.mapError(error);
+        String message = mappedError.getNormalizedMessage();
+
+        if (error instanceof WebClientResponseException webClientError) {
+            String responseBody = webClientError.getResponseBodyAsString();
+            if (responseBody != null && !responseBody.isBlank()) {
+                responseBody = responseBody.replaceAll("[\\r\\n]+", " ").trim();
+                if (responseBody.length() > 1200) {
+                    responseBody = responseBody.substring(0, 1200) + "...";
+                }
+                message = message + " | provider_response=" + responseBody;
+            }
+        }
+
+        return new RuntimeException(message, error);
     }
 
     @Override
@@ -303,3 +316,4 @@ public class MySpringAI extends BaseLlm {
     }
 
 }
+

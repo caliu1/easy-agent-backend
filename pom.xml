@@ -111,6 +111,11 @@
                 <artifactId>commons-codec</artifactId>
                 <version>1.15</version>
             </dependency>
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>3.17.4</version>
+            </dependency>
 
             <!-- spring ai & google adk begin -->
             <dependency>
@@ -150,7 +155,7 @@
             <!--     <version>1.4.0</version> -->
             <!-- </dependency> -->
 
-            <!-- spring ai 1.1.0 https://central.sonatype.com/artifact/org.springframework.ai/spring-ai-bom -->
+            <!-- spring ai 1.1.0 -->
             <dependency>
                 <groupId>org.springframework.ai</groupId>
                 <artifactId>spring-ai-bom</artifactId>

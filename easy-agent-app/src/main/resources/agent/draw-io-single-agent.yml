@@ -9,13 +9,27 @@ ai:
             agent-name: DrawIO Single Agent
             agent-desc: 单智能体，按用户意图在普通对话与 draw.io XML 生成之间切换
           module:
+#            ai-api:
+#              base-url: https://dashscope.aliyuncs.com/compatible-mode/
+#              api-key: ${DASHSCOPE_API_KEY}
+#              completions-path: v1/chat/completions
+#              embeddings-path: v1/embeddings
+#            chat-model:
+#              model: qwen-plus
             ai-api:
-              base-url: https://dashscope.aliyuncs.com/compatible-mode/
-              api-key: ${DASHSCOPE_API_KEY}
+              base-url: https://api.deepseek.com
+              api-key: ${DEEPSEEK_API_KEY}
               completions-path: v1/chat/completions
               embeddings-path: v1/embeddings
             chat-model:
-              model: qwen-plus
+              model: deepseek-chat
+              tool-mcp-list:
+                - streamable-http:
+                    name: web-search-mcp-server
+                    base-uri: https://qianfan.baidubce.com/v2/tools/web-search/mcp
+                    headers:
+                      Authorization: Bearer ${BAIDU_API_KEY}
+                    request-timeout: 10000
               tool-skills-list:
                 - type: resource
                   path: agent/skills/drawio-skill
@@ -44,7 +58,7 @@ ai:
                   - 锚点只能在边上（top/right/bottom/left），禁止连接到中心点。
                   - 连线接入节点边界时，首段/末段方向要与该边垂直。
                   - 连线不得穿过无关节点主体，非端点与节点保持可读净距（建议 >= 20px）。
-                  - 输入/输出尽量使用总线：输入优先左/上，输出优先右/下；冲突时可局部绕行。
+                  - 输入/输出尽量使用总线；冲突时可局部绕行。
 
                   【最终输出协议（最高优先级）】
                   - 仅当绘图模式且已可交付时，最终输出必须是一个完整 XML 文本。
@@ -52,17 +66,6 @@ ai:
                   - 最终输出中必须包含：mxfile、diagram、mxGraphModel、root、mxCell。
                   - 禁止输出 markdown（例如 ```xml）、禁止输出“Here is...”、禁止 JSON 包装、禁止解释文字。
                   - 禁止输出残片（例如只输出 style 片段、坐标片段、entryX/entryY 片段）。
-
-                  【绘图前自检（生成前必须静默完成）】
-                  - 是否是完整 mxfile（不是片段）？
-                  - 是否包含必须结构（mxfile/diagram/mxGraphModel/root/mxCell）？
-                  - 是否存在判断节点却未使用菱形或未标注 Yes/No？
-                  - 是否存在中心锚点连接或明显穿越节点主体？
-                  - 若任一不满足：先修正，再输出。
-
-                  【失败回退】
-                  - 如果当前无法保证输出完整且可导入的 XML，不要输出 XML。
-                  - 改为提一个最小澄清问题，等待用户补充后再生成。
 
             runner:
               agent-name: DrawioSingleAgent

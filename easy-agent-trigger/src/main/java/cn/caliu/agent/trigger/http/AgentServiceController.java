@@ -27,7 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 聊天会话 HTTP 控制器。
@@ -212,6 +215,7 @@ public class AgentServiceController implements IAgentService {
     public SseEmitter chatStream(@RequestBody ChatRequestDTO requestDTO) {
         SseEmitter emitter = new SseEmitter(CHAT_STREAM_TIMEOUT_MS);
         try {
+            AtomicReference<Disposable> disposableRef = new AtomicReference<>();
             Disposable disposable = agentChatApplicationService
                     .chatStream(requestDTO)
                     .subscribeOn(Schedulers.io())
@@ -222,22 +226,55 @@ public class AgentServiceController implements IAgentService {
                                             .name("message")
                                             .data(JSON.toJSONString(streamEvent)));
                                 } catch (Exception e) {
-                                    emitter.completeWithError(e);
+                                    log.warn("chat stream send failed", e);
+                                    Disposable current = disposableRef.get();
+                                    if (current != null) {
+                                        current.dispose();
+                                    }
+                                    emitter.complete();
                                 }
                             },
-                            emitter::completeWithError,
+                            error -> {
+                                log.error("chat stream failed", error);
+                                try {
+                                    Map<String, Object> errorEvent = new HashMap<>();
+                                    errorEvent.put("type", "error");
+                                    errorEvent.put("message", error.getMessage());
+                                    emitter.send(SseEmitter.event()
+                                            .name("error")
+                                            .data(JSON.toJSONString(errorEvent)));
+                                } catch (Exception sendError) {
+                                    log.warn("send chat stream error event failed", sendError);
+                                } finally {
+                                    emitter.complete();
+                                }
+                            },
                             emitter::complete
                     );
+            disposableRef.set(disposable);
 
-            emitter.onCompletion(disposable::dispose);
+            emitter.onCompletion(() -> {
+                Disposable current = disposableRef.get();
+                if (current != null) {
+                    current.dispose();
+                }
+            });
             emitter.onTimeout(() -> {
-                disposable.dispose();
+                Disposable current = disposableRef.get();
+                if (current != null) {
+                    current.dispose();
+                }
                 emitter.complete();
             });
-            emitter.onError(throwable -> disposable.dispose());
+            emitter.onError(throwable -> {
+                Disposable current = disposableRef.get();
+                if (current != null) {
+                    current.dispose();
+                }
+            });
         } catch (Exception e) {
             log.error("chat stream failed", e);
-            emitter.completeWithError(e);
+            emitter.complete();
         }
         return emitter;
     }

@@ -6,7 +6,11 @@ import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryResult;
 import cn.caliu.agent.domain.agent.model.valobj.AgentConfigVersionVO;
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentConfigTableVO;
 import cn.caliu.agent.domain.agent.model.valobj.AiAgentRegisterVO;
+import cn.caliu.agent.domain.agent.model.valobj.SkillAssetEntryVO;
+import cn.caliu.agent.domain.agent.model.valobj.SkillAssetsResultVO;
+import cn.caliu.agent.domain.agent.model.valobj.SkillImportResultVO;
 import cn.caliu.agent.domain.agent.model.valobj.properties.AiAgentAutoConfigProperties;
+import cn.caliu.agent.domain.agent.model.valobj.properties.SkillOssProperties;
 import cn.caliu.agent.domain.agent.repository.IAgentConfigRepository;
 import cn.caliu.agent.domain.agent.repository.IAgentConfigVersionRepository;
 import cn.caliu.agent.domain.session.repository.IAgentSessionBindRepository;
@@ -15,6 +19,13 @@ import cn.caliu.agent.domain.agent.service.runtime.AgentRuntimeAssembler;
 import cn.caliu.agent.domain.agent.service.runtime.AgentRuntimeRegistry;
 import cn.caliu.agent.types.enums.ResponseCode;
 import cn.caliu.agent.types.exception.AppException;
+import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.model.ListObjectsV2Request;
+import com.aliyun.oss.model.ListObjectsV2Result;
+import com.aliyun.oss.model.ObjectMetadata;
+import com.aliyun.oss.model.OSSObject;
+import com.aliyun.oss.model.OSSObjectSummary;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -24,11 +35,23 @@ import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.annotation.Resource;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * Agent 配置领域服务实现。
@@ -46,6 +69,15 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final int AGENT_ID_GENERATE_RETRY_TIMES = 10;
     private static final String AGENT_ID_PREFIX = "2";
+    private static final String OSS_SCHEME_PREFIX = "oss://";
+    private static final String SKILL_ROOT_PREFIX = "easyagent/skills/";
+    private static final String LEGACY_SKILL_ROOT_PREFIX = "skills/";
+    private static final long MAX_ZIP_SIZE_BYTES = 20L * 1024L * 1024L;
+    private static final long MAX_ZIP_ENTRY_SIZE_BYTES = 10L * 1024L * 1024L;
+    private static final long MAX_ZIP_TOTAL_UNCOMPRESSED_BYTES = 200L * 1024L * 1024L;
+    private static final int MAX_ZIP_ENTRY_COUNT = 4000;
+    private static final int MAX_SKILL_ASSET_COUNT = 500;
+    private static final long MAX_SKILL_ASSET_TOTAL_SIZE = 20L * 1024L * 1024L;
 
     @Resource
     private IAgentConfigRepository agentConfigRepository;
@@ -59,6 +91,8 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
     private AgentRuntimeAssembler agentRuntimeAssembler;
     @Resource
     private AiAgentAutoConfigProperties aiAgentAutoConfigProperties;
+    @Resource
+    private SkillOssProperties skillOssProperties;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -114,8 +148,18 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
                 choose(request.getAgentDesc(), existed.getAgentDesc())
         );
 
+        // 更新配置后自动启用：先装配校验，确保新版本可被运行时加载。
+        AgentConfigEntity publishCandidate = AgentConfigEntity.builder()
+                .agentId(agentId)
+                .appName(configMeta.appName)
+                .agentName(configMeta.agentName)
+                .agentDesc(configMeta.agentDesc)
+                .configJson(mergedConfigJson)
+                .build();
+        AiAgentRegisterVO registerVO = agentRuntimeAssembler.assemble(publishCandidate);
+
         long nextVersion = defaultLong(existed.getCurrentVersion(), 1L) + 1;
-        AgentConfigEntity updated = existed.toDraftUpdate(
+        AgentConfigEntity updated = existed.toPublishedUpdate(
                 configMeta.appName,
                 configMeta.agentName,
                 configMeta.agentDesc,
@@ -127,6 +171,7 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
 
         agentConfigRepository.update(updated);
         insertVersionSnapshot(updated);
+        runAfterCommit(() -> agentRuntimeRegistry.activate(agentId, nextVersion, registerVO));
         return requireConfig(agentId);
     }
 
@@ -321,10 +366,170 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
         agentConfigRepository.update(updated);
         return requireConfig(key);
     }
+
+    @Override
+    public synchronized SkillImportResultVO importSkillZip(String operator, String fileName, byte[] zipBytes) {
+        validateSkillZipInput(fileName, zipBytes);
+        ensureSkillOssEnabled();
+
+        List<ZipEntryPayload> zipEntries = readZipEntries(zipBytes);
+        if (zipEntries.isEmpty()) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "zip has no files");
+        }
+
+        Set<String> skillDirectories = collectSkillDirectories(zipEntries);
+        if (skillDirectories.isEmpty()) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "zip has no SKILL.md");
+        }
+
+        String bucket = StringUtils.trimToEmpty(skillOssProperties.getDefaultBucket());
+        if (StringUtils.isBlank(bucket)) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "OSS default bucket is blank");
+        }
+
+        String uploadPrefix = buildUploadPrefix(fileName);
+        OSS ossClient = buildOssClient();
+        try {
+            for (ZipEntryPayload zipEntry : zipEntries) {
+                String objectKey = uploadPrefix + zipEntry.path;
+                ObjectMetadata metadata = new ObjectMetadata();
+                metadata.setContentLength(zipEntry.content.length);
+                ossClient.putObject(bucket, objectKey, new ByteArrayInputStream(zipEntry.content), metadata);
+            }
+        } catch (Exception e) {
+            throw new AppException(ResponseCode.UN_ERROR.getCode(), "upload skill zip to OSS failed: " + e.getMessage());
+        } finally {
+            try {
+                ossClient.shutdown();
+            } catch (Exception ignored) {
+            }
+        }
+
+        List<SkillImportResultVO.ToolSkillLocationVO> toolSkillsList = new ArrayList<>();
+        for (String skillDirectory : skillDirectories) {
+            String locationPrefix = StringUtils.isBlank(skillDirectory)
+                    ? uploadPrefix
+                    : uploadPrefix + skillDirectory + "/";
+
+            // 统一返回相对 default bucket 的路径，格式固定在 easyagent/skills/ 下。
+            String ossPath = trimTailSlash(locationPrefix);
+            String skillName = StringUtils.isBlank(skillDirectory)
+                    ? removeZipExtension(fileName)
+                    : skillDirectory.substring(skillDirectory.lastIndexOf('/') + 1);
+
+            toolSkillsList.add(SkillImportResultVO.ToolSkillLocationVO.builder()
+                    .type("oss")
+                    .path(ossPath)
+                    .skillName(skillName)
+                    .build());
+        }
+
+        return SkillImportResultVO.builder()
+                .bucket(bucket)
+                .prefix(trimTailSlash(uploadPrefix))
+                .fileCount(zipEntries.size())
+                .skillCount(toolSkillsList.size())
+                .toolSkillsList(toolSkillsList)
+                .build();
+    }
+
+    @Override
+    public synchronized SkillImportResultVO saveSkillAssets(String operator, String rootFolder, List<SkillAssetEntryVO> entries) {
+        ensureSkillOssEnabled();
+
+        String normalizedRootFolder = normalizeSkillRootFolder(rootFolder);
+        if (StringUtils.isBlank(normalizedRootFolder)) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "rootFolder is blank");
+        }
+
+        List<SkillAssetEntryVO> normalizedEntries = normalizeSkillAssetEntries(entries);
+        validateSkillAssetEntries(normalizedEntries);
+
+        String bucket = StringUtils.trimToEmpty(skillOssProperties.getDefaultBucket());
+        if (StringUtils.isBlank(bucket)) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "OSS default bucket is blank");
+        }
+
+        String prefix = SKILL_ROOT_PREFIX + normalizedRootFolder + "/";
+        OSS ossClient = buildOssClient();
+        try {
+            cleanOssPrefix(ossClient, bucket, prefix);
+            uploadSkillAssets(ossClient, bucket, prefix, normalizedEntries);
+        } catch (AppException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new AppException(ResponseCode.UN_ERROR.getCode(), "save skill assets failed: " + e.getMessage());
+        } finally {
+            try {
+                ossClient.shutdown();
+            } catch (Exception ignored) {
+            }
+        }
+
+        List<SkillImportResultVO.ToolSkillLocationVO> locations = List.of(
+                SkillImportResultVO.ToolSkillLocationVO.builder()
+                        .type("oss")
+                        .path(trimTailSlash(prefix))
+                        .skillName(normalizedRootFolder)
+                        .build()
+        );
+
+        return SkillImportResultVO.builder()
+                .bucket(bucket)
+                .prefix(trimTailSlash(prefix))
+                .fileCount((int) normalizedEntries.stream().filter(this::isFileEntry).count())
+                .skillCount(1)
+                .toolSkillsList(locations)
+                .build();
+    }
+
+    @Override
+    public synchronized SkillAssetsResultVO querySkillAssets(String ossPath) {
+        ensureSkillOssEnabled();
+
+        OssLocation location = parseOssLocation(ossPath);
+        String normalizedPrefix = normalizeObjectKey(location.getKeyPrefix());
+        if (StringUtils.isBlank(normalizedPrefix)) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "ossPath is blank");
+        }
+        if (normalizedPrefix.startsWith(LEGACY_SKILL_ROOT_PREFIX)) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(),
+                    "legacy skill path is not supported, use easyagent/skills/{skillName}");
+        }
+        if (!normalizedPrefix.startsWith(SKILL_ROOT_PREFIX)) {
+            normalizedPrefix = SKILL_ROOT_PREFIX + normalizedPrefix;
+        }
+        String listPrefix = normalizedPrefix.endsWith("/") ? normalizedPrefix : normalizedPrefix + "/";
+
+        OSS ossClient = buildOssClient();
+        try {
+            List<SkillAssetEntryVO> entries = readSkillAssetsFromOss(ossClient, location.getBucket(), listPrefix);
+            int fileCount = (int) entries.stream().filter(this::isFileEntry).count();
+            int folderCount = entries.size() - fileCount;
+
+            return SkillAssetsResultVO.builder()
+                    .bucket(location.getBucket())
+                    .prefix(trimTailSlash(listPrefix))
+                    .fileCount(fileCount)
+                    .folderCount(folderCount)
+                    .entries(entries)
+                    .build();
+        } catch (AppException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new AppException(ResponseCode.UN_ERROR.getCode(), "query skill assets failed: " + e.getMessage());
+        } finally {
+            try {
+                ossClient.shutdown();
+            } catch (Exception ignored) {
+            }
+        }
+    }
+
     @Override
     public synchronized int reloadPublishedAgentRuntime() {
         List<AgentConfigEntity> publishedConfigs = agentConfigRepository.queryPublishedList();
-        agentRuntimeRegistry.clear();
+        Set<String> systemAgentIds = collectSystemAgentIds();
 
         if (publishedConfigs == null || publishedConfigs.isEmpty()) {
             return 0;
@@ -332,6 +537,11 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
 
         int loaded = 0;
         for (AgentConfigEntity config : publishedConfigs) {
+            if (systemAgentIds.contains(config.getAgentId())) {
+                log.info("skip db runtime activation because system config takes precedence. agentId={}", config.getAgentId());
+                continue;
+            }
+
             try {
                 ConfigMeta configMeta = resolveConfigMeta(
                         config.getAgentId(),
@@ -359,6 +569,28 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
             }
         }
         return loaded;
+    }
+
+    /**
+     * 收集内置（yml）Agent 的 id，用于运行时装配时做优先级保护。
+     */
+    private Set<String> collectSystemAgentIds() {
+        Set<String> systemAgentIds = new LinkedHashSet<>();
+        Map<String, AiAgentConfigTableVO> tables = aiAgentAutoConfigProperties.getTables();
+        if (tables == null || tables.isEmpty()) {
+            return systemAgentIds;
+        }
+
+        for (AiAgentConfigTableVO table : tables.values()) {
+            if (table == null || table.getAgent() == null) {
+                continue;
+            }
+            String agentId = StringUtils.trimToEmpty(table.getAgent().getAgentId());
+            if (StringUtils.isNotBlank(agentId)) {
+                systemAgentIds.add(agentId);
+            }
+        }
+        return systemAgentIds;
     }
 
     private AgentConfigEntity requireConfig(String agentId) {
@@ -440,6 +672,465 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
         }
         return officialAgents;
     }
+
+    private void validateSkillZipInput(String fileName, byte[] zipBytes) {
+        if (StringUtils.isBlank(fileName) || !StringUtils.endsWithIgnoreCase(fileName.trim(), ".zip")) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "file must be a .zip package");
+        }
+        if (zipBytes == null || zipBytes.length == 0) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "zip file is empty");
+        }
+        if (zipBytes.length > MAX_ZIP_SIZE_BYTES) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "zip file is too large (max 20MB)");
+        }
+    }
+
+    private void ensureSkillOssEnabled() {
+        if (!skillOssProperties.isEnabled()) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "OSS skill import is disabled");
+        }
+    }
+
+    private List<ZipEntryPayload> readZipEntries(byte[] zipBytes) {
+        List<ZipEntryPayload> payloads = new ArrayList<>();
+        long totalUncompressedSize = 0L;
+        int entryCount = 0;
+
+        try (ZipInputStream zipInputStream = new ZipInputStream(new ByteArrayInputStream(zipBytes))) {
+            ZipEntry zipEntry;
+            while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+                if (zipEntry.isDirectory()) {
+                    continue;
+                }
+
+                entryCount++;
+                if (entryCount > MAX_ZIP_ENTRY_COUNT) {
+                    throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "zip entry count exceeds limit");
+                }
+
+                String normalizedPath = normalizeZipEntryPath(zipEntry.getName());
+                byte[] content = readZipEntryContent(zipInputStream);
+                totalUncompressedSize += content.length;
+                if (totalUncompressedSize > MAX_ZIP_TOTAL_UNCOMPRESSED_BYTES) {
+                    throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "zip content is too large after unzip");
+                }
+
+                payloads.add(new ZipEntryPayload(normalizedPath, content));
+            }
+        } catch (AppException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "invalid zip file: " + e.getMessage());
+        }
+
+        return payloads;
+    }
+
+    private String normalizeZipEntryPath(String originalName) {
+        String normalized = StringUtils.trimToEmpty(originalName).replace('\\', '/');
+        while (normalized.startsWith("./")) {
+            normalized = normalized.substring(2);
+        }
+        normalized = StringUtils.stripStart(normalized, "/");
+
+        if (StringUtils.isBlank(normalized)) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "zip contains empty file path");
+        }
+
+        String[] segments = normalized.split("/");
+        for (String segment : segments) {
+            if (StringUtils.isBlank(segment) || ".".equals(segment) || "..".equals(segment)) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "zip contains unsafe file path: " + originalName);
+            }
+        }
+
+        return String.join("/", Arrays.asList(segments));
+    }
+
+    private byte[] readZipEntryContent(ZipInputStream zipInputStream) throws Exception {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[8192];
+        long currentEntrySize = 0L;
+
+        int readSize;
+        while ((readSize = zipInputStream.read(buffer)) != -1) {
+            currentEntrySize += readSize;
+            if (currentEntrySize > MAX_ZIP_ENTRY_SIZE_BYTES) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "single file in zip is too large");
+            }
+            outputStream.write(buffer, 0, readSize);
+        }
+
+        return outputStream.toByteArray();
+    }
+
+    private Set<String> collectSkillDirectories(List<ZipEntryPayload> zipEntries) {
+        Set<String> directories = new LinkedHashSet<>();
+        for (ZipEntryPayload zipEntry : zipEntries) {
+            String normalizedPath = zipEntry.path;
+            String lowerPath = normalizedPath.toLowerCase();
+            if (!"skill.md".equals(lowerPath) && !lowerPath.endsWith("/skill.md")) {
+                continue;
+            }
+
+            int slashIndex = normalizedPath.lastIndexOf('/');
+            String directory = slashIndex < 0 ? "" : normalizedPath.substring(0, slashIndex);
+            directories.add(directory);
+        }
+        return directories;
+    }
+
+    private String normalizeSkillRootFolder(String rootFolder) {
+        String normalized = StringUtils.trimToEmpty(rootFolder).replace('\\', '/');
+        while (normalized.startsWith("/")) {
+            normalized = normalized.substring(1);
+        }
+        while (normalized.endsWith("/")) {
+            normalized = normalized.substring(0, normalized.length() - 1);
+        }
+        if (normalized.startsWith(SKILL_ROOT_PREFIX)) {
+            normalized = normalized.substring(SKILL_ROOT_PREFIX.length());
+        } else if (normalized.startsWith(LEGACY_SKILL_ROOT_PREFIX)) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(),
+                    "legacy skill path is not supported, use easyagent/skills/{skillName}");
+        }
+
+        if (StringUtils.isBlank(normalized) || normalized.contains("/") || ".".equals(normalized) || "..".equals(normalized)) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "invalid rootFolder");
+        }
+        return normalized;
+    }
+
+    private List<SkillAssetEntryVO> normalizeSkillAssetEntries(List<SkillAssetEntryVO> entries) {
+        if (entries == null || entries.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        List<SkillAssetEntryVO> normalized = new ArrayList<>();
+        for (SkillAssetEntryVO entry : entries) {
+            if (entry == null) continue;
+            String kind = StringUtils.defaultString(entry.getKind()).trim().toLowerCase();
+            if (!"file".equals(kind) && !"folder".equals(kind)) {
+                continue;
+            }
+            String path = normalizeRelativeAssetPath(entry.getPath(), "folder".equals(kind));
+            if (StringUtils.isBlank(path)) continue;
+
+            normalized.add(SkillAssetEntryVO.builder()
+                    .kind(kind)
+                    .path(path)
+                    .content("file".equals(kind) ? StringUtils.defaultString(entry.getContent()) : "")
+                    .build());
+        }
+        return normalized;
+    }
+
+    private void validateSkillAssetEntries(List<SkillAssetEntryVO> entries) {
+        if (entries.isEmpty()) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "skill entries is empty");
+        }
+        if (entries.size() > MAX_SKILL_ASSET_COUNT) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "too many skill entries");
+        }
+
+        boolean hasRootSkillMarkdown = false;
+        long totalSize = 0L;
+        Set<String> dedupKeys = new LinkedHashSet<>();
+
+        for (SkillAssetEntryVO entry : entries) {
+            String dedupKey = entry.getKind() + ":" + entry.getPath();
+            if (dedupKeys.contains(dedupKey)) {
+                continue;
+            }
+            dedupKeys.add(dedupKey);
+
+            if (isFileEntry(entry)) {
+                String content = StringUtils.defaultString(entry.getContent());
+                totalSize += content.getBytes().length;
+                if (totalSize > MAX_SKILL_ASSET_TOTAL_SIZE) {
+                    throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "skill content is too large");
+                }
+                if ("SKILL.md".equals(entry.getPath())) {
+                    hasRootSkillMarkdown = true;
+                }
+            }
+        }
+
+        if (!hasRootSkillMarkdown) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "first level must contain SKILL.md");
+        }
+    }
+
+    private boolean isFileEntry(SkillAssetEntryVO entry) {
+        return "file".equals(StringUtils.defaultString(entry.getKind()).trim().toLowerCase());
+    }
+
+    private String normalizeRelativeAssetPath(String rawPath, boolean isFolder) {
+        String normalized = StringUtils.trimToEmpty(rawPath).replace('\\', '/');
+        while (normalized.startsWith("./")) {
+            normalized = normalized.substring(2);
+        }
+        while (normalized.startsWith("/")) {
+            normalized = normalized.substring(1);
+        }
+        while (normalized.endsWith("/")) {
+            normalized = normalized.substring(0, normalized.length() - 1);
+        }
+        if (StringUtils.isBlank(normalized)) {
+            return "";
+        }
+
+        String[] segments = normalized.split("/");
+        for (String segment : segments) {
+            if (StringUtils.isBlank(segment) || ".".equals(segment) || "..".equals(segment)) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "invalid asset path: " + rawPath);
+            }
+        }
+
+        if (isFolder && "SKILL.md".equalsIgnoreCase(normalized)) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "SKILL.md must be a file");
+        }
+        return String.join("/", Arrays.asList(segments));
+    }
+
+    private OssLocation parseOssLocation(String path) {
+        String raw = StringUtils.trimToEmpty(path);
+        if (StringUtils.isBlank(raw)) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "ossPath is blank");
+        }
+
+        if (raw.startsWith(OSS_SCHEME_PREFIX)) {
+            String bucketAndKey = raw.substring(OSS_SCHEME_PREFIX.length());
+            int slashIndex = bucketAndKey.indexOf('/');
+            if (slashIndex <= 0) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "ossPath is invalid");
+            }
+            String bucket = bucketAndKey.substring(0, slashIndex).trim();
+            String keyPrefix = normalizeObjectKey(bucketAndKey.substring(slashIndex + 1));
+            if (StringUtils.isBlank(bucket) || StringUtils.isBlank(keyPrefix)) {
+                throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "ossPath is invalid");
+            }
+            return new OssLocation(bucket, keyPrefix);
+        }
+
+        String defaultBucket = StringUtils.trimToEmpty(skillOssProperties.getDefaultBucket());
+        if (StringUtils.isBlank(defaultBucket)) {
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(),
+                    "ossPath must use oss://bucket/prefix when defaultBucket is not configured");
+        }
+        return new OssLocation(defaultBucket, normalizeObjectKey(raw));
+    }
+
+    private String normalizeObjectKey(String rawKey) {
+        String normalized = StringUtils.trimToEmpty(rawKey).replace('\\', '/');
+        while (normalized.startsWith("/")) {
+            normalized = normalized.substring(1);
+        }
+        while (normalized.endsWith("/")) {
+            normalized = normalized.substring(0, normalized.length() - 1);
+        }
+        return normalized;
+    }
+
+    private List<SkillAssetEntryVO> readSkillAssetsFromOss(OSS ossClient, String bucket, String listPrefix) {
+        Map<String, SkillAssetEntryVO> entryMap = new LinkedHashMap<>();
+        String continuationToken = null;
+        boolean truncated;
+        long totalBytes = 0L;
+        int maxKeys = clampListMaxKeys(skillOssProperties.getListMaxKeys());
+
+        do {
+            ListObjectsV2Request request = new ListObjectsV2Request(bucket)
+                    .withPrefix(listPrefix)
+                    .withMaxKeys(maxKeys)
+                    .withContinuationToken(continuationToken);
+            ListObjectsV2Result result = ossClient.listObjectsV2(request);
+            for (OSSObjectSummary summary : result.getObjectSummaries()) {
+                String key = summary.getKey();
+                if (StringUtils.equals(key, listPrefix) || !StringUtils.startsWith(key, listPrefix)) {
+                    continue;
+                }
+
+                String relativePath = key.substring(listPrefix.length());
+                boolean isFolder = key.endsWith("/");
+                relativePath = isFolder ? StringUtils.stripEnd(relativePath, "/") : relativePath;
+                if (StringUtils.isBlank(relativePath)) {
+                    continue;
+                }
+
+                if (isFolder) {
+                    addFolderPathAndParents(entryMap, relativePath);
+                } else {
+                    addFolderParentsForFile(entryMap, relativePath);
+                    String content = readOssObjectAsUtf8(ossClient, bucket, key);
+                    totalBytes += content.getBytes(StandardCharsets.UTF_8).length;
+                    if (totalBytes > MAX_SKILL_ASSET_TOTAL_SIZE) {
+                        throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "skill content is too large");
+                    }
+                    entryMap.put("file:" + relativePath, SkillAssetEntryVO.builder()
+                            .kind("file")
+                            .path(relativePath)
+                            .content(content)
+                            .build());
+                }
+
+                if (entryMap.size() > MAX_SKILL_ASSET_COUNT) {
+                    throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), "too many skill entries");
+                }
+            }
+
+            truncated = result.isTruncated();
+            continuationToken = result.getNextContinuationToken();
+        } while (truncated);
+
+        return entryMap.values().stream()
+                .sorted(Comparator
+                        .comparing((SkillAssetEntryVO item) -> "folder".equals(item.getKind()) ? 0 : 1)
+                        .thenComparing(SkillAssetEntryVO::getPath))
+                .collect(Collectors.toList());
+    }
+
+    private void addFolderParentsForFile(Map<String, SkillAssetEntryVO> entryMap, String filePath) {
+        int lastSlash = filePath.lastIndexOf('/');
+        if (lastSlash <= 0) {
+            return;
+        }
+        addFolderPathAndParents(entryMap, filePath.substring(0, lastSlash));
+    }
+
+    private void addFolderPathAndParents(Map<String, SkillAssetEntryVO> entryMap, String folderPath) {
+        String normalized = normalizeObjectKey(folderPath);
+        if (StringUtils.isBlank(normalized)) {
+            return;
+        }
+        String[] segments = normalized.split("/");
+        StringBuilder current = new StringBuilder();
+        for (String segment : segments) {
+            if (StringUtils.isBlank(segment)) continue;
+            if (current.length() > 0) {
+                current.append('/');
+            }
+            current.append(segment);
+            String path = current.toString();
+            entryMap.put("folder:" + path, SkillAssetEntryVO.builder()
+                    .kind("folder")
+                    .path(path)
+                    .content("")
+                    .build());
+        }
+    }
+
+    private String readOssObjectAsUtf8(OSS ossClient, String bucket, String key) {
+        try (OSSObject ossObject = ossClient.getObject(bucket, key);
+             InputStream inputStream = ossObject.getObjectContent()) {
+            return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new AppException(ResponseCode.UN_ERROR.getCode(), "read OSS object failed: oss://" + bucket + "/" + key);
+        }
+    }
+
+    private int clampListMaxKeys(Integer input) {
+        int fallback = 1000;
+        if (input == null || input <= 0) {
+            return fallback;
+        }
+        return Math.min(input, 1000);
+    }
+
+    private void cleanOssPrefix(OSS ossClient, String bucket, String prefix) {
+        String continuationToken = null;
+        boolean truncated;
+        do {
+            ListObjectsV2Request request = new ListObjectsV2Request(bucket)
+                    .withPrefix(prefix)
+                    .withMaxKeys(1000)
+                    .withContinuationToken(continuationToken);
+            ListObjectsV2Result result = ossClient.listObjectsV2(request);
+            for (OSSObjectSummary summary : result.getObjectSummaries()) {
+                ossClient.deleteObject(bucket, summary.getKey());
+            }
+            truncated = result.isTruncated();
+            continuationToken = result.getNextContinuationToken();
+        } while (truncated);
+    }
+
+    private void uploadSkillAssets(OSS ossClient, String bucket, String prefix, List<SkillAssetEntryVO> entries) {
+        Set<String> uploaded = new LinkedHashSet<>();
+        for (SkillAssetEntryVO entry : entries) {
+            String key = prefix + entry.getPath();
+            if (uploaded.contains(entry.getKind() + ":" + key)) {
+                continue;
+            }
+
+            if (isFileEntry(entry)) {
+                byte[] bytes = StringUtils.defaultString(entry.getContent()).getBytes();
+                ObjectMetadata metadata = new ObjectMetadata();
+                metadata.setContentLength(bytes.length);
+                ossClient.putObject(bucket, key, new ByteArrayInputStream(bytes), metadata);
+            } else {
+                String folderKey = key.endsWith("/") ? key : key + "/";
+                ossClient.putObject(bucket, folderKey, new ByteArrayInputStream(new byte[0]));
+            }
+            uploaded.add(entry.getKind() + ":" + key);
+        }
+    }
+
+    private String buildUploadPrefix(String fileName) {
+        String packageSegment = sanitizePathSegment(removeZipExtension(fileName));
+        long now = System.currentTimeMillis();
+        int random = ThreadLocalRandom.current().nextInt(1000, 10000);
+        // 统一落到 OSS easyagent/skills 根目录，避免分散到其他前缀。
+        return SKILL_ROOT_PREFIX + packageSegment + "-" + now + "-" + random + "/";
+    }
+
+    private String sanitizePathSegment(String raw) {
+        String normalized = StringUtils.defaultString(raw).trim();
+        if (normalized.isEmpty()) {
+            return "default";
+        }
+        normalized = normalized.replaceAll("[^a-zA-Z0-9._-]", "-");
+        normalized = normalized.replaceAll("-{2,}", "-");
+        normalized = normalized.replaceAll("^[.-]+", "");
+        normalized = normalized.replaceAll("[.-]+$", "");
+        return normalized.isEmpty() ? "default" : normalized;
+    }
+
+    private String removeZipExtension(String fileName) {
+        String normalized = StringUtils.defaultString(fileName).trim();
+        if (normalized.toLowerCase().endsWith(".zip")) {
+            return normalized.substring(0, normalized.length() - 4);
+        }
+        return normalized;
+    }
+
+    private OSS buildOssClient() {
+        String endpoint = StringUtils.trimToEmpty(skillOssProperties.getEndpoint());
+        String accessKeyId = StringUtils.trimToEmpty(skillOssProperties.getAccessKeyId());
+        String accessKeySecret = StringUtils.trimToEmpty(skillOssProperties.getAccessKeySecret());
+        String securityToken = StringUtils.trimToEmpty(skillOssProperties.getSecurityToken());
+
+        if (StringUtils.isAnyBlank(endpoint, accessKeyId, accessKeySecret)) {
+            throw new AppException(
+                    ResponseCode.ILLEGAL_PARAMETER.getCode(),
+                    "OSS config invalid: endpoint/accessKeyId/accessKeySecret required"
+            );
+        }
+
+        OSSClientBuilder builder = new OSSClientBuilder();
+        if (StringUtils.isNotBlank(securityToken)) {
+            return builder.build(endpoint, accessKeyId, accessKeySecret, securityToken);
+        }
+        return builder.build(endpoint, accessKeyId, accessKeySecret);
+    }
+
+    private String trimTailSlash(String value) {
+        String normalized = StringUtils.trimToEmpty(value);
+        while (normalized.endsWith("/")) {
+            normalized = normalized.substring(0, normalized.length() - 1);
+        }
+        return normalized;
+    }
+
     /**
      * 解析并归一化 Agent 配置元信息（appName / agentName / agentDesc）。
      *
@@ -577,6 +1268,34 @@ public class IAgentConfigManageServiceImpl implements IAgentConfigManageService 
             this.appName = appName;
             this.agentName = agentName;
             this.agentDesc = agentDesc;
+        }
+    }
+
+    private static class ZipEntryPayload {
+        private final String path;
+        private final byte[] content;
+
+        private ZipEntryPayload(String path, byte[] content) {
+            this.path = path;
+            this.content = content;
+        }
+    }
+
+    private static class OssLocation {
+        private final String bucket;
+        private final String keyPrefix;
+
+        private OssLocation(String bucket, String keyPrefix) {
+            this.bucket = bucket;
+            this.keyPrefix = keyPrefix;
+        }
+
+        private String getBucket() {
+            return bucket;
+        }
+
+        private String getKeyPrefix() {
+            return keyPrefix;
         }
     }
 

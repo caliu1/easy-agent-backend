@@ -4,7 +4,7 @@ import cn.caliu.agent.domain.agent.model.valobj.AiAgentConfigTableVO;
 import cn.caliu.agent.domain.agent.service.armory.matter.mcp.client.IToolMcpCreateService;
 import io.modelcontextprotocol.client.McpClient;
 import io.modelcontextprotocol.client.McpSyncClient;
-import io.modelcontextprotocol.client.transport.HttpClientSseClientTransport;
+import io.modelcontextprotocol.client.transport.HttpClientStreamableHttpTransport;
 import io.modelcontextprotocol.spec.McpSchema;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -22,21 +22,22 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * SSE MCP tool callback assembler.
+ * streamableHttp MCP tool callback assembler.
  */
 @Slf4j
 @Service
-public class SSEToolMcpCreateService implements IToolMcpCreateService {
+public class StreamableHttpToolMcpCreateService implements IToolMcpCreateService {
 
     @Override
     public ToolCallback[] buildToolCallback(AiAgentConfigTableVO.Module.ChatModel.ToolMcp toolMcp) throws Exception {
-        AiAgentConfigTableVO.Module.ChatModel.ToolMcp.SSEServerParameters sseConfig = toolMcp.getSse();
+        AiAgentConfigTableVO.Module.ChatModel.ToolMcp.StreamableHttpServerParameters config =
+                toolMcp.getStreamableHttp();
 
-        String originalBaseUri = sseConfig.getBaseUri();
+        String originalBaseUri = config.getBaseUri();
         String baseUri = originalBaseUri;
-        String sseEndpoint = sseConfig.getSseEndpoint();
+        String endpoint = config.getEndpoint();
 
-        if (StringUtils.isBlank(sseEndpoint)) {
+        if (StringUtils.isBlank(endpoint)) {
             URL url = new URL(originalBaseUri);
             String protocol = url.getProtocol();
             String host = url.getHost();
@@ -45,39 +46,43 @@ public class SSEToolMcpCreateService implements IToolMcpCreateService {
 
             int index = originalBaseUri.indexOf(baseUrl);
             if (index != -1) {
-                sseEndpoint = originalBaseUri.substring(index + baseUrl.length());
+                endpoint = originalBaseUri.substring(index + baseUrl.length());
             }
             baseUri = baseUrl;
         }
 
-        sseEndpoint = StringUtils.isBlank(sseEndpoint) ? "/sse" : sseEndpoint;
-        sseEndpoint = appendQuery(sseEndpoint, sseConfig.getQuery());
+        endpoint = StringUtils.isBlank(endpoint) ? "/mcp" : endpoint;
+        endpoint = appendQuery(endpoint, config.getQuery());
 
-        HttpClientSseClientTransport.Builder transportBuilder = HttpClientSseClientTransport
+        Integer timeout = config.getRequestTimeout();
+        if (timeout == null || timeout <= 0) {
+            timeout = 3000;
+        }
+
+        HttpClientStreamableHttpTransport.Builder transportBuilder = HttpClientStreamableHttpTransport
                 .builder(baseUri)
-                .sseEndpoint(sseEndpoint);
+                .endpoint(endpoint)
+                // Some third-party streamableHttp MCP servers do not support long-lived SSE back-channel.
+                // Disable resumable stream hints to reduce noisy reconnect attempts and warning logs.
+                .resumableStreams(false)
+                .openConnectionOnStartup(false);
 
-        Map<String, String> headers = buildHeaders(sseConfig.getHeaders(), sseConfig.getAuth());
+        Map<String, String> headers = buildHeaders(config.getHeaders(), config.getAuth());
         if (!headers.isEmpty()) {
             HttpRequest.Builder requestBuilder = HttpRequest.newBuilder();
             headers.forEach(requestBuilder::header);
             transportBuilder.requestBuilder(requestBuilder);
         }
 
-        HttpClientSseClientTransport sseClientTransport = transportBuilder.build();
-
-        Integer timeout = sseConfig.getRequestTimeout();
-        if (timeout == null || timeout <= 0) {
-            timeout = 3000;
-        }
+        HttpClientStreamableHttpTransport transport = transportBuilder.build();
 
         McpSyncClient mcpSyncClient = McpClient
-                .sync(sseClientTransport)
+                .sync(transport)
                 .requestTimeout(Duration.ofMillis(timeout))
                 .build();
 
         McpSchema.InitializeResult initialize = mcpSyncClient.initialize();
-        log.info("tool sse mcp initialize {}", initialize);
+        log.info("tool streamable-http mcp initialize {}", initialize);
 
         return SyncMcpToolCallbackProvider.builder()
                 .mcpClients(mcpSyncClient)

@@ -8,13 +8,28 @@ import cn.caliu.agent.api.dto.agent.config.request.AgentConfigPageQueryRequestDT
 import cn.caliu.agent.api.dto.agent.config.response.AgentConfigPageResponseDTO;
 import cn.caliu.agent.api.dto.agent.config.request.AgentConfigPublishRequestDTO;
 import cn.caliu.agent.api.dto.agent.config.request.AgentConfigRollbackRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentMcpProfileDeleteRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentMcpProfileUpsertRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentSkillSaveRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentSkillProfileDeleteRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentSkillProfileUpsertRequestDTO;
 import cn.caliu.agent.api.dto.agent.config.request.AgentConfigSubscribeRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.response.AgentMcpProfileResponseDTO;
+import cn.caliu.agent.api.dto.agent.config.response.AgentSkillAssetsResponseDTO;
+import cn.caliu.agent.api.dto.agent.config.response.AgentSkillImportResponseDTO;
+import cn.caliu.agent.api.dto.agent.config.response.AgentSkillProfileResponseDTO;
 import cn.caliu.agent.api.dto.agent.config.response.AgentConfigSummaryResponseDTO;
 import cn.caliu.agent.api.dto.agent.config.request.AgentConfigUpsertRequestDTO;
 import cn.caliu.agent.domain.agent.model.entity.AgentConfigEntity;
+import cn.caliu.agent.domain.agent.model.entity.AgentMcpProfileEntity;
+import cn.caliu.agent.domain.agent.model.entity.AgentSkillProfileEntity;
 import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryVO;
 import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryResult;
+import cn.caliu.agent.domain.agent.model.valobj.SkillAssetEntryVO;
+import cn.caliu.agent.domain.agent.model.valobj.SkillAssetsResultVO;
+import cn.caliu.agent.domain.agent.model.valobj.SkillImportResultVO;
 import cn.caliu.agent.domain.agent.service.IAgentConfigManageService;
+import cn.caliu.agent.domain.agent.service.IAgentToolProfileManageService;
 import cn.caliu.agent.domain.user.service.IUserSubscriptionService;
 import cn.caliu.agent.types.enums.ResponseCode;
 import cn.caliu.agent.types.exception.AppException;
@@ -39,9 +54,12 @@ import java.util.stream.Collectors;
  */
 @Service
 public class AgentConfigApplicationService implements IAgentConfigApplicationService {
+    private static final String SYSTEM_USER_ID = "system";
 
     @Resource
     private IAgentConfigManageService agentConfigManageService;
+    @Resource
+    private IAgentToolProfileManageService agentToolProfileManageService;
     @Resource
     private IUserSubscriptionService userSubscriptionService;
 
@@ -165,6 +183,139 @@ public class AgentConfigApplicationService implements IAgentConfigApplicationSer
         return userSubscriptionService.unsubscribeAgent(requestDTO.getUserId(), requestDTO.getAgentId());
     }
 
+    @Override
+    public AgentSkillImportResponseDTO importSkillZip(String operator, String fileName, byte[] zipBytes) {
+        SkillImportResultVO importResult = agentConfigManageService.importSkillZip(operator, fileName, zipBytes);
+        return toSkillImportResponse(importResult);
+    }
+
+    @Override
+    public AgentSkillImportResponseDTO saveSkillAssets(AgentSkillSaveRequestDTO requestDTO) {
+        List<SkillAssetEntryVO> entries = new ArrayList<>();
+        if (requestDTO != null && requestDTO.getEntries() != null) {
+            for (AgentSkillSaveRequestDTO.Entry entry : requestDTO.getEntries()) {
+                if (entry == null) continue;
+                entries.add(SkillAssetEntryVO.builder()
+                        .kind(entry.getKind())
+                        .path(entry.getPath())
+                        .content(entry.getContent())
+                        .build());
+            }
+        }
+
+        SkillImportResultVO saveResult = agentConfigManageService.saveSkillAssets(
+                requestDTO == null ? null : requestDTO.getOperator(),
+                requestDTO == null ? null : requestDTO.getRootFolder(),
+                entries
+        );
+        return toSkillImportResponse(saveResult);
+    }
+
+    @Override
+    public AgentSkillAssetsResponseDTO querySkillAssets(String ossPath) {
+        SkillAssetsResultVO resultVO = agentConfigManageService.querySkillAssets(ossPath);
+        AgentSkillAssetsResponseDTO responseDTO = new AgentSkillAssetsResponseDTO();
+        responseDTO.setBucket(resultVO.getBucket());
+        responseDTO.setPrefix(resultVO.getPrefix());
+        responseDTO.setFileCount(resultVO.getFileCount());
+        responseDTO.setFolderCount(resultVO.getFolderCount());
+
+        List<AgentSkillAssetsResponseDTO.Entry> entries = new ArrayList<>();
+        if (resultVO.getEntries() != null) {
+            for (SkillAssetEntryVO item : resultVO.getEntries()) {
+                AgentSkillAssetsResponseDTO.Entry entry = new AgentSkillAssetsResponseDTO.Entry();
+                entry.setKind(item.getKind());
+                entry.setPath(item.getPath());
+                entry.setContent(item.getContent());
+                entries.add(entry);
+            }
+        }
+        responseDTO.setEntries(entries);
+        return responseDTO;
+    }
+
+    @Override
+    public AgentMcpProfileResponseDTO createMcpProfile(AgentMcpProfileUpsertRequestDTO requestDTO) {
+        AgentMcpProfileEntity created = agentToolProfileManageService.createMcpProfile(toMcpProfileEntity(requestDTO));
+        return toMcpProfileResponse(created);
+    }
+
+    @Override
+    public AgentMcpProfileResponseDTO updateMcpProfile(AgentMcpProfileUpsertRequestDTO requestDTO) {
+        AgentMcpProfileEntity updated = agentToolProfileManageService.updateMcpProfile(toMcpProfileEntity(requestDTO));
+        return toMcpProfileResponse(updated);
+    }
+
+    @Override
+    public boolean deleteMcpProfile(AgentMcpProfileDeleteRequestDTO requestDTO) {
+        return agentToolProfileManageService.deleteMcpProfile(
+                requestDTO == null ? null : requestDTO.getId(),
+                requestDTO == null ? null : requestDTO.getUserId()
+        );
+    }
+
+    @Override
+    public List<AgentMcpProfileResponseDTO> queryMcpProfileList(String userId) {
+        String requesterUserId = StringUtils.trimToEmpty(userId);
+        return agentToolProfileManageService.queryMcpProfileList(userId).stream()
+                .map(this::toMcpProfileResponse)
+                .map(item -> sanitizeSystemMcpProfile(item, requesterUserId))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean testMcpProfileConnection(AgentMcpProfileUpsertRequestDTO requestDTO) {
+        return agentToolProfileManageService.testMcpProfileConnection(toMcpProfileEntity(requestDTO));
+    }
+
+    @Override
+    public AgentSkillProfileResponseDTO createSkillProfile(AgentSkillProfileUpsertRequestDTO requestDTO) {
+        AgentSkillProfileEntity created = agentToolProfileManageService.createSkillProfile(toSkillProfileEntity(requestDTO));
+        return toSkillProfileResponse(created);
+    }
+
+    @Override
+    public AgentSkillProfileResponseDTO updateSkillProfile(AgentSkillProfileUpsertRequestDTO requestDTO) {
+        AgentSkillProfileEntity updated = agentToolProfileManageService.updateSkillProfile(toSkillProfileEntity(requestDTO));
+        return toSkillProfileResponse(updated);
+    }
+
+    @Override
+    public boolean deleteSkillProfile(AgentSkillProfileDeleteRequestDTO requestDTO) {
+        return agentToolProfileManageService.deleteSkillProfile(
+                requestDTO == null ? null : requestDTO.getId(),
+                requestDTO == null ? null : requestDTO.getUserId()
+        );
+    }
+
+    @Override
+    public List<AgentSkillProfileResponseDTO> querySkillProfileList(String userId) {
+        return agentToolProfileManageService.querySkillProfileList(userId).stream()
+                .map(this::toSkillProfileResponse)
+                .collect(Collectors.toList());
+    }
+
+    private AgentSkillImportResponseDTO toSkillImportResponse(SkillImportResultVO importResult) {
+        AgentSkillImportResponseDTO responseDTO = new AgentSkillImportResponseDTO();
+        responseDTO.setBucket(importResult.getBucket());
+        responseDTO.setPrefix(importResult.getPrefix());
+        responseDTO.setFileCount(importResult.getFileCount());
+        responseDTO.setSkillCount(importResult.getSkillCount());
+
+        List<AgentSkillImportResponseDTO.ToolSkillItemDTO> toolSkills = new ArrayList<>();
+        if (importResult.getToolSkillsList() != null) {
+            for (SkillImportResultVO.ToolSkillLocationVO source : importResult.getToolSkillsList()) {
+                AgentSkillImportResponseDTO.ToolSkillItemDTO itemDTO = new AgentSkillImportResponseDTO.ToolSkillItemDTO();
+                itemDTO.setType(source.getType());
+                itemDTO.setPath(source.getPath());
+                itemDTO.setSkillName(source.getSkillName());
+                toolSkills.add(itemDTO);
+            }
+        }
+        responseDTO.setToolSkillsList(toolSkills);
+        return responseDTO;
+    }
+
     private boolean existsInPlaza(String agentId) {
         if (StringUtils.isBlank(agentId)) {
             return false;
@@ -204,6 +355,96 @@ public class AgentConfigApplicationService implements IAgentConfigApplicationSer
                 .sourceType(requestDTO.getSourceType())
                 .plazaStatus(requestDTO.getPlazaStatus())
                 .build();
+    }
+
+    private AgentMcpProfileEntity toMcpProfileEntity(AgentMcpProfileUpsertRequestDTO requestDTO) {
+        if (requestDTO == null) {
+            return AgentMcpProfileEntity.builder().build();
+        }
+        return AgentMcpProfileEntity.builder()
+                .id(requestDTO.getId())
+                .userId(requestDTO.getUserId())
+                .configJson(requestDTO.getConfigJson())
+                .type(requestDTO.getType())
+                .name(requestDTO.getName())
+                .description(requestDTO.getDescription())
+                .baseUri(requestDTO.getBaseUri())
+                .sseEndpoint(requestDTO.getSseEndpoint())
+                .requestTimeout(requestDTO.getRequestTimeout())
+                .authType(requestDTO.getAuthType())
+                .authToken(requestDTO.getAuthToken())
+                .authKeyName(requestDTO.getAuthKeyName())
+                .headersJson(requestDTO.getHeadersJson())
+                .queryJson(requestDTO.getQueryJson())
+                .build();
+    }
+
+    private AgentMcpProfileResponseDTO toMcpProfileResponse(AgentMcpProfileEntity source) {
+        AgentMcpProfileResponseDTO dto = new AgentMcpProfileResponseDTO();
+        dto.setId(source.getId());
+        dto.setUserId(source.getUserId());
+        dto.setType(source.getType());
+        dto.setName(source.getName());
+        dto.setDescription(source.getDescription());
+        dto.setBaseUri(source.getBaseUri());
+        dto.setConfigJson(source.getConfigJson());
+        dto.setSseEndpoint(source.getSseEndpoint());
+        dto.setRequestTimeout(source.getRequestTimeout());
+        dto.setAuthType(source.getAuthType());
+        dto.setAuthToken(source.getAuthToken());
+        dto.setAuthKeyName(source.getAuthKeyName());
+        dto.setHeadersJson(source.getHeadersJson());
+        dto.setQueryJson(source.getQueryJson());
+        dto.setCreateTime(source.getCreateTime());
+        dto.setUpdateTime(source.getUpdateTime());
+        return dto;
+    }
+
+    private AgentMcpProfileResponseDTO sanitizeSystemMcpProfile(AgentMcpProfileResponseDTO source, String requesterUserId) {
+        if (source == null) {
+            return null;
+        }
+
+        // system 自己查询时保留完整字段，便于运维管理。
+        if (isSystemUser(requesterUserId)) {
+            return source;
+        }
+
+        // 非 system 用户查询 system 配置时，只返回名称和描述，避免泄露敏感连接信息。
+        if (isSystemUser(source.getUserId())) {
+            AgentMcpProfileResponseDTO masked = new AgentMcpProfileResponseDTO();
+            masked.setName(source.getName());
+            masked.setDescription(source.getDescription());
+            return masked;
+        }
+        return source;
+    }
+
+    private boolean isSystemUser(String userId) {
+        return SYSTEM_USER_ID.equalsIgnoreCase(StringUtils.trimToEmpty(userId));
+    }
+
+    private AgentSkillProfileEntity toSkillProfileEntity(AgentSkillProfileUpsertRequestDTO requestDTO) {
+        if (requestDTO == null) {
+            return AgentSkillProfileEntity.builder().build();
+        }
+        return AgentSkillProfileEntity.builder()
+                .id(requestDTO.getId())
+                .userId(requestDTO.getUserId())
+                .skillName(requestDTO.getSkillName())
+                .ossPath(requestDTO.getOssPath())
+                .build();
+    }
+
+    private AgentSkillProfileResponseDTO toSkillProfileResponse(AgentSkillProfileEntity source) {
+        AgentSkillProfileResponseDTO dto = new AgentSkillProfileResponseDTO();
+        dto.setId(source.getId());
+        dto.setUserId(source.getUserId());
+        dto.setSkillName(source.getSkillName());
+        dto.setOssPath(source.getOssPath());
+        dto.setCreateTime(source.getCreateTime());
+        dto.setUpdateTime(source.getUpdateTime());
+        return dto;
     }
 
     private AgentConfigDetailResponseDTO toDetailResponse(AgentConfigEntity source) {

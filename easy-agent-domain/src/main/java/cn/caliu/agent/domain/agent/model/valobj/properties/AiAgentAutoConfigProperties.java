@@ -16,7 +16,7 @@ public class AiAgentAutoConfigProperties {
     /**
      * 是否启用AI Agent自动装配
      */
-    private boolean enabled = false;
+    private boolean enabled = true;
 
     private Map<String, AiAgentConfigTableVO> tables;
 

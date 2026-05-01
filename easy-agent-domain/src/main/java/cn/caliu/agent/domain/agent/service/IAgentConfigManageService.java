@@ -3,17 +3,14 @@ package cn.caliu.agent.domain.agent.service;
 import cn.caliu.agent.domain.agent.model.entity.AgentConfigEntity;
 import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryResult;
 import cn.caliu.agent.domain.agent.model.valobj.AgentConfigPageQueryVO;
+import cn.caliu.agent.domain.agent.model.valobj.SkillAssetEntryVO;
+import cn.caliu.agent.domain.agent.model.valobj.SkillAssetsResultVO;
+import cn.caliu.agent.domain.agent.model.valobj.SkillImportResultVO;
 
 import java.util.List;
 
 /**
  * Agent 配置领域服务接口。
- *
- * 覆盖能力：
- * 1. 配置生命周期：创建、更新、删除、详情。
- * 2. 版本与状态：发布、下线、回滚。
- * 3. 广场运营：发布到广场、取消发布、广场列表。
- * 4. 运行时：从已发布配置重建内存运行时注册表。
  */
 public interface IAgentConfigManageService {
 
@@ -39,12 +36,16 @@ public interface IAgentConfigManageService {
 
     AgentConfigEntity unpublishAgentFromPlaza(String agentId, String operator);
 
-    /**
-     * 从已发布配置批量重建运行时注册表。
-     *
-     * @return 成功重载并激活的 Agent 数量
-     */
     int reloadPublishedAgentRuntime();
+
+    SkillImportResultVO importSkillZip(String operator, String fileName, byte[] zipBytes);
+
+    SkillImportResultVO saveSkillAssets(String operator, String rootFolder, List<SkillAssetEntryVO> entries);
+
+    /**
+     * 按 OSS 路径读取 Skill 目录资产（文件/文件夹及文件内容）。
+     */
+    SkillAssetsResultVO querySkillAssets(String ossPath);
 
 }
 

@@ -7,7 +7,16 @@ import cn.caliu.agent.api.dto.agent.config.request.AgentConfigPageQueryRequestDT
 import cn.caliu.agent.api.dto.agent.config.response.AgentConfigPageResponseDTO;
 import cn.caliu.agent.api.dto.agent.config.request.AgentConfigPublishRequestDTO;
 import cn.caliu.agent.api.dto.agent.config.request.AgentConfigRollbackRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentMcpProfileDeleteRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentMcpProfileUpsertRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentSkillSaveRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentSkillProfileDeleteRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.request.AgentSkillProfileUpsertRequestDTO;
 import cn.caliu.agent.api.dto.agent.config.request.AgentConfigSubscribeRequestDTO;
+import cn.caliu.agent.api.dto.agent.config.response.AgentMcpProfileResponseDTO;
+import cn.caliu.agent.api.dto.agent.config.response.AgentSkillAssetsResponseDTO;
+import cn.caliu.agent.api.dto.agent.config.response.AgentSkillImportResponseDTO;
+import cn.caliu.agent.api.dto.agent.config.response.AgentSkillProfileResponseDTO;
 import cn.caliu.agent.api.dto.agent.config.response.AgentConfigSummaryResponseDTO;
 import cn.caliu.agent.api.dto.agent.config.request.AgentConfigUpsertRequestDTO;
 
@@ -48,6 +57,30 @@ public interface IAgentConfigApplicationService {
     boolean subscribeAgentConfig(AgentConfigSubscribeRequestDTO requestDTO);
 
     boolean unsubscribeAgentConfig(AgentConfigSubscribeRequestDTO requestDTO);
+
+    AgentSkillImportResponseDTO importSkillZip(String operator, String fileName, byte[] zipBytes);
+
+    AgentSkillImportResponseDTO saveSkillAssets(AgentSkillSaveRequestDTO requestDTO);
+
+    AgentSkillAssetsResponseDTO querySkillAssets(String ossPath);
+
+    AgentMcpProfileResponseDTO createMcpProfile(AgentMcpProfileUpsertRequestDTO requestDTO);
+
+    AgentMcpProfileResponseDTO updateMcpProfile(AgentMcpProfileUpsertRequestDTO requestDTO);
+
+    boolean deleteMcpProfile(AgentMcpProfileDeleteRequestDTO requestDTO);
+
+    List<AgentMcpProfileResponseDTO> queryMcpProfileList(String userId);
+
+    boolean testMcpProfileConnection(AgentMcpProfileUpsertRequestDTO requestDTO);
+
+    AgentSkillProfileResponseDTO createSkillProfile(AgentSkillProfileUpsertRequestDTO requestDTO);
+
+    AgentSkillProfileResponseDTO updateSkillProfile(AgentSkillProfileUpsertRequestDTO requestDTO);
+
+    boolean deleteSkillProfile(AgentSkillProfileDeleteRequestDTO requestDTO);
+
+    List<AgentSkillProfileResponseDTO> querySkillProfileList(String userId);
 
 }
 
